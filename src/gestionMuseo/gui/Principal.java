@@ -41,24 +41,32 @@ public class Principal {
 	private static final String SIN_TITULO_MUSEO = "Sin titulo: Museo";
 	private JFrame frame;
 	static Exposicion exposicion = new Exposicion();
-	static{//BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+	static { // BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 		try {
-			exposicion.ingresarPintura("Pintura1", "autor1", "sitio", EstiloArtistico.BARROCO, 
-					true, "persona", 0.5, 0.5, Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			exposicion.ingresarPintura("Pintura2", "autor2", "sitio", EstiloArtistico.BARROCO, 
-					true, "persona", 0.5, 0.5, Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			exposicion.ingresarPintura("Pintura3", "autor3", "sitio", EstiloArtistico.BARROCO, 
-					true, "persona", 0.5, 0.5, Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			exposicion.ingresarEscultura("Escultura", "autor", "calle", EstiloArtistico.RENACIMIENTO, 
-				true, "persona", 0.5, 0.4, TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA, 
-					0.3, 0.4, 0.5); 
-//			exposicion.ingresarGrabado("grabado", "autor", "lala", EstiloArtistico.EGIPCIO, 
-//					true, "persona", 0.3, 0.5, TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
-//			exposicion.ingresarGrabado("grabado2", "pepe", "ronda", EstiloArtistico.ISLAMICO, 
-//					true, "persona", 0.3, 0.5, TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
-//			exposicion.ingresarDibujo("dibujo", "autorr", "fuente", EstiloArtistico.CUBISTA, 
-//					false, "personita", 0.6, 0.5, TecnicaDeDibujo.CARBONCILLO, 0.10, 0.5);
-			
+			exposicion.ingresarPintura("Pintura1", "autor1", "sitio",
+					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+			exposicion.ingresarPintura("Pintura2", "autor2", "sitio",
+					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+			exposicion.ingresarPintura("Pintura3", "autor3", "sitio",
+					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+			exposicion.ingresarEscultura("Escultura", "autor", "calle",
+					EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
+					TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
+					0.3, 0.4, 0.5);
+			 exposicion.ingresarGrabado("grabado", "autor", "lala",
+			 EstiloArtistico.EGIPCIO,
+			 true, "persona", 0.3, 0.5, TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
+			// exposicion.ingresarGrabado("grabado2", "pepe", "ronda",
+			// EstiloArtistico.ISLAMICO,
+			// true, "persona", 0.3, 0.5, TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
+			// exposicion.ingresarDibujo("dibujo", "autorr", "fuente",
+			// EstiloArtistico.CUBISTA,
+			// false, "personita", 0.6, 0.5, TecnicaDeDibujo.CARBONCILLO, 0.10,
+			// 0.5);
+
 		} catch (AutorNoValidoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -74,7 +82,6 @@ public class Principal {
 	private Filtro filtro = new Filtro(".obj", "obj");
 	private String nombreMuseo;
 
-	
 	/**
 	 * Launch the application.
 	 */
@@ -123,6 +130,9 @@ public class Principal {
 				abrir();
 			}
 		});
+
+		JMenuItem mntmNu = new JMenuItem("Nuevo Museo");
+		mnArchivo.add(mntmNu);
 		mnArchivo.add(mntmAbrirExpo);
 
 		JSeparator separator = new JSeparator();
@@ -152,7 +162,7 @@ public class Principal {
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//salir();
+				//SALIR
 			}
 		});
 		mnArchivo.add(mntmSalir);
@@ -161,38 +171,48 @@ public class Principal {
 		mnMuseo.setMnemonic('M');
 		menuBar.add(mnMuseo);
 
-		JMenuItem mntmBaja = new JMenuItem("Eliminar obra");
-		mntmBaja.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				EliminarObras eliminar;
-				try {
-					eliminar = new EliminarObras(exposicion);
-					eliminar.setVisible(true);
-				} catch (NoHayFondosException e1) {
-					JOptionPane.showMessageDialog(frame, e1.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}
-
-			}
-		});
-		
 		JMenuItem mntmIngresarObra = new JMenuItem("Ingresar obra");
 		mntmIngresarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				IngresarObras ingresos= new IngresarObras(exposicion);
+				IngresarObras ingresos = new IngresarObras(exposicion);
 				ingresos.setVisible(true);
 			}
 		});
 		mnMuseo.add(mntmIngresarObra);
-		mntmBaja.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B,
-				InputEvent.CTRL_MASK));
-		mnMuseo.add(mntmBaja);
+		
+		JMenu mnEliminarObra = new JMenu("Eliminar obra");
+		mnMuseo.add(mnEliminarObra);
+		
+		JMenuItem mntmPorCdigo = new JMenuItem("Por código");
+		mntmPorCdigo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EliminarPorCodigo eliminarPorCodigo= new EliminarPorCodigo(exposicion);
+				eliminarPorCodigo.setVisible(true);
+			}
+		});
+		mnEliminarObra.add(mntmPorCdigo);
+		
+		JMenuItem mntmMostrarObrasY = new JMenuItem("Mostrando obras");
+		mntmMostrarObrasY.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				MostrarEliminar eliminar;
+				try {
+					eliminar = new MostrarEliminar(exposicion);
+					eliminar.setVisible(true);
+				} catch (NoHayFondosException e) {
+					JOptionPane.showMessageDialog(frame, e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnEliminarObra.add(mntmMostrarObrasY);
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Mostrar fondos");
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(exposicion);
+					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(
+							exposicion);
 					mostrar.setVisible(true);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -205,7 +225,7 @@ public class Principal {
 		JMenu mnBuscar = new JMenu("Buscar");
 		mnBuscar.setMnemonic('B');
 		menuBar.add(mnBuscar);
-		
+
 		JMenuItem mntmBuscarPorNombre = new JMenuItem("Buscar por nombre");
 		mnBuscar.add(mntmBuscarPorNombre);
 
@@ -216,30 +236,67 @@ public class Principal {
 		mntmPintura_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					MostrarPinturas mostrarPinturas= new MostrarPinturas(exposicion);
+					MostrarPinturas mostrarPinturas = new MostrarPinturas(
+							exposicion);
 					mostrarPinturas.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			}
 		});
 		mnBuscarPorTipo.add(mntmPintura_1);
 
 		JMenuItem mntmEscultura_1 = new JMenuItem("Escultura");
+		mntmEscultura_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					MostrarEsculturas mostrarEsculturas = new MostrarEsculturas(
+							exposicion);
+					mostrarEsculturas.setVisible(true);
+				} catch (NoHayFondosException e) {
+					JOptionPane.showMessageDialog(frame, e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		mnBuscarPorTipo.add(mntmEscultura_1);
 
 		JMenuItem mntmGrabado_1 = new JMenuItem("Grabado");
+		mntmGrabado_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					MostrarGrabados mostrarGrabados = new MostrarGrabados(
+							exposicion);
+					mostrarGrabados.setVisible(true);
+				} catch (NoHayFondosException e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		mnBuscarPorTipo.add(mntmGrabado_1);
 
 		JMenuItem mntmDibujo_1 = new JMenuItem("Dibujo");
+		mntmDibujo_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					MostrarDibujos mostrarDibujos= new MostrarDibujos(exposicion);
+					mostrarDibujos.setVisible(true);
+				} catch (NoHayFondosException e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 		mnBuscarPorTipo.add(mntmDibujo_1);
 
 		JMenuItem mntmBuscarPorEstilo = new JMenuItem(
 				"Buscar por estilo art\u00EDstico");
 		mntmBuscarPorEstilo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 			}
 
 		});
@@ -253,13 +310,13 @@ public class Principal {
 				"Organizar exposicion");
 		mntmOrganizarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if(exposicion.comprobarSiObrasExpuestas()){
-				OrganizarExposicion organizar = new OrganizarExposicion(
-						exposicion);
-				organizar.setVisible(true);
-				}
-				else
-					JOptionPane.showMessageDialog(frame,"No hay obras expuestas, debes exponerlas antes!",
+				if (exposicion.comprobarSiObrasExpuestas()) {
+					OrganizarExposicion organizar = new OrganizarExposicion(
+							exposicion);
+					organizar.setVisible(true);
+				} else
+					JOptionPane.showMessageDialog(frame,
+							"No hay obras expuestas, debes exponerlas antes!",
 							"Error", JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -275,7 +332,6 @@ public class Principal {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
 
 			}
 		});
@@ -287,29 +343,29 @@ public class Principal {
 			public void actionPerformed(ActionEvent e) {
 				VisitarExposicion visitarExposicion;
 				try {
-					if(exposicion.isOrganizada()){
-					visitarExposicion = new VisitarExposicion(exposicion);
-					visitarExposicion.setVisible(true);
-					}
-					else
-						JOptionPane.showMessageDialog(frame,"No hay ninguna exposicion organizada",
+					if (exposicion.isOrganizada()) {
+						visitarExposicion = new VisitarExposicion(exposicion);
+						visitarExposicion.setVisible(true);
+					} else
+						JOptionPane.showMessageDialog(frame,
+								"No hay ninguna exposicion organizada",
 								"Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
 							"Error", JOptionPane.ERROR_MESSAGE);
 				}
-				
+
 			}
 		});
-		
+
 		JMenuItem mntmDatosDeLa = new JMenuItem("Datos de la exposici\u00F3n");
 		mnExposicion.add(mntmDatosDeLa);
 		mnExposicion.add(mntmVisitarExposicion);
-		
+
 		JMenuItem mntmClausurarExposicin = new JMenuItem("Clausurar exposición");
 		mntmClausurarExposicin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClausurarExposicion clausurar= new ClausurarExposicion();
+				ClausurarExposicion clausurar = new ClausurarExposicion();
 				clausurar.setVisible(true);
 			}
 		});
@@ -364,90 +420,100 @@ public class Principal {
 		});
 		mnAyuda.add(mntmAyuda);
 	}
-	
+
 	/**
 	 * Permite guardar un fichero
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
-	private void guardar(){
+	private void guardar() {
 		if (Fichero.FICHERO.getName().equalsIgnoreCase(nombreMuseo)) {
 			guardarComo();
 			exposicion.setModificada(false);
-		} 
-		else {
+		} else {
 			try {
 				Fichero.guardar(exposicion);
 				exposicion.setModificada(false);
 			} catch (IOException ex) {
-				JOptionPane.showMessageDialog(null, "Error al guardar", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Error al guardar",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
 			}
 
 		}
-}
-	
+	}
+
 	/**
 	 * Permite guardar como...
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
-	private void guardarComo(){
+	private void guardarComo() {
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.addChoosableFileFilter(filtro);
 
-		if (JFileChooser.APPROVE_OPTION == fileChooser.showDialog(fileChooser, "Guardar Archivo")) {
+		if (JFileChooser.APPROVE_OPTION == fileChooser.showDialog(fileChooser,
+				"Guardar Archivo")) {
 
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			Fichero.comprobarNombre(fileChooser.getSelectedFile());
 			if (Fichero.getFichero().exists()) {
 				Object[] options = { "Si", "No" };
-				int respuesta = JOptionPane.showOptionDialog(null, "El archivo ya existe, ¿deseas sobreescribirlo?",
-						"Guardando", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
-						options[0]);
+				int respuesta = JOptionPane.showOptionDialog(null,
+						"El archivo ya existe, ¿deseas sobreescribirlo?",
+						"Guardando", JOptionPane.DEFAULT_OPTION,
+						JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				if (respuesta == JOptionPane.YES_OPTION) {
 					try {
 						Fichero.guardarComo(exposicion, Fichero.getFichero());
 					} catch (IOException ex) {
-						JOptionPane.showMessageDialog(null, "Error al guardar el archivo", "ERROR",
+						JOptionPane.showMessageDialog(null,
+								"Error al guardar el archivo", "ERROR",
 								JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
-			}else{
+			} else {
 				guardar();
 			}
 
 			frame.setTitle(Fichero.getFichero().getName());
 			exposicion.setModificada(false);
 		}
-} 
+	}
 
 	/**
 	 * Abre un concesionario existente
-	 * @throws IOException 
-	 * @throws ClassNotFoundException 
+	 * 
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
-	private void abrir(){
+	private void abrir() {
 		if (exposicion.isModificada()) {
 			Object[] options = { "SI", "NO", "CANCELAR" };
-			int respuesta = JOptionPane.showOptionDialog(null, "¿Deseas Guardar?", "Archivo sin guardar",
-					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0]);
-			if (respuesta == JOptionPane.YES_OPTION) 
+			int respuesta = JOptionPane.showOptionDialog(null,
+					"¿Deseas Guardar?", "Archivo sin guardar",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+			if (respuesta == JOptionPane.YES_OPTION)
 				guardarComo();
 			else {
 				try {
 					abrirFichero();
 				} catch (IOException | ClassNotFoundException e) {
-					JOptionPane.showMessageDialog(null, "Error al abrir fichero", "ERROR", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Error al abrir fichero", "ERROR",
+							JOptionPane.ERROR_MESSAGE);
 					Fichero.nuevo();
 				}
-			} 
-		}
-		 else {
+			}
+		} else {
 			try {
 				abrirFichero();
 			} catch (IOException | ClassNotFoundException ex) {
-				JOptionPane.showMessageDialog(null, "Error al abrir fichero", "ERROR", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Error al abrir fichero",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
 				Fichero.nuevo();
 			}
 
@@ -461,15 +527,16 @@ public class Principal {
 	 * @throws ClassNotFoundException
 	 * @throws IOException
 	 */
-	private void abrirFichero() throws FileNotFoundException, ClassNotFoundException, IOException {
+	private void abrirFichero() throws FileNotFoundException,
+			ClassNotFoundException, IOException {
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		fileChooser.addChoosableFileFilter(filtro);
 		if (fileChooser.showDialog(fileChooser, "Abrir Fichero") == JFileChooser.APPROVE_OPTION) {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
-			exposicion = (Exposicion) Fichero.abrir(fileChooser.getSelectedFile());
+			exposicion = (Exposicion) Fichero.abrir(fileChooser
+					.getSelectedFile());
 			frame.setTitle(Fichero.getFichero().getName());
 			exposicion.setModificada(false);
 		}
 	}
-
 }

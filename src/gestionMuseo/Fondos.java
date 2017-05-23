@@ -180,14 +180,30 @@ public class Fondos implements Serializable{
 	}
 
 	/**
-	 * Elimina una obra de arte por código
+	 * Elimina un grabado por código
 	 * 
 	 * @param codigo
 	 * @throws ObraNoExisteException
 	 * @throws NoHayFondosException
 	 */
-	public void eliminar(int codigo){
-		fondos.remove(new Grabado(codigo));		
+	public void eliminarGrabado(int codigo) throws ObraNoExisteException{
+		if(!fondos.remove(new Grabado(codigo)))
+			throw new ObraNoExisteException("Error, la obra no existe");	
+	}
+	
+	public void eliminarPintura(int codigo) throws ObraNoExisteException{
+		if(!fondos.remove(new Pintura(codigo)))
+			throw new ObraNoExisteException("Error, la obra no existe");	
+	}
+	
+	public void eliminarDibujo(int codigo) throws ObraNoExisteException{
+		if(!fondos.remove(new Dibujo(codigo)))
+			throw new ObraNoExisteException("Error, la obra no existe");	
+	}
+	
+	public void eliminarEscultura(int codigo) throws ObraNoExisteException{
+		if(!fondos.remove(new Escultura(codigo)))
+			throw new ObraNoExisteException("Error, la obra no existe");	
 	}
 	
 	/**
@@ -207,9 +223,13 @@ public class Fondos implements Serializable{
 					"Imposible eliminar, la obra no existe");
 	}
 	
-	public void eliminar(ObraDeArte obra){
-		fondos.remove(obra);
-	}
+//	/**
+//	 * Elimina por título
+//	 * @param obra
+//	 */
+//	public void eliminar(String titulo){
+//		fondos.remove(new Grabado(titulo));
+//	}
 	
 	/**
 	 * Ordena por Titulo
@@ -475,6 +495,7 @@ public class Fondos implements Serializable{
 	public boolean isEmpty() {
 		return fondos.isEmpty();
 	}
+
 
 //	/**
 //	 * Lista todas las obras de arte que hay en el museo.

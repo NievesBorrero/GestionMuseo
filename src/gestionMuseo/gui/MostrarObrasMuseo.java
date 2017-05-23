@@ -36,8 +36,8 @@ import javax.swing.JTextField;
 
 public class MostrarObrasMuseo extends DialogoGeneral {
 
-	static ListIterator<ObraDeArte> itObras; // QUITAR ESTATICOOO
-	private Exposicion exposicion;
+	ListIterator<ObraDeArte> itObras; // QUITAR ESTATICOOO
+	protected Exposicion exposicion;
 
 	public MostrarObrasMuseo(Exposicion exposicion) throws NoHayFondosException {
 		super(exposicion);

@@ -28,6 +28,10 @@ public class Escultura extends ObraDeArte implements Serializable{
 		this.tipoEscultura = tipoEscultura;
 		setCosteRestauracion(calcularPrecioRestauracion());
 	}
+	
+	public Escultura(int codigo){
+		super(codigo);
+	}
 
 	public TipoEscultura getTipoEscultura() {
 		return tipoEscultura;

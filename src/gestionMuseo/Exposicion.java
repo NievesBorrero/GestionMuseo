@@ -242,10 +242,29 @@ public class Exposicion implements Presupuestable, Serializable{
 	 * @throws ObraNoExisteException
 	 * @throws NoHayFondosException
 	 */
-	public void eliminar(int codigo){
+	public void eliminarGrabado(int codigo) throws ObraNoExisteException{
 
-		museo.eliminar(codigo);
+		museo.eliminarGrabado(codigo);
 	}
+	
+	public void eliminarPintura(int codigo) throws ObraNoExisteException{
+		museo.eliminarPintura(codigo);
+	}
+	
+	public void eliminarEscultura(int codigo) throws ObraNoExisteException{
+		museo.eliminarEscultura(codigo);
+	}
+	
+	public void eliminarDibujo(int codigo) throws ObraNoExisteException{
+		museo.eliminarDibujo(codigo);	
+	}
+//	/**
+//	 * Elimina una obra del museo.
+//	 * @param titulo
+//	 */
+//	public void eliminar(String titulo){
+//		museo.eliminar(titulo);
+//	}
 
 	public int contarPinturas() throws NoHayFondosException {
 		return museo.contarPinturas();

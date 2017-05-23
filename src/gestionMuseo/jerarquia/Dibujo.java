@@ -30,7 +30,11 @@ public class Dibujo extends ObraDeArte implements Serializable{
 		setCosteRestauracion(calcularPrecioRestauracion());
 		
 	}
-
+	
+	public Dibujo(int codigo){
+		super(codigo);
+	}
+	
 	public TecnicaDeDibujo getTecnica() {
 		return tecnica;
 	}

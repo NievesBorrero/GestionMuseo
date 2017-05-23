@@ -11,25 +11,19 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class MostrarPinturas extends MostrarObrasMuseo {
+public class MostrarDibujos extends MostrarObrasMuseo {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public MostrarPinturas(Exposicion exposicion) throws NoHayFondosException {
+	public MostrarDibujos(Exposicion exposicion) throws NoHayFondosException {
 		super(exposicion);
-		try {
-			itObras= exposicion.getListPintura();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		setTitle("Mostrando pinturas...");
-			
+		itObras= exposicion.gestListDibujo();
+		setTitle("Mostrando dibujos...");
 	}
 
-
+	
 
 }

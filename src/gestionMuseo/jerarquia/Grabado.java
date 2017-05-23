@@ -33,6 +33,16 @@ public class Grabado extends ObraDeArte implements Serializable{
 	public Grabado(int codigo) {
 		super(codigo);
 	}
+	
+	/**
+	 * Constructor para instanciar un grabado a partir de un título introducido
+	 * por parámetro.
+	 * 
+	 * @param codigo
+	 */
+//	public Grabado(String titulo) {
+//		super(titulo);
+//	}
 
 	@Override
 	double calcularPrecioRestauracion() {

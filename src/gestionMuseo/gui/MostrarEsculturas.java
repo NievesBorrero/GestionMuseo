@@ -13,6 +13,11 @@ import javax.swing.border.EmptyBorder;
 
 public class MostrarEsculturas extends MostrarObrasMuseo {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public MostrarEsculturas(Exposicion exposicion) throws NoHayFondosException {
 		super(exposicion);
 		itObras= exposicion.gestListEscultura();

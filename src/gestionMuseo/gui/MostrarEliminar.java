@@ -18,14 +18,14 @@ import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.excepciones.TituloNoValidoException;
 import gestionMuseo.jerarquia.ObraDeArte;
 
-public class EliminarObras extends MostrarObrasMuseo {
+public class MostrarEliminar extends MostrarObrasMuseo {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EliminarObras(Exposicion exposicion) throws NoHayFondosException {
+	public MostrarEliminar(Exposicion exposicion) throws NoHayFondosException {
 		super(exposicion);
 
 		btnEliminar.setVisible(true);
@@ -42,12 +42,14 @@ public class EliminarObras extends MostrarObrasMuseo {
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 
 				if (opcion == JOptionPane.YES_OPTION) {
-
+					
 					itObras.remove();	
+					actualizarListIterator();
 					
 					if (itObras.hasNext()){
 						nextObra();
-						actualizarBotones();  
+						actualizarBotones();
+						
 					}
 						
 					else if (itObras.hasPrevious()){
@@ -66,12 +68,26 @@ public class EliminarObras extends MostrarObrasMuseo {
 	}
 
 	protected void actualizarBotones() {
+		
 		if (!itObras.hasNext())
 			btnDerecha.setEnabled(false);
-		if(!itObras.hasPrevious())
+		
+		else 
+			btnDerecha.setEnabled(true);
+		
+		if(itObras.hasPrevious())
 			btnAnterior.setEnabled(false);
-			
 		
-		
+		else
+			btnAnterior.setEnabled(true);		
+	}
+	
+	private void actualizarListIterator(){
+		try {
+			itObras = exposicion.getList();
+			actualizarBotones();
+		} catch (NoHayFondosException e) {
+			//Aquí no debería entrar
+		}
 	}
 }

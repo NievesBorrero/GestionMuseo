@@ -108,6 +108,17 @@ public abstract class ObraDeArte implements Serializable{
 	ObraDeArte(int codigo) {
 		this.codigo = codigo;
 	}
+	
+//	/**
+//	 * Constructor de obra de arte a partir del título introducido por
+//	 * parámetro.
+//	 * 
+//	 * @param codigo
+//	 */
+//	ObraDeArte(String Titulo) {
+//		this.titulo = titulo;
+//	}
+
 
 	public ObraDeArte() {
 	}
@@ -387,20 +398,11 @@ public abstract class ObraDeArte implements Serializable{
 		return this.donada;
 	}
 	
-	
-	
-	/**
-	 * Comprueba si una obra en concreto ya se ha creado, tomando como
-	 * referencia su código, título y autor.
-	 */
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((autor == null) ? 0 : autor.hashCode());
 		result = prime * result + codigo;
-		result = prime * result + ((titulo == null) ? 0 : titulo.hashCode());
 		return result;
 	}
 
@@ -413,21 +415,10 @@ public abstract class ObraDeArte implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		ObraDeArte other = (ObraDeArte) obj;
-		if (autor == null) {
-			if (other.autor != null)
-				return false;
-		} else if (!autor.equals(other.autor))
-			return false;
 		if (codigo != other.codigo)
-			return false;
-		if (titulo == null) {
-			if (other.titulo != null)
-				return false;
-		} else if (!titulo.equals(other.titulo))
 			return false;
 		return true;
 	}
-
 
 	@Override
 	public String toString() {

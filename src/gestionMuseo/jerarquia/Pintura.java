@@ -29,9 +29,8 @@ public class Pintura extends ObraDeArte implements Serializable {
 		setCosteRestauracion(calcularPrecioRestauracion());
 	}
 
-	public Pintura(String text) throws TituloNoValidoException {
-		super();
-		setTitulo(text);
+	public Pintura(int codigo){
+		super(codigo);
 	}
 
 	public Soporte getSoporte() {
