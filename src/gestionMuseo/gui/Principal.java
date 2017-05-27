@@ -1,6 +1,7 @@
 package gestionMuseo.gui;
 
 import gestionMuseo.Exposicion;
+import gestionMuseo.Fondos;
 import gestionMuseo.Ficheros.Fichero;
 import gestionMuseo.Ficheros.Filtro;
 import gestionMuseo.enumeraciones.EstiloArtistico;
@@ -33,6 +34,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -56,18 +58,18 @@ public class Principal {
 					EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
 					TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
 					0.3, 0.4, 0.5);
-			 exposicion.ingresarGrabado("grabado", "autor", "lala",
-			 EstiloArtistico.EGIPCIO,
-			 true, "persona", 0.3, 0.5, TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
-			// exposicion.ingresarGrabado("grabado2", "pepe", "ronda",
-			// EstiloArtistico.ISLAMICO,
-			// true, "persona", 0.3, 0.5, TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
-			// exposicion.ingresarDibujo("dibujo", "autorr", "fuente",
-			// EstiloArtistico.CUBISTA,
-			// false, "personita", 0.6, 0.5, TecnicaDeDibujo.CARBONCILLO, 0.10,
-			// 0.5);
+			exposicion.ingresarGrabado("grabado", "autor", "lala",
+					EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
+					TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
+			 exposicion.ingresarGrabado("grabado2", "pepe", "ronda",
+			 EstiloArtistico.ISLAMICO,
+			 true, "persona", 0.3, 0.5, TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
+			 exposicion.ingresarDibujo("dibujo", "autorr", "fuente",
+			 EstiloArtistico.CUBISTA,
+			 false, "personita", 0.6, 0.5, TecnicaDeDibujo.CARBONCILLO, 0.10,
+			 0.5);
 
-		} catch (AutorNoValidoException e) {
+		}catch (AutorNoValidoException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (TituloNoValidoException e) {
@@ -114,6 +116,7 @@ public class Principal {
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
+		
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 538, 21);
@@ -162,7 +165,7 @@ public class Principal {
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//SALIR
+				// SALIR
 			}
 		});
 		mnArchivo.add(mntmSalir);
@@ -179,25 +182,26 @@ public class Principal {
 			}
 		});
 		mnMuseo.add(mntmIngresarObra);
-		
+
 		JMenu mnEliminarObra = new JMenu("Eliminar obra");
 		mnMuseo.add(mnEliminarObra);
-		
+
 		JMenuItem mntmPorCdigo = new JMenuItem("Por código");
 		mntmPorCdigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EliminarPorCodigo eliminarPorCodigo= new EliminarPorCodigo(exposicion);
+				EliminarPorCodigo eliminarPorCodigo = new EliminarPorCodigo(
+						exposicion);
 				eliminarPorCodigo.setVisible(true);
 			}
 		});
 		mnEliminarObra.add(mntmPorCdigo);
-		
+
 		JMenuItem mntmMostrarObrasY = new JMenuItem("Mostrando obras");
 		mntmMostrarObrasY.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MostrarEliminar eliminar;
 				try {
-					eliminar = new MostrarEliminar(exposicion);
+					eliminar = new MostrarEliminar(exposicion.getList());
 					eliminar.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -211,8 +215,7 @@ public class Principal {
 		mntmNewMenuItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(
-							exposicion);
+					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(exposicion.getList());
 					mostrar.setVisible(true);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -236,8 +239,9 @@ public class Principal {
 		mntmPintura_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					MostrarPinturas mostrarPinturas = new MostrarPinturas(
-							exposicion);
+					MostrarObrasMuseo mostrarPinturas = new MostrarObrasMuseo(
+							exposicion.getListPintura());
+					mostrarPinturas.setTitle("Mostrando Pinturas...");
 					mostrarPinturas.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -252,8 +256,9 @@ public class Principal {
 		mntmEscultura_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					MostrarEsculturas mostrarEsculturas = new MostrarEsculturas(
-							exposicion);
+					MostrarObrasMuseo mostrarEsculturas = new MostrarObrasMuseo(
+							exposicion.getListEscultura());
+					mostrarEsculturas.setTitle("Mostrando Esculturas...");
 					mostrarEsculturas.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -267,8 +272,9 @@ public class Principal {
 		mntmGrabado_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					MostrarGrabados mostrarGrabados = new MostrarGrabados(
-							exposicion);
+					MostrarObrasMuseo mostrarGrabados = new MostrarObrasMuseo(
+							exposicion.getListGrabado());
+					mostrarGrabados.setTitle("Mostrando Grabados...");
 					mostrarGrabados.setVisible(true);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -282,7 +288,9 @@ public class Principal {
 		mntmDibujo_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					MostrarDibujos mostrarDibujos= new MostrarDibujos(exposicion);
+					MostrarObrasMuseo mostrarDibujos = new MostrarObrasMuseo(
+							exposicion.getListDibujo());
+					mostrarDibujos.setTitle("Mostrando Dibujos...");
 					mostrarDibujos.setVisible(true);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -296,7 +304,7 @@ public class Principal {
 				"Buscar por estilo art\u00EDstico");
 		mntmBuscarPorEstilo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+
 			}
 
 		});
@@ -326,7 +334,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				ExponerObras exponer;
 				try {
-					exponer = new ExponerObras(exposicion);
+					exponer = new ExponerObras(exposicion.getList());
 					exponer.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -341,10 +349,10 @@ public class Principal {
 		JMenuItem mntmVisitarExposicion = new JMenuItem("Visitar exposicion");
 		mntmVisitarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				VisitarExposicion visitarExposicion;
+				MostrarObrasMuseo visitarExposicion;
 				try {
 					if (exposicion.isOrganizada()) {
-						visitarExposicion = new VisitarExposicion(exposicion);
+						visitarExposicion = new MostrarObrasMuseo(exposicion.listExpuestas());
 						visitarExposicion.setVisible(true);
 					} else
 						JOptionPane.showMessageDialog(frame,
@@ -381,7 +389,7 @@ public class Principal {
 				if (exposicion.comprobarObrasDaniadas()) {
 					RestaurarObras obrasDaniadas;
 					try {
-						obrasDaniadas = new RestaurarObras(exposicion);
+						obrasDaniadas = new RestaurarObras(exposicion.getList());
 						obrasDaniadas.setVisible(true);
 					} catch (NoHayFondosException exc) {
 						JOptionPane.showMessageDialog(frame, exc.getMessage(),
@@ -455,7 +463,6 @@ public class Principal {
 
 		if (JFileChooser.APPROVE_OPTION == fileChooser.showDialog(fileChooser,
 				"Guardar Archivo")) {
-
 			fileChooser.setAcceptAllFileFilterUsed(false);
 			Fichero.comprobarNombre(fileChooser.getSelectedFile());
 			if (Fichero.getFichero().exists()) {
@@ -484,7 +491,7 @@ public class Principal {
 	}
 
 	/**
-	 * Abre un concesionario existente
+	 * Abre un archivo existente
 	 * 
 	 * @throws IOException
 	 * @throws ClassNotFoundException
@@ -533,10 +540,10 @@ public class Principal {
 		fileChooser.addChoosableFileFilter(filtro);
 		if (fileChooser.showDialog(fileChooser, "Abrir Fichero") == JFileChooser.APPROVE_OPTION) {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
-			exposicion = (Exposicion) Fichero.abrir(fileChooser
-					.getSelectedFile());
+			exposicion = (Exposicion) Fichero.abrir(fileChooser.getSelectedFile());	
 			frame.setTitle(Fichero.getFichero().getName());
-			exposicion.setModificada(false);
+			JOptionPane.showMessageDialog(null, "Cargado con exito");
+}
 		}
 	}
-}
+

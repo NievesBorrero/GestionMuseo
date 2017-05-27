@@ -1,6 +1,5 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.Exposicion;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
 import gestionMuseo.enumeraciones.PeriodoHistorico;
@@ -38,15 +37,22 @@ import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 import gestionMuseo.enumeraciones.EstiloArtistico;
-import gestionMuseo.excepciones.NoHayFondosException;
 
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JSeparator;
+/**
+ * JDialog padre con los campos de cada obra a partir del cual heredan el resto de diálogos.
+ * @author Nieves Borrero.
+ *
+ */
 
 public class DialogoGeneral extends JDialog {
 	
+	private static final long serialVersionUID = 1L;
+	
 	protected final JPanel contentPanel = new JPanel();
+	
 	protected JTextField textTitulo;
 	protected JTextField textLocal;
 	protected JTextField textAutor;
@@ -57,7 +63,7 @@ public class DialogoGeneral extends JDialog {
 	protected JRadioButton rbDonada;
 	protected JRadioButton rbComprada; 
 	protected JButton btnAnterior;
-	protected JButton btnCentro;
+	protected JButton btnIzquierda;
 	protected JButton btnDerecha;
 	protected JSpinner spAlto;
 	protected JSpinner spAncho;
@@ -69,7 +75,7 @@ public class DialogoGeneral extends JDialog {
 	protected JLabel lblCombobox2;
 	protected JComboBox cb1;
 	protected JComboBox cb2;
-	protected JButton btnEliminar;
+	protected JButton btnSiguiente;
 	protected JLabel lblProfundidad;
 	protected JSpinner spprof;
 	protected JLabel lblCosteDeExposicion;
@@ -90,15 +96,17 @@ public class DialogoGeneral extends JDialog {
 	JRadioButton rbAlmacen;
 	protected JLabel lblFechaDeIngreso;
 	protected JTextField textFecha;
+	JLabel lblOrdenarPor;
+	JComboBox cbOrdenar;
 	ObraDeArte obraMostrada;
 	
 	/**
 	 * Create the dialog.
 	 */
-	public DialogoGeneral(Exposicion exposicion) {
+	public DialogoGeneral() {
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 573, 487);
+		setBounds(100, 100, 649, 487);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -106,36 +114,36 @@ public class DialogoGeneral extends JDialog {
 
 		{
 			JLabel lblTtulo = new JLabel("T\u00EDtulo");
-			lblTtulo.setBounds(12, 55, 70, 17);
+			lblTtulo.setBounds(22, 56, 70, 17);
 			contentPanel.add(lblTtulo);
 		}
 		
 		textTitulo = new JTextField();
-		textTitulo.setBounds(127, 54, 114, 19);
+		textTitulo.setBounds(127, 56, 114, 19);
 		contentPanel.add(textTitulo);
 		textTitulo.setColumns(10);
 		
 		textLocal = new JTextField();
 		textLocal.setColumns(10);
-		textLocal.setBounds(127, 109, 114, 19);
+		textLocal.setBounds(127, 111, 114, 19);
 		contentPanel.add(textLocal);
 		
 		JLabel lblLocal = new JLabel("Localizaci\u00F3n");
-		lblLocal.setBounds(12, 111, 97, 15);
+		lblLocal.setBounds(22, 112, 97, 15);
 		contentPanel.add(lblLocal);
 		
 		textAutor = new JTextField();
 		textAutor.setColumns(10);
-		textAutor.setBounds(127, 78, 114, 19);
+		textAutor.setBounds(127, 80, 114, 19);
 		contentPanel.add(textAutor);
 		
 		JLabel lblAutor_1 = new JLabel("Autor");
-		lblAutor_1.setBounds(12, 84, 70, 15);
+		lblAutor_1.setBounds(22, 85, 70, 15);
 		contentPanel.add(lblAutor_1);
 		
 		panel_adquisicion = new JPanel();
 		panel_adquisicion.setBorder(new TitledBorder(null, "Adquisici\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
-		panel_adquisicion.setBounds(12, 297, 229, 105);
+		panel_adquisicion.setBounds(22, 298, 229, 105);
 		contentPanel.add(panel_adquisicion);
 		panel_adquisicion.setLayout(null);
 		
@@ -159,7 +167,7 @@ public class DialogoGeneral extends JDialog {
 		textPersona.setColumns(10);
 		
 		JLabel lblPeriodoHistrico = new JLabel("Periodo hist\u00F3rico");
-		lblPeriodoHistrico.setBounds(259, 54, 129, 15);
+		lblPeriodoHistrico.setBounds(309, 54, 129, 15);
 		contentPanel.add(lblPeriodoHistrico);
 
 		
@@ -173,39 +181,39 @@ public class DialogoGeneral extends JDialog {
 		
 		
 		cbPH.setModel(new DefaultComboBoxModel(PeriodoHistorico.values()));		
-		cbPH.setBounds(394, 49, 167, 24);
+		cbPH.setBounds(459, 51, 167, 24);
 		contentPanel.add(cbPH);
 		
 		JLabel lblEstiloArtstico = new JLabel("Estilo art\u00EDstico");
-		lblEstiloArtstico.setBounds(259, 82, 129, 15);
+		lblEstiloArtstico.setBounds(309, 82, 129, 15);
 		contentPanel.add(lblEstiloArtstico);
 		
 		cbEA = new JComboBox<EstiloArtistico>();
 		cbEA.setModel(new DefaultComboBoxModel(getEstilo(cbPH)));
-		cbEA.setBounds(394, 77, 167, 24);
+		cbEA.setBounds(459, 79, 167, 24);
 		contentPanel.add(cbEA);
 		
 		lblCombobox1 = new JLabel("ComboBox1");
-		lblCombobox1.setBounds(259, 111, 129, 15);
+		lblCombobox1.setBounds(309, 111, 129, 15);
 		contentPanel.add(lblCombobox1);
 		
 		cb1 = new JComboBox();
 		cb1.setSelectedItem(null);
-		cb1.setBounds(394, 104, 167, 24);
+		cb1.setBounds(459, 106, 167, 24);
 		contentPanel.add(cb1);
 		
 		lblCombobox2 = new JLabel("ComboBox2");
-		lblCombobox2.setBounds(259, 138, 114, 15);
+		lblCombobox2.setBounds(309, 138, 114, 15);
 		contentPanel.add(lblCombobox2);
 		
 		cb2 = new JComboBox();
 		cb2.setSelectedItem(null);
-		cb2.setBounds(394, 131, 167, 24);
+		cb2.setBounds(459, 133, 167, 24);
 		contentPanel.add(cb2);
 		
 		ingresosYgastos = new JPanel();
 		ingresosYgastos.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Ingresos y gastos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		ingresosYgastos.setBounds(253, 297, 308, 116);
+		ingresosYgastos.setBounds(309, 287, 308, 116);
 		contentPanel.add(ingresosYgastos);
 		ingresosYgastos.setLayout(null);
 		
@@ -249,21 +257,21 @@ public class DialogoGeneral extends JDialog {
 		btnAnterior.setBounds(22, 426, 117, 25);
 		contentPanel.add(btnAnterior);
 		
-		btnCentro = new JButton("      ");
-		btnCentro.setBounds(300, 426, 117, 25);
-		contentPanel.add(btnCentro);
+		btnIzquierda = new JButton("      ");
+		btnIzquierda.setBounds(300, 426, 117, 25);
+		contentPanel.add(btnIzquierda);
 		
 		btnDerecha = new JButton("       ");
 		btnDerecha.setBounds(429, 426, 117, 25);
 		contentPanel.add(btnDerecha);
 		
-		btnEliminar = new JButton("");
-		btnEliminar.setBounds(171, 426, 117, 25);
-		contentPanel.add(btnEliminar);
+		btnSiguiente = new JButton("");
+		btnSiguiente.setBounds(171, 426, 117, 25);
+		contentPanel.add(btnSiguiente);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBorder(new TitledBorder(null, "Medidas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(12, 171, 198, 114);
+		panel_2.setBounds(22, 172, 198, 114);
 		contentPanel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -296,7 +304,7 @@ public class DialogoGeneral extends JDialog {
 		
 		panel_salas = new JPanel();
 		panel_salas.setBorder(new TitledBorder(null, "Salas", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_salas.setBounds(259, 171, 287, 86);
+		panel_salas.setBounds(309, 171, 287, 86);
 		contentPanel.add(panel_salas);
 		panel_salas.setLayout(null);
 		
@@ -319,12 +327,12 @@ public class DialogoGeneral extends JDialog {
 		rbAlmacen.setBounds(91, 51, 149, 23);
 		panel_salas.add(rbAlmacen);
 		
-		lblcod = new JLabel("Código de obra");
-		lblcod.setBounds(382, 6, 117, 15);
+		lblcod = new JLabel("Código");
+		lblcod.setBounds(524, 6, 59, 15);
 		contentPanel.add(lblcod);
 		
 		textcod = new JTextField();
-		textcod.setBounds(502, 4, 59, 19);
+		textcod.setBounds(578, 4, 59, 19);
 		contentPanel.add(textcod);
 		textcod.setColumns(10);
 		
@@ -343,11 +351,11 @@ public class DialogoGeneral extends JDialog {
 		contentPanel.add(cbTipo);
 		
 		lblFechaDeIngreso = new JLabel("Fecha de ingreso:");
-		lblFechaDeIngreso.setBounds(12, 138, 127, 15);
+		lblFechaDeIngreso.setBounds(22, 139, 127, 15);
 		contentPanel.add(lblFechaDeIngreso);
 		
 		textFecha = new JTextField();
-		textFecha.setBounds(155, 136, 86, 19);
+		textFecha.setBounds(155, 138, 86, 19);
 		contentPanel.add(textFecha);
 		textFecha.setColumns(10);
 		textFecha.setEnabled(false);
@@ -357,6 +365,17 @@ public class DialogoGeneral extends JDialog {
 		separator.setBackground(Color.WHITE);
 		separator.setBounds(0, 420, 561, 13);
 		contentPanel.add(separator);
+		
+		lblOrdenarPor = new JLabel("Ordenar por");
+		lblOrdenarPor.setBounds(247, 6, 97, 15);
+		contentPanel.add(lblOrdenarPor);
+		
+		cbOrdenar = new JComboBox();
+		
+	
+		cbOrdenar.setModel(new DefaultComboBoxModel(new String[] {"Título", "Coste restauración"}));
+		cbOrdenar.setBounds(342, 1, 164, 24);
+		contentPanel.add(cbOrdenar);
 	}
 	
 	/**
@@ -377,6 +396,9 @@ public class DialogoGeneral extends JDialog {
 		return estilos.toArray();
 	}
 	
+	/**
+	 * Limpia el diálogo eliminando todo lo que se ha rellenado previamente.
+	 */
 	void limpiar(){
 		lblCombobox1.setVisible(false);
 		cb1.setVisible(false);
@@ -393,13 +415,19 @@ public class DialogoGeneral extends JDialog {
 		cb2.setSelectedItem(null);
 		cbTipo.setSelectedItem(null);
 		textcod.setText(null);
+		spCosteExp.setValue(0);
+		spCostRest.setValue(0);
+		spFama.setValue(0);
+		spValor.setValue(0);
+		spAncho.setValue(0);
+		spAlto.setValue(0);
+		spprof.setValue(0);
 	}
 	
-	protected boolean obtenerSiDonada(){
-		return (rbDonada.isSelected());
-	
-	}
-	
+	/**
+	 * Muestra una obra de arte.
+	 * @param obra
+	 */
 	protected void mostrar(ObraDeArte obra) {
 		
 		textTitulo.setText(obra.getTitulo());
@@ -411,7 +439,12 @@ public class DialogoGeneral extends JDialog {
 		seleccionarSala(obra);
 		String codigo;
 		textFecha.setText(obra.formatearFecha(obra.getFechaIngreso()));
-		
+		spCosteExp.setValue(obra.getCosteExposicion());
+		spCostRest.setValue(obra.getCosteRestauracion());
+		spFama.setValue(obra.getFama());
+		spValor.setValue(obra.getValor());
+		spAlto.setValue(obra.getAlto());
+		spAncho.setValue(obra.getAncho());
 		
 		if (obra.isDonada())
 			rbDonada.setSelected(true);
@@ -441,6 +474,7 @@ public class DialogoGeneral extends JDialog {
 			cb2.setSelectedItem(escultura.getMaterialEscultura());
 			codigo=String.valueOf((escultura.getCodigo()));
 			textcod.setText(codigo);
+			spprof.setValue(((Escultura) obra).getProfundidad());
 		}
 		
 		else if(obra instanceof Grabado){
@@ -484,6 +518,8 @@ public class DialogoGeneral extends JDialog {
 			lblCombobox2.setVisible(true);
 			cb1.setVisible(true);
 			cb2.setVisible(true);
+			cb1.setSelectedItem(null);
+			cb2.setSelectedItem(null);
 		}
 		
 		else if(cbTipo.getSelectedItem()=="Escultura"){
@@ -497,6 +533,8 @@ public class DialogoGeneral extends JDialog {
 			cb2.setVisible(true);
 			cb1.setModel(new DefaultComboBoxModel(TipoEscultura.values()));
 			cb2.setModel(new DefaultComboBoxModel(MaterialEscultura.values()));
+			cb1.setSelectedItem(null);
+			cb2.setSelectedItem(null);
 		}
 		
 		else if(cbTipo.getSelectedItem()=="Grabado"){
@@ -508,7 +546,9 @@ public class DialogoGeneral extends JDialog {
 			cb1.setVisible(true);
 			cb2.setVisible(false);
 			cb1.setModel(new DefaultComboBoxModel(TipoDeGrabado.values()));
+			cb1.setSelectedItem(null);
 		}
+		
 		else if (cbTipo.getSelectedItem()=="Dibujo"){
 			spprof.setVisible(false);
 			lblProfundidad.setVisible(false);
@@ -518,8 +558,10 @@ public class DialogoGeneral extends JDialog {
 			cb2.setVisible(false);
 			lblCombobox1.setText("Tecnica");
 			cb1.setModel(new DefaultComboBoxModel(TecnicaDeDibujo.values()));
-			
-		}else{
+			cb1.setSelectedItem(null);			
+		}
+		
+		else{
 			spprof.setVisible(false);
 			lblProfundidad.setVisible(false);
 			lblCombobox2.setVisible(false);

@@ -2,6 +2,7 @@ package gestionMuseo.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ListIterator;
 import java.util.Spliterator;
 import java.util.Spliterators;
 import java.util.stream.Collectors;
@@ -18,20 +19,25 @@ import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.excepciones.TituloNoValidoException;
 import gestionMuseo.jerarquia.ObraDeArte;
 
+/**
+ * JDialog que muestra las obras contenidas en un listIterator dando la
+ * posibilidad de eliminarlas en ese momento.
+ * 
+ * @author Nieves Borrero.
+ *
+ */
 public class MostrarEliminar extends MostrarObrasMuseo {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public MostrarEliminar(Exposicion exposicion) throws NoHayFondosException {
-		super(exposicion);
+	public MostrarEliminar(ListIterator<ObraDeArte> itObras)
+			throws NoHayFondosException {
+		super(itObras);
 
-		btnEliminar.setVisible(true);
-		btnEliminar.setText("Eliminar");
+		btnIzquierda.setVisible(true);
+		btnIzquierda.setText("Eliminar");
 
-		btnEliminar.addActionListener(new ActionListener() {
+		btnIzquierda.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -42,23 +48,21 @@ public class MostrarEliminar extends MostrarObrasMuseo {
 						JOptionPane.QUESTION_MESSAGE, null, null, null);
 
 				if (opcion == JOptionPane.YES_OPTION) {
-					
-					itObras.remove();	
-					actualizarListIterator();
-					
-					if (itObras.hasNext()){
+
+					itObras.remove();
+					actualizarListIterator(Principal.exposicion);
+
+					if (itObras.hasNext()) {
 						nextObra();
 						actualizarBotones();
-						
+
 					}
-						
-					else if (itObras.hasPrevious()){
+
+					else if (itObras.hasPrevious()) {
 						previousObra();
 						actualizarBotones();
-					}
-					else
+					} else
 						setVisible(false);
-				
 
 				}
 			}
@@ -68,26 +72,27 @@ public class MostrarEliminar extends MostrarObrasMuseo {
 	}
 
 	protected void actualizarBotones() {
-		
+
 		if (!itObras.hasNext())
 			btnDerecha.setEnabled(false);
-		
-		else 
-			btnDerecha.setEnabled(true);
-		
-		if(itObras.hasPrevious())
-			btnAnterior.setEnabled(false);
-		
+
 		else
-			btnAnterior.setEnabled(true);		
+			btnDerecha.setEnabled(true);
+
+		if (itObras.hasPrevious())
+			btnAnterior.setEnabled(false);
+
+		else
+			btnAnterior.setEnabled(true);
 	}
-	
-	private void actualizarListIterator(){
+
+	void actualizarListIterator(Exposicion exposicion) {
 		try {
 			itObras = exposicion.getList();
 			actualizarBotones();
 		} catch (NoHayFondosException e) {
-			//Aquí no debería entrar
+			// Aquí no debería entrar
 		}
 	}
+
 }

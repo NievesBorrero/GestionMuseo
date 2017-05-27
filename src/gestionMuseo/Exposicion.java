@@ -3,6 +3,7 @@ package gestionMuseo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
 import java.util.ListIterator;
 
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
@@ -17,7 +18,6 @@ import gestionMuseo.enumeraciones.TipoEscultura;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
-import gestionMuseo.excepciones.ExposicionNoOrganizadaException;
 import gestionMuseo.excepciones.FechaFinException;
 import gestionMuseo.excepciones.FechaPasadaException;
 import gestionMuseo.excepciones.NoHayFondosException;
@@ -27,11 +27,7 @@ import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.excepciones.ObraNoExpuestaException;
 import gestionMuseo.excepciones.TituloNoValidoException;
 import gestionMuseo.excepciones.YaHayExposicionException;
-import gestionMuseo.jerarquia.Dibujo;
-import gestionMuseo.jerarquia.Escultura;
-import gestionMuseo.jerarquia.Grabado;
 import gestionMuseo.jerarquia.ObraDeArte;
-import gestionMuseo.jerarquia.Pintura;
 
 /**
  * 
@@ -39,7 +35,8 @@ import gestionMuseo.jerarquia.Pintura;
  *
  */
 
-public class Exposicion implements Presupuestable, Serializable{
+public class Exposicion implements Serializable,Presupuestable{
+	private static final long serialVersionUID = 1L;
 	private Fondos museo = Fondos.getInstance(); // Fondos que hay en el museo.
 	private double presupuesto = 1000; // Presupuesto que hay en el museo.
 	private String nombreExposicion;
@@ -51,11 +48,11 @@ public class Exposicion implements Presupuestable, Serializable{
 	private boolean organizada = false;
 	private double gastos = 0.0;
 	private double ingresos = 0.0;
-	private boolean modificada; // MIRAR MODIFICABLE
+	private boolean modificada; 
 	private int entradas;
 	
 
-	public Exposicion() {
+	public Exposicion() {//BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 
 	}
 	
@@ -93,29 +90,7 @@ public class Exposicion implements Presupuestable, Serializable{
 				donada, personaEntidad, fama, valor, soporte, material, alto,
 				ancho);
 	}
-
-	/**
-	 * 
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tipoEscultura
-	 * @param materialEscultura
-	 * @param ancho
-	 * @param alto
-	 * @param profundidad
-	 * @throws AutorNoValidoException
-	 * @throws LocalizacionNoValidaException
-	 * @throws TituloNoValidoException
-	 * @throws EstiloNoValidoException
-	 * @throws personaEntidadNoValidaException
-	 * @throws ObraYaExisteException
-	 */
+	
 	/**
 	 * Añade una escultura al museo.
 	 * 
@@ -234,6 +209,17 @@ public class Exposicion implements Presupuestable, Serializable{
 	public int size() {
 		return museo.size();
 	}
+	
+	public void ordenarPorTitulo(){
+		museo.ordenarPorTitulo();
+	}
+	
+	/**
+	 * Ordena por nombre
+	 */
+	public void ordenarPorcosteRestauracion(){
+		museo.ordenarPorcosteRestauracion();
+	}
 
 	/**
 	 * Elimina una obra del museo a partir de su código.
@@ -312,7 +298,7 @@ public class Exposicion implements Presupuestable, Serializable{
 	 * @return ListIterator
 	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> gestListEscultura() throws NoHayFondosException {
+	public ListIterator<ObraDeArte> getListEscultura() throws NoHayFondosException {
 		if (museo.size()==0)
 			throw new NoHayFondosException("No hay fondos en el museo");
 		return museo.listEsculturas();
@@ -324,7 +310,7 @@ public class Exposicion implements Presupuestable, Serializable{
 	 * @return ListIterator
 	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> gestListDibujo() throws NoHayFondosException {
+	public ListIterator<ObraDeArte> getListDibujo() throws NoHayFondosException {
 		if (museo.size()==0)
 			throw new NoHayFondosException("No hay fondos en el museo");
 		return museo.listDibujos();
@@ -336,7 +322,7 @@ public class Exposicion implements Presupuestable, Serializable{
 	 * @return ListIterator
 	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> gestListGrabado() throws NoHayFondosException {
+	public ListIterator<ObraDeArte> getListGrabado() throws NoHayFondosException {
 		if (museo.size()==0)
 			throw new NoHayFondosException("No hay fondos en el museo");
 		return museo.listGrabados();

@@ -26,6 +26,10 @@ import java.util.regex.Pattern;
 
 public abstract class ObraDeArte implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String titulo;
 	private String autor;
 
@@ -370,7 +374,7 @@ public abstract class ObraDeArte implements Serializable{
 		this.fama = fama;
 	}
 
-	protected double getValor() {
+	public double getValor() {
 		return valor;
 	}
 

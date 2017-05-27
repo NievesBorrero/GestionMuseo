@@ -14,6 +14,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ListIterator;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -33,20 +34,20 @@ public class ExponerObras extends MostrarObrasMuseo {
 	 * @param sala
 	 * @throws NoHayFondosException
 	 */
-	public ExponerObras(Exposicion exposicion) throws NoHayFondosException {
-		super(exposicion);
-		btnEliminar.setText("Exponer");
-		btnEliminar.setVisible(true);
+	public ExponerObras(ListIterator <ObraDeArte> itObras) throws NoHayFondosException {
+		super(itObras);
+		btnIzquierda.setText("Exponer");
+		btnIzquierda.setVisible(true);
 		setTitle("Exponer obras de arte");
 		rbSala_1.setEnabled(true);
 		rbSala_2.setEnabled(true);
 		rbSala_3.setEnabled(true);
 		rbAlmacen.setVisible(false);
 
-		btnEliminar.addActionListener(new ActionListener() {
+		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					obra = exposicion.devolverPorCodigo(Integer
+					obra = Principal.exposicion.devolverPorCodigo(Integer
 							.parseInt(textcod.getText()));
 					if (rbSala_1.isSelected() || rbSala_2.isSelected()
 							|| rbSala_3.isSelected()) {
@@ -68,7 +69,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 								try {
 									obra.restaurar();
 									obra.exponerObra(getSala());
-									exposicion.setModificada(true);
+									Principal.exposicion.setModificada(true);
 								} catch (ObraNoDaniadaException e1) {
 									// Aquí no debería entrar.
 								}
@@ -78,7 +79,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 						else{
 							
 						obra.exponerObra(getSala());
-						exposicion.setModificada(true);
+						Principal.exposicion.setModificada(true);
 
 						JOptionPane.showMessageDialog(contentPanel,
 								"Buena eleccion, obra expuesta",

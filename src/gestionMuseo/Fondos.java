@@ -29,6 +29,10 @@ import java.util.ListIterator;
 
 public class Fondos implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static ArrayList<ObraDeArte> fondos;
 
 	private Fondos() {
@@ -253,7 +257,6 @@ public class Fondos implements Serializable{
 	public ObraDeArte devolverPorCodigo(int cod){
 
 		ObraDeArte obra;
-		int i = 0;
 		ListIterator<ObraDeArte> it = fondos.listIterator();
 
 		while (it.hasNext()) {
@@ -410,8 +413,9 @@ public class Fondos implements Serializable{
 	/**
 	 * Devuelve un listIterator con las pinturas.
 	 * @return
+	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> listPinturas() {
+	public ListIterator<ObraDeArte> listPinturas() throws NoHayFondosException {
 		ArrayList<ObraDeArte> pinturas= new ArrayList<ObraDeArte>();
 		ObraDeArte obra;
 		ListIterator<ObraDeArte> it = fondos.listIterator();
@@ -421,14 +425,18 @@ public class Fondos implements Serializable{
 				pinturas.add((Pintura) obra);
 			}
 		}		
+		if (!pinturas.listIterator().hasNext())
+			throw new NoHayFondosException("no hay Dibujos");
+
 		return pinturas.listIterator();
 	}
 	
 	/**
 	 * Devuelve un listIterator con las esculturas.
 	 * @return
+	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> listEsculturas() {
+	public ListIterator<ObraDeArte> listEsculturas() throws NoHayFondosException {
 		ArrayList<ObraDeArte> esculturas= new ArrayList<ObraDeArte>();
 		ObraDeArte obra;
 		ListIterator<ObraDeArte> it = fondos.listIterator();
@@ -438,14 +446,17 @@ public class Fondos implements Serializable{
 				esculturas.add((Escultura) obra);
 			}
 		}		
+		if (!esculturas.listIterator().hasNext())
+			throw new NoHayFondosException("no hay Esculturas");
 		return esculturas.listIterator();
 	}
 	
 	/**
 	 * Devuelve un listIterator con los dibujos.
 	 * @return
+	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> listDibujos() {
+	public ListIterator<ObraDeArte> listDibujos() throws NoHayFondosException {
 		ArrayList<ObraDeArte> dibujos= new ArrayList<ObraDeArte>();
 		ObraDeArte obra;
 		ListIterator<ObraDeArte> it = fondos.listIterator();
@@ -455,14 +466,17 @@ public class Fondos implements Serializable{
 				dibujos.add((Dibujo) obra);
 			}
 		}		
+		if (!dibujos.listIterator().hasNext())
+			throw new NoHayFondosException("no hay Dibujos");
 		return dibujos.listIterator();
 	}
 	
 	/**
 	 * Devuelve un listIterator con los grabados.
 	 * @return
+	 * @throws NoHayFondosException 
 	 */
-	public ListIterator<ObraDeArte> listGrabados() {
+	public ListIterator<ObraDeArte> listGrabados() throws NoHayFondosException {
 		ArrayList<ObraDeArte> grabados= new ArrayList<ObraDeArte>();
 		ObraDeArte obra;
 		ListIterator<ObraDeArte> it = fondos.listIterator();
@@ -472,6 +486,9 @@ public class Fondos implements Serializable{
 				grabados.add((Grabado) obra);
 			}
 		}		
+		if (!grabados.listIterator().hasNext())
+			throw new NoHayFondosException("no hay Grabados");
+
 		return grabados.listIterator();
 	}
 	

@@ -26,6 +26,7 @@ public class Ayuda extends JDialog {
 		JTextArea txtGestion = new JTextArea();
 		txtGestion.setBounds(12, 12, 426, 310);
 		getContentPane().add(txtGestion);
+		txtGestion.setEnabled(false);
 		txtGestion.setText("Gestión de Museo");
 	}
 	

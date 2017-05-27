@@ -13,6 +13,13 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JOptionPane;
 
+/**
+ * JDialog que permite eliminar una obra introduciendo su código. Al pulsar el
+ * botón eliminar, muestra la obra y pregunta antes de borrar.
+ * 
+ * @author nieves
+ *
+ */
 public class EliminarPorCodigo extends DialogoGeneral {
 
 	/**
@@ -21,13 +28,74 @@ public class EliminarPorCodigo extends DialogoGeneral {
 	private static final long serialVersionUID = 1L;
 
 	public EliminarPorCodigo(Exposicion exposicion) {
-		super(exposicion);
+		super();
+
+		InhabilitarComponentes();
+		hacerComponentesInvisibles();
+
+		btnIzquierda.setText("Eliminar");
+		btnDerecha.setText("Cancelar");
+
 		btnDerecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
 			}
 		});
-		
+
+		btnIzquierda.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					int codigo = Integer.parseInt(textcod.getText());
+					ObraDeArte aEliminar = exposicion.devolverPorCodigo(codigo);
+					mostrar(aEliminar);
+					int n = JOptionPane.showOptionDialog(contentPanel,
+							"Estas seguro de que desea eliminarlo?",
+							"Confirmar", JOptionPane.YES_NO_CANCEL_OPTION,
+							JOptionPane.QUESTION_MESSAGE, null, null, null);
+
+					if (n == JOptionPane.YES_OPTION) {
+
+						if (aEliminar instanceof Pintura)
+							exposicion.eliminarPintura(codigo);
+						if (aEliminar instanceof Escultura)
+							exposicion.eliminarEscultura(codigo);
+						if (aEliminar instanceof Grabado)
+							exposicion.eliminarGrabado(codigo);
+						if (aEliminar instanceof Dibujo)
+							exposicion.eliminarDibujo(codigo);
+						exposicion.setModificada(true);
+						limpiar();
+					}
+				} catch (ObraNoExisteException e) {
+					JOptionPane.showMessageDialog(getContentPane(),
+							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (NumberFormatException e1) {
+					JOptionPane.showMessageDialog(getContentPane(),
+							"Debes introducir el codigo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+
+			}
+
+		});
+
+	}
+
+	/**
+	 * Hace invisibles los componentes del JDialog padre que no son necesarios.
+	 */
+	private void hacerComponentesInvisibles() {
+		lblOrdenarPor.setVisible(false);
+		cbOrdenar.setVisible(false);
+		btnAnterior.setVisible(false);
+	}
+
+	/**
+	 * Inhabilita los componentes del JDialog padre que se deban inhabilitar en
+	 * este caso.
+	 */
+	private void InhabilitarComponentes() {
+		cbTipo.setEnabled(false);
 		textAutor.setEnabled(false);
 		textLocal.setEnabled(false);
 		textPersona.setEnabled(false);
@@ -44,55 +112,12 @@ public class EliminarPorCodigo extends DialogoGeneral {
 		lblCombobox2.setEnabled(false);
 		cb1.setEnabled(false);
 		cb2.setEnabled(false);
-		btnEliminar.setVisible(false);
+		btnSiguiente.setVisible(false);
 		textTitulo.setEnabled(false);
-		textcod.setEnabled(true);
-		btnAnterior.setVisible(false); 
 		rbSala_1.setEnabled(false);
 		rbSala_2.setEnabled(false);
 		rbSala_3.setEnabled(false);
 		rbAlmacen.setEnabled(false);
-		
-		btnCentro.setText("Eliminar");
-		btnDerecha.setText("Cancelar");
-		
-		btnCentro.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int codigo= Integer.parseInt(textcod.getText());
-				ObraDeArte aEliminar= exposicion.devolverPorCodigo(codigo);
-				mostrar(aEliminar);
-				int n = JOptionPane.showOptionDialog(contentPanel,
-						"Estas seguro de que desea eliminarlo?", "Confirmar",
-						JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.QUESTION_MESSAGE, null, null, null);
-				
-				switch (n) {
-				case JOptionPane.YES_OPTION:
-					
-					try {
-						if(aEliminar instanceof Pintura)
-							exposicion.eliminarPintura(codigo);
-						if(aEliminar instanceof Escultura)
-							exposicion.eliminarEscultura(codigo);
-						if(aEliminar instanceof Grabado)
-							exposicion.eliminarGrabado(codigo);
-						if(aEliminar instanceof Dibujo)
-							exposicion.eliminarDibujo(codigo);
-					} catch (ObraNoExisteException e) {
-						JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
-								"Error", JOptionPane.ERROR_MESSAGE);
-					}
-						exposicion.setModificada(true);
-						limpiar();
-				}
-				
-			}
-		});
-		
-		
-		
 	}
-
-	
 
 }

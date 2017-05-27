@@ -4,7 +4,6 @@ import gestionMuseo.Exposicion;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
@@ -12,56 +11,39 @@ import gestionMuseo.enumeraciones.TipoEscultura;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.TituloNoValidoException;
-
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class IngresarObras extends DialogoGeneral {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * Create the dialog.
+	 * Constructor que permite crear el diálogo.
 	 */
 	public IngresarObras(Exposicion exposicion) {
-		super(exposicion);
-		btnEliminar.setVisible(false);
-		textcod.setVisible(false);
-		lblcod.setVisible(false);
-		rbSala_1.setVisible(false);
-		rbSala_2.setVisible(false);
-		rbSala_3.setVisible(false);
-		rbAlmacen.setVisible(false);
-		panel_salas.setVisible(false);
-		textFecha.setVisible(false);
-		lblFechaDeIngreso.setVisible(false);
-		cb1.setSelectedItem(null);
-		cb2.setSelectedItem(null);
+		super();
 		
+		setTitle("Ingreso de obras de arte");
+		hacerComponentesInvisibles();
+		
+		btnIzquierda.setText("a\u00f1adir");
+		btnDerecha.setText("Salir");
+
 		limpiar();
-			
-		
-		btnCentro.addActionListener(new ActionListener() {
+					
+		/**
+		 * Al pulsar el botón se podrá añadir al museo una obra del tipo señalado.
+		 */
+		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
 				double fama=  Double.parseDouble(spFama.getValue().toString());
 				double valor= Double.parseDouble(spValor.getValue().toString());
 				double alto= Double.parseDouble(spAlto.getValue().toString());
 				double ancho= Double.parseDouble(spAncho.getValue().toString());
-				double profundidad=  Double.parseDouble(spprof.getValue().toString());
-				
+				double profundidad=  Double.parseDouble(spprof.getValue().toString());			
 				
 					try {
 						if(cbTipo.getSelectedItem()=="Pintura")
@@ -89,17 +71,17 @@ public class IngresarObras extends DialogoGeneral {
 							e1.getMessage(), "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
+					
 				limpiar();				
 	
 			}
 
 		});
 		
-		setTitle("Ingresar Pintura");
-		btnAnterior.setVisible(false);
-		btnCentro.setText("a\u00f1adir");
-		btnDerecha.setText("Salir");
 		
+		/**
+		 * Al pulsar el botón el diálogo se hace invisible.
+		 */
 		btnDerecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);  
@@ -107,8 +89,38 @@ public class IngresarObras extends DialogoGeneral {
 		});
 		
 	}
-	
 
+	/**
+	 * Hace invisibles los componentes del JDialog padre que no son necesarios.
+	 */
+	
+	private void hacerComponentesInvisibles() {
+		btnSiguiente.setVisible(false);
+		textcod.setVisible(false);
+		lblcod.setVisible(false);
+		rbSala_1.setVisible(false);
+		rbSala_2.setVisible(false);
+		rbSala_3.setVisible(false);
+		rbAlmacen.setVisible(false);
+		panel_salas.setVisible(false);
+		textFecha.setVisible(false);
+		lblFechaDeIngreso.setVisible(false);
+		btnAnterior.setVisible(false);
+		lblOrdenarPor.setVisible(false);
+		cbOrdenar.setVisible(false);
+	}
+	
+	/**
+	 * Permite ingresar una pintura en el museo.
+	 * @param exposicion
+	 * @param fama
+	 * @param valor
+	 * @param alto
+	 * @param ancho
+	 * @throws AutorNoValidoException
+	 * @throws TituloNoValidoException
+	 * @throws EstiloNoValidoException
+	 */
 	private void ingresarPintura(Exposicion exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, TituloNoValidoException,
@@ -116,13 +128,24 @@ public class IngresarObras extends DialogoGeneral {
 		exposicion.ingresarPintura(textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				obtenerSiDonada(), textPersona.getText(),
+				rbDonada.isSelected(), textPersona.getText(),
 				fama, valor,
 				(Soporte) cb1.getSelectedItem(),
 				(MaterialPintura) cb2.getSelectedItem(),
 				alto, ancho);
 	}
 	
+	/**
+	 * Permite ingresar un dibujo en el museo.
+	 * @param exposicion
+	 * @param fama
+	 * @param valor
+	 * @param alto
+	 * @param ancho
+	 * @throws AutorNoValidoException
+	 * @throws TituloNoValidoException
+	 * @throws EstiloNoValidoException
+	 */
 	private void ingresarDibujo(Exposicion exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, TituloNoValidoException,
@@ -130,12 +153,23 @@ public class IngresarObras extends DialogoGeneral {
 		exposicion.ingresarDibujo(textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				obtenerSiDonada(), textPersona.getText(),
+				rbDonada.isSelected(), textPersona.getText(),
 				fama, valor,
 				(TecnicaDeDibujo) cb1.getSelectedItem(),
 				alto, ancho);
 	}
-
+	
+	/**
+	 * Permite ingresar un grabado en el museo.
+	 * @param exposicion
+	 * @param fama
+	 * @param valor
+	 * @param alto
+	 * @param ancho
+	 * @throws AutorNoValidoException
+	 * @throws TituloNoValidoException
+	 * @throws EstiloNoValidoException
+	 */
 	private void ingresarGrabado(Exposicion exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, TituloNoValidoException,
@@ -143,12 +177,24 @@ public class IngresarObras extends DialogoGeneral {
 		exposicion.ingresarGrabado(textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				obtenerSiDonada(), textPersona.getText(),
+				rbDonada.isSelected(), textPersona.getText(),
 				fama, valor,
 				(TipoDeGrabado) cb1.getSelectedItem(),
 				alto, ancho);
 	}
-
+	
+	/**
+	 * Permite ingresar una escultura en el museo.
+	 * @param exposicion
+	 * @param fama
+	 * @param valor
+	 * @param alto
+	 * @param ancho
+	 * @param profundidad
+	 * @throws AutorNoValidoException
+	 * @throws TituloNoValidoException
+	 * @throws EstiloNoValidoException
+	 */
 	private void ingresarEscultura(Exposicion exposicion, double fama,
 			double valor, double alto, double ancho, double profundidad)
 			throws AutorNoValidoException, TituloNoValidoException,
@@ -156,20 +202,11 @@ public class IngresarObras extends DialogoGeneral {
 		exposicion.ingresarEscultura(textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				obtenerSiDonada(), textPersona.getText(),
+				rbDonada.isSelected(), textPersona.getText(),
 				fama, valor,
 				(TipoEscultura) cb1.getSelectedItem(),
 				(MaterialEscultura) cb2.getSelectedItem(),
 				alto, ancho, profundidad);
 	}
 	
-	private void controlarBtnAniadir() {
-		if(cbTipo.getSelectedItem()==null)
-			btnCentro.setEnabled(false);
-		else
-			btnCentro.setEnabled(true);
-	}
-		
-
-
 }
