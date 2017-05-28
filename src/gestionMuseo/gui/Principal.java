@@ -170,9 +170,9 @@ public class Principal {
 		});
 		mnArchivo.add(mntmSalir);
 
-		JMenu mnMuseo = new JMenu("Museo");
-		mnMuseo.setMnemonic('M');
-		menuBar.add(mnMuseo);
+		JMenu mnObras = new JMenu("Obras");
+		mnObras.setMnemonic('M');
+		menuBar.add(mnObras);
 
 		JMenuItem mntmIngresarObra = new JMenuItem("Ingresar obra");
 		mntmIngresarObra.addActionListener(new ActionListener() {
@@ -181,10 +181,38 @@ public class Principal {
 				ingresos.setVisible(true);
 			}
 		});
-		mnMuseo.add(mntmIngresarObra);
+		
+				JMenuItem mntmNewMenuItem = new JMenuItem("Mostrar obras");
+				mntmNewMenuItem.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						try {
+							MostrarObrasMuseo mostrar = new MostrarObrasMuseo(exposicion.getList());
+							mostrar.setVisible(true);
+						} catch (NoHayFondosException e1) {
+							JOptionPane.showMessageDialog(frame, e1.getMessage(),
+									"Error", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				});
+				mnObras.add(mntmNewMenuItem);
+		mnObras.add(mntmIngresarObra);
+		
+		JMenuItem mntmModificarDatosDe = new JMenuItem("Modificar datos");
+		mntmModificarDatosDe.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				try {
+					ModificarObra modificar= new ModificarObra(exposicion.getList());
+					modificar.setVisible(true);
+				} catch (NoHayFondosException e) {
+					JOptionPane.showMessageDialog(frame, e.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnObras.add(mntmModificarDatosDe);
 
 		JMenu mnEliminarObra = new JMenu("Eliminar obra");
-		mnMuseo.add(mnEliminarObra);
+		mnObras.add(mnEliminarObra);
 
 		JMenuItem mntmPorCdigo = new JMenuItem("Por código");
 		mntmPorCdigo.addActionListener(new ActionListener() {
@@ -210,20 +238,6 @@ public class Principal {
 			}
 		});
 		mnEliminarObra.add(mntmMostrarObrasY);
-
-		JMenuItem mntmNewMenuItem = new JMenuItem("Mostrar fondos");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				try {
-					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(exposicion.getList());
-					mostrar.setVisible(true);
-				} catch (NoHayFondosException e1) {
-					JOptionPane.showMessageDialog(frame, e1.getMessage(),
-							"Error", JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		});
-		mnMuseo.add(mntmNewMenuItem);
 
 		JMenu mnBuscar = new JMenu("Buscar");
 		mnBuscar.setMnemonic('B');

@@ -94,7 +94,7 @@ public abstract class ObraDeArte implements Serializable{
 		setAutor(autor);
 		setLocalizacion(localizacion);
 		setEstiloArtistico(estiloArtistico);
-		this.donada = donada;
+		setDonada(donada);
 		setPersonaEntidad(personaEntidad);
 		setFama(fama);
 		setValor(valor);
@@ -311,7 +311,7 @@ public abstract class ObraDeArte implements Serializable{
 		return autor;
 	}
 
-	protected void setAutor(String autor) throws AutorNoValidoException {
+	public void setAutor(String autor) throws AutorNoValidoException {
 		if(!esValido(autor))
 			throw new AutorNoValidoException("El autor no es valido");
 		this.autor = autor;
@@ -321,7 +321,7 @@ public abstract class ObraDeArte implements Serializable{
 		return localizacion;
 	}
 
-	protected void setLocalizacion(String localizacion){
+	public void setLocalizacion(String localizacion){
 		this.localizacion = localizacion;
 	}
 
@@ -333,7 +333,7 @@ public abstract class ObraDeArte implements Serializable{
 		return personaEntidad;
 	}
 
-	protected void setPersonaEntidad(String personaEntidad) {
+	public void setPersonaEntidad(String personaEntidad) {
 		this.personaEntidad = personaEntidad;
 	}
 
@@ -370,7 +370,7 @@ public abstract class ObraDeArte implements Serializable{
 		return fama;
 	}
 
-	protected void setFama(double fama) {
+	public void setFama(double fama) {
 		this.fama = fama;
 	}
 
@@ -378,7 +378,7 @@ public abstract class ObraDeArte implements Serializable{
 		return valor;
 	}
 
-	protected void setValor(double valor) {
+	public void setValor(double valor) {
 		this.valor = valor;
 	}
 
@@ -400,6 +400,10 @@ public abstract class ObraDeArte implements Serializable{
 	
 	public boolean isDonada() {
 		return this.donada;
+	}
+	
+	public void setDonada(boolean donada){
+		this.donada= donada;
 	}
 	
 	@Override
@@ -437,6 +441,7 @@ public abstract class ObraDeArte implements Serializable{
 				+ getCosteRestauracion() + ", fama=" + fama + ", valor="
 				+ valor + " Expuesta= " + expuesta + ", ";
 	}
+
 
 	
 }

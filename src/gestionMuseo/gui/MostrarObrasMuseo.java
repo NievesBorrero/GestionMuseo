@@ -24,8 +24,9 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 
 	public MostrarObrasMuseo(ListIterator<ObraDeArte> itObras)
 			throws NoHayFondosException {
+		
 		super();
-
+		
 		setTitle("Mostrando fondos del museo...");
 
 		setItObras(itObras);

@@ -503,7 +503,10 @@ public class DialogoGeneral extends JDialog {
 	
 	 void setObraMostrada(ObraDeArte obra) {
 		this.obraMostrada= obra;
-		
+	}
+
+	protected ObraDeArte getObraMostrada() {
+		return obraMostrada;
 	}
 
 	void habilitarTipoDeObra(){
