@@ -35,19 +35,19 @@ public enum Sala {
 		return VALUES;
 	}
 	
-	/**
-	 * Genera opciones para un menú con las posibles salas.
-	 * @return
-	 */
-	public String[] generarOpcionesMenu() {
-		String[] opcionesMenu = new String[VALUES.length-1];
-		int i = 0;
-		for (Sala sala : VALUES) {
-			if(sala.ordinal()>0) // Para que no coja el almacén
-			opcionesMenu[i++] = sala.name();
-		}
-		return opcionesMenu;
-	}
+//	/**
+//	 * Genera opciones para un menú con las posibles salas.
+//	 * @return
+//	 */
+//	public String[] generarOpcionesMenu() {
+//		String[] opcionesMenu = new String[VALUES.length-1];
+//		int i = 0;
+//		for (Sala sala : VALUES) {
+//			if(sala.ordinal()>0) // Para que no coja el almacén
+//			opcionesMenu[i++] = sala.name();
+//		}
+//		return opcionesMenu;
+//	}
 
 	public double getGasto() {
 		return gasto;

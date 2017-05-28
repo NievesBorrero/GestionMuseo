@@ -6,12 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.regex.Pattern;
 
 public class Fichero {
 
-	private static final long serialVersionUID = 1L;
 	private static final Pattern patron = Pattern.compile("^((\\w)+(\\.obj))$");
 	public static File FICHERO = new File("SinTitulo");
 

@@ -1,6 +1,6 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.Exposicion;
+import gestionMuseo.GestionMuseo;
 import gestionMuseo.Fondos;
 import gestionMuseo.Ficheros.Fichero;
 import gestionMuseo.Ficheros.Filtro;
@@ -42,29 +42,29 @@ public class Principal {
 
 	private static final String SIN_TITULO_MUSEO = "Sin titulo: Museo";
 	private JFrame frame;
-	static Exposicion exposicion = new Exposicion();
+	static GestionMuseo museo = new GestionMuseo();
 	static { // BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 		try {
-			exposicion.ingresarPintura("Pintura1", "autor1", "sitio",
+			museo.ingresarPintura("Pintura1", "autor1", "sitio",
 					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
 					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			exposicion.ingresarPintura("Pintura2", "autor2", "sitio",
+			museo.ingresarPintura("Pintura2", "autor2", "sitio",
 					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
 					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			exposicion.ingresarPintura("Pintura3", "autor3", "sitio",
+			museo.ingresarPintura("Pintura3", "autor3", "sitio",
 					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
 					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			exposicion.ingresarEscultura("Escultura", "autor", "calle",
+			museo.ingresarEscultura("Escultura", "autor", "calle",
 					EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
 					TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
 					0.3, 0.4, 0.5);
-			exposicion.ingresarGrabado("grabado", "autor", "lala",
+			museo.ingresarGrabado("grabado", "autor", "lala",
 					EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
 					TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
-			 exposicion.ingresarGrabado("grabado2", "pepe", "ronda",
+			 museo.ingresarGrabado("grabado2", "pepe", "ronda",
 			 EstiloArtistico.ISLAMICO,
 			 true, "persona", 0.3, 0.5, TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
-			 exposicion.ingresarDibujo("dibujo", "autorr", "fuente",
+			 museo.ingresarDibujo("dibujo", "autorr", "fuente",
 			 EstiloArtistico.CUBISTA,
 			 false, "personita", 0.6, 0.5, TecnicaDeDibujo.CARBONCILLO, 0.10,
 			 0.5);
@@ -177,7 +177,7 @@ public class Principal {
 		JMenuItem mntmIngresarObra = new JMenuItem("Ingresar obra");
 		mntmIngresarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				IngresarObras ingresos = new IngresarObras(exposicion);
+				IngresarObras ingresos = new IngresarObras(museo);
 				ingresos.setVisible(true);
 			}
 		});
@@ -186,7 +186,7 @@ public class Principal {
 				mntmNewMenuItem.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						try {
-							MostrarObrasMuseo mostrar = new MostrarObrasMuseo(exposicion.getList());
+							MostrarObrasMuseo mostrar = new MostrarObrasMuseo(museo.getList());
 							mostrar.setVisible(true);
 						} catch (NoHayFondosException e1) {
 							JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -201,7 +201,7 @@ public class Principal {
 		mntmModificarDatosDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					ModificarObra modificar= new ModificarObra(exposicion.getList());
+					ModificarObra modificar= new ModificarObra(museo.getList());
 					modificar.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -218,7 +218,7 @@ public class Principal {
 		mntmPorCdigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EliminarPorCodigo eliminarPorCodigo = new EliminarPorCodigo(
-						exposicion);
+						museo);
 				eliminarPorCodigo.setVisible(true);
 			}
 		});
@@ -229,7 +229,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				MostrarEliminar eliminar;
 				try {
-					eliminar = new MostrarEliminar(exposicion.getList());
+					eliminar = new MostrarEliminar(museo.getList());
 					eliminar.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -254,7 +254,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					MostrarObrasMuseo mostrarPinturas = new MostrarObrasMuseo(
-							exposicion.getListPintura());
+							museo.getListPintura());
 					mostrarPinturas.setTitle("Mostrando Pinturas...");
 					mostrarPinturas.setVisible(true);
 				} catch (NoHayFondosException e) {
@@ -271,7 +271,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					MostrarObrasMuseo mostrarEsculturas = new MostrarObrasMuseo(
-							exposicion.getListEscultura());
+							museo.getListEscultura());
 					mostrarEsculturas.setTitle("Mostrando Esculturas...");
 					mostrarEsculturas.setVisible(true);
 				} catch (NoHayFondosException e) {
@@ -287,7 +287,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					MostrarObrasMuseo mostrarGrabados = new MostrarObrasMuseo(
-							exposicion.getListGrabado());
+							museo.getListGrabado());
 					mostrarGrabados.setTitle("Mostrando Grabados...");
 					mostrarGrabados.setVisible(true);
 				} catch (NoHayFondosException e1) {
@@ -303,7 +303,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					MostrarObrasMuseo mostrarDibujos = new MostrarObrasMuseo(
-							exposicion.getListDibujo());
+							museo.getListDibujo());
 					mostrarDibujos.setTitle("Mostrando Dibujos...");
 					mostrarDibujos.setVisible(true);
 				} catch (NoHayFondosException e1) {
@@ -332,9 +332,9 @@ public class Principal {
 				"Organizar exposicion");
 		mntmOrganizarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (exposicion.comprobarSiObrasExpuestas()) {
+				if (museo.comprobarSiObrasExpuestas()) {
 					OrganizarExposicion organizar = new OrganizarExposicion(
-							exposicion);
+							museo);
 					organizar.setVisible(true);
 				} else
 					JOptionPane.showMessageDialog(frame,
@@ -348,7 +348,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent arg0) {
 				ExponerObras exponer;
 				try {
-					exponer = new ExponerObras(exposicion.getList());
+					exponer = new ExponerObras(museo.getList());
 					exponer.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -365,8 +365,8 @@ public class Principal {
 			public void actionPerformed(ActionEvent e) {
 				MostrarObrasMuseo visitarExposicion;
 				try {
-					if (exposicion.isOrganizada()) {
-						visitarExposicion = new MostrarObrasMuseo(exposicion.listExpuestas());
+					if (museo.isOrganizada()) {
+						visitarExposicion = new MostrarObrasMuseo(museo.listExpuestas());
 						visitarExposicion.setVisible(true);
 					} else
 						JOptionPane.showMessageDialog(frame,
@@ -387,8 +387,14 @@ public class Principal {
 		JMenuItem mntmClausurarExposicin = new JMenuItem("Clausurar exposición");
 		mntmClausurarExposicin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ClausurarExposicion clausurar = new ClausurarExposicion();
-				clausurar.setVisible(true);
+				if (museo.isOrganizada()) {
+					ClausurarExposicion clausurar = new ClausurarExposicion();
+					clausurar.setVisible(true);
+				} else
+					JOptionPane.showMessageDialog(frame,
+							"No hay ninguna exposicion organizada",
+							"Error", JOptionPane.ERROR_MESSAGE);
+				
 			}
 		});
 		mnExposicion.add(mntmClausurarExposicin);
@@ -400,10 +406,10 @@ public class Principal {
 		JMenuItem mntmRestaurarObra = new JMenuItem("Restaurar obra");
 		mntmRestaurarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (exposicion.comprobarObrasDaniadas()) {
+				if (museo.comprobarObrasDaniadas()) {
 					RestaurarObras obrasDaniadas;
 					try {
-						obrasDaniadas = new RestaurarObras(exposicion.getList());
+						obrasDaniadas = new RestaurarObras(museo.getList());
 						obrasDaniadas.setVisible(true);
 					} catch (NoHayFondosException exc) {
 						JOptionPane.showMessageDialog(frame, exc.getMessage(),
@@ -452,11 +458,11 @@ public class Principal {
 	private void guardar() {
 		if (Fichero.FICHERO.getName().equalsIgnoreCase(nombreMuseo)) {
 			guardarComo();
-			exposicion.setModificada(false);
+			museo.setModificada(false);
 		} else {
 			try {
-				Fichero.guardar(exposicion);
-				exposicion.setModificada(false);
+				Fichero.guardar(museo);
+				museo.setModificada(false);
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Error al guardar",
 						"ERROR", JOptionPane.ERROR_MESSAGE);
@@ -487,7 +493,7 @@ public class Principal {
 						JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				if (respuesta == JOptionPane.YES_OPTION) {
 					try {
-						Fichero.guardarComo(exposicion, Fichero.getFichero());
+						Fichero.guardarComo(museo, Fichero.getFichero());
 					} catch (IOException ex) {
 						JOptionPane.showMessageDialog(null,
 								"Error al guardar el archivo", "ERROR",
@@ -500,7 +506,7 @@ public class Principal {
 			}
 
 			frame.setTitle(Fichero.getFichero().getName());
-			exposicion.setModificada(false);
+			museo.setModificada(false);
 		}
 	}
 
@@ -511,7 +517,7 @@ public class Principal {
 	 * @throws ClassNotFoundException
 	 */
 	private void abrir() {
-		if (exposicion.isModificada()) {
+		if (museo.isModificada()) {
 			Object[] options = { "SI", "NO", "CANCELAR" };
 			int respuesta = JOptionPane.showOptionDialog(null,
 					"¿Deseas Guardar?", "Archivo sin guardar",
@@ -554,7 +560,7 @@ public class Principal {
 		fileChooser.addChoosableFileFilter(filtro);
 		if (fileChooser.showDialog(fileChooser, "Abrir Fichero") == JFileChooser.APPROVE_OPTION) {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
-			exposicion = (Exposicion) Fichero.abrir(fileChooser.getSelectedFile());	
+			museo = (GestionMuseo) Fichero.abrir(fileChooser.getSelectedFile());	
 			frame.setTitle(Fichero.getFichero().getName());
 			JOptionPane.showMessageDialog(null, "Cargado con exito");
 }

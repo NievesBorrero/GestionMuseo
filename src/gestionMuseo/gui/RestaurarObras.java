@@ -26,7 +26,7 @@ public class RestaurarObras extends MostrarObrasMuseo {
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					obra = Principal.exposicion.devolverPorCodigo(Integer
+					obra = Principal.museo.devolverPorCodigo(Integer
 							.parseInt(textcod.getText()));
 					
 					int opcion = JOptionPane
@@ -42,7 +42,7 @@ public class RestaurarObras extends MostrarObrasMuseo {
 
 					if (opcion == JOptionPane.YES_OPTION) {
 							obra.restaurar();
-							Principal.exposicion.setModificada(true);
+							Principal.museo.setModificada(true);
 							
 					}
 					

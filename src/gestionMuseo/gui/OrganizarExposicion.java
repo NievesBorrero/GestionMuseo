@@ -1,6 +1,6 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.Exposicion;
+import gestionMuseo.GestionMuseo;
 import gestionMuseo.excepciones.FechaFinException;
 import gestionMuseo.excepciones.FechaPasadaException;
 import gestionMuseo.excepciones.YaHayExposicionException;
@@ -36,7 +36,7 @@ public class OrganizarExposicion extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public OrganizarExposicion(Exposicion exposicion) {
+	public OrganizarExposicion(GestionMuseo exposicion) {
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 450, 300);

@@ -3,7 +3,6 @@ package gestionMuseo;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Collections;
 import java.util.ListIterator;
 
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
@@ -31,15 +30,16 @@ import gestionMuseo.jerarquia.ObraDeArte;
 import gestionMuseo.jerarquia.Pintura;
 
 /**
+ * Clase que gestiona un museo.
  * 
  * @author Nieves María Borrero Barea.
  *
  */
 
-public class Exposicion implements Serializable, Presupuestable {
+public class GestionMuseo implements Serializable, Presupuestable {
 	private static final long serialVersionUID = 1L;
 	private Fondos museo = Fondos.getInstance(); // Fondos que hay en el museo.
-	private double presupuesto = 1000; // Presupuesto que hay en el museo.
+	private double presupuesto = 1000; // dinero de que dispone el museo.
 	private String nombreExposicion;
 	private String descripcionExposicion;
 	private LocalDate fechaInicio;
@@ -52,7 +52,7 @@ public class Exposicion implements Serializable, Presupuestable {
 	private boolean modificada;
 	private int entradas;
 
-	public Exposicion() {// BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+	public GestionMuseo() {// BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 
 	}
 
@@ -562,6 +562,107 @@ public class Exposicion implements Serializable, Presupuestable {
 	}
 
 	/**
+	 * Devuelve los ingresos y gastos de las obras expuestas en un string.
+	 * 
+	 * @return cadena
+	 */
+	public String imprimirPresupuestoExpuestas() {
+		ObraDeArte obra;
+		ListIterator<ObraDeArte> it = museo.listIterator();
+		StringBuilder expuestas = new StringBuilder(
+				"Exposicion:\nObra\tGastos\tIngresos");
+
+		while (it.hasNext()) {
+			obra = (ObraDeArte) it.next();
+			if (obra.isExpuesta()) {
+				expuestas.append("\n" + obra.getTitulo() + "\t-"
+						+ obra.getCosteExposicion() + "\t+" + obra.getFama());
+
+			}
+		}
+		expuestas.append("\nTOTAL:\t" +"-"+ Math.rint(calcularGasto() * 100) / 100 + "\t"
+				+ "+"+Math.rint(calcularIngreso() * 1000) / 1000 + "\n");
+		return expuestas.toString();
+	}
+
+	/**
+	 * Devuelve el gasto de restauración de las obras que han sido restauradas
+	 * en una cadena.
+	 * 
+	 * @return cadena
+	 */
+	public String imprimirPresupuestoRestauradas() {
+		ObraDeArte obra;
+		ListIterator<ObraDeArte> it = museo.listIterator();
+		StringBuilder restauradas = new StringBuilder(
+				"Restauracion:\nObra\tprecio restauracion");
+		double total = 0;
+
+		while (it.hasNext()) {
+			obra = (ObraDeArte) it.next();
+			if (obra.isRestaurada()) {
+				restauradas.append("\n" + obra.getTitulo() + "\t-"
+						+ obra.getCosteRestauracion());
+				total += obra.getCosteRestauracion();
+
+			}
+		}
+		restauradas.append("\nTOTAL:\t" + Math.rint(total * 1000) / 1000+"\n");
+
+		return restauradas.toString();
+	}
+
+	/**
+	 * Añade el gasto de la sala a los gastos de la exposición y devulve una
+	 * cadena con el precio de mantenimiento.
+	 * 
+	 * @return cadena
+	 */
+	public String calcularGastoSalas() {
+		ObraDeArte obra;
+		Sala sala;
+		int sala1 = 0;
+		int sala2 = 0;
+		int sala3 = 0;
+		double total = 0;
+		ListIterator<ObraDeArte> it = museo.listIterator();
+		StringBuilder salas = new StringBuilder("Salas:\nSala\tGasto");
+		while (it.hasNext()) {
+			obra = (ObraDeArte) it.next();
+			if (obra.isExpuesta()) {
+				sala = obra.getSala();
+				if (sala == Sala.SALA1)
+					sala1++;
+				else if (sala == Sala.SALA2)
+					sala2++;
+				else
+					sala3++;
+			}
+
+		}
+		
+		if (sala1 > 0) {
+			salas.append("\nSala1\t" + Sala.SALA1.getGasto());
+			total += Sala.SALA1.getGasto();
+			setGastos(getGastos() + Sala.SALA1.getGasto());
+		}
+		if (sala2 > 0) {
+			salas.append("\nSala2\t" + Sala.SALA2.getGasto());
+			total += Sala.SALA2.getGasto();
+			setGastos(getGastos() + Sala.SALA2.getGasto());
+		}
+		if (sala3 > 0) {
+			salas.append("\nSala3\t" + Sala.SALA3.getGasto());
+			total += Sala.SALA3.getGasto();
+			setGastos(getGastos() + Sala.SALA3.getGasto());
+		}
+		
+		salas.append("\nTOTAL:\t" + total+"\n");
+
+		return salas.toString();
+	}
+
+	/**
 	 * Comprueba si hay obras expuestas
 	 * 
 	 * @return
@@ -654,69 +755,57 @@ public class Exposicion implements Serializable, Presupuestable {
 		this.fechaFin = fechaFin;
 	}
 
-	// /**
-	// * Calcula el ingreso de la exposición
-	// *
-	// * @return
-	// */
-	// @Override
-	// public double calcularIngreso() {
-	// ListIterator<ObraDeArte> it = museo.listIterator();
-	// ObraDeArte obra;
-	// double fama = 0.0;
-	// double valor = 0.0;
-	//
-	// while (it.hasNext()) {
-	// obra = (ObraDeArte) it.next();
-	// if (obra.isExpuesta()) {
-	// fama += obra.getFama();
-	// }
-	// }
-	// return (fama + valor) * calcularDiasExposicion();
-	// }
+	 /**
+	 * Calcula el ingreso de la exposición
+	 *
+	 * @return
+	 */
+	 public double calcularIngreso() {
+	 ListIterator<ObraDeArte> it = museo.listIterator();
+	 ObraDeArte obra;
+	 double fama = 0.0;
+	
+	 while (it.hasNext()) {
+	 obra = (ObraDeArte) it.next();
+	 if (obra.isExpuesta()) {
+	 fama += obra.getFama();
+	 }
+	 }
+	 setIngresos(getIngresos()+fama);
+	 return fama;
+	 }
 
-	// /**
-	// * Calcula el gasto de la exposición
-	// *
-	// * @return
-	// */
-	// @Override
-	// public double calcularGasto() {
-	// ListIterator<ObraDeArte> it = museo.listIterator();
-	// ObraDeArte obra;
-	// double precioSala1 = 0.0;
-	// double precioSala2 = 0.0;
-	// double precioSala3 = 0.0;
-	// double gastoObras = 0.0;
-	//
-	// while (it.hasNext()) {
-	// if (it.next().isExpuesta()) {
-	// obra = (ObraDeArte) it.next();
-	// if (obra.getSala() == Sala.SALA1)
-	// precioSala1 = Sala.SALA1.getGasto();
-	// if (obra.getSala() == Sala.SALA2)
-	// precioSala2 = Sala.SALA2.getGasto();
-	// if (obra.getSala() == Sala.SALA3)
-	// precioSala3 = Sala.SALA3.getGasto();
-	// gastoObras += obra.getCosteExposicion();
-	// }
-	// }
-	// return (precioSala1 + precioSala2 + precioSala3 + gastoObras) *
-	// calcularDiasExposicion();
-	// }
+	 /**
+	 * Calcula el gasto de la exposición
+	 *
+	 * @return
+	 */
+	 public double calcularGasto() {
+	 ListIterator<ObraDeArte> it = museo.listIterator();
+	 ObraDeArte obra;
+	 double gastoObras = 0.0;
+	
+	 while (it.hasNext()) {
+	 if (it.next().isExpuesta()) {
+	 obra = (ObraDeArte) it.next();
+	 gastoObras+= obra.getCosteExposicion();
+	 }
+	 }
+	 setGastos(getGastos()+gastoObras);
+	 return gastoObras;
+	 }
+	 
 	/**
 	 * Calcula el presupuesto después de una exposición.
 	 */
 	@Override
 	public double calcularPresupuesto(double gasto, double ingreso) {
-		this.presupuesto = (presupuesto + (ingreso * getEntradas() * calcularDiasExposicion()))
+		return (presupuesto + (ingreso * getEntradas() * calcularDiasExposicion()))
 				- gasto;
-
-		return getPresupuesto();
 	}
 
 	public long calcularDiasExposicion() {
-		return ChronoUnit.DAYS.between(fechaInicio, fechaFin);
+		return ChronoUnit.DAYS.between(fechaFin,fechaInicio);
 	}
 
 	// public String[] generarOpcionesMenu() {
@@ -735,6 +824,10 @@ public class Exposicion implements Serializable, Presupuestable {
 		this.modificada = modificada;
 	}
 
+	public void setPresupuesto(double presupuesto) {
+		this.presupuesto = presupuesto;
+	}
+
 	/**
 	 * Recoge las obras y calcula el presupuesto resultante de la exposición.
 	 * 
@@ -750,7 +843,8 @@ public class Exposicion implements Serializable, Presupuestable {
 				obra.recogerObra();
 			}
 		}
-		calcularPresupuesto(getGastos(), getIngresos());
+		setPresupuesto(calcularPresupuesto(getGastos(), getIngresos()));
+		setOrganizada(false);
 	}
 
 	/**

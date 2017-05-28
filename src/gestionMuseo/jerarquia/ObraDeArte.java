@@ -61,8 +61,9 @@ public abstract class ObraDeArte implements Serializable{
 	protected double costeExposicion = 2; // Suma en gastos
 	protected double costeRestauracion;
 	private double fama; // Suma en ingresos
-	protected double valor; // Suma en gastos
+	protected double valor; // Suma en gastos de restauración
 	private boolean expuesta;
+	private boolean restaurada;
 	private double alto;
 	private double ancho;
 
@@ -224,8 +225,10 @@ public abstract class ObraDeArte implements Serializable{
 		if(getEstadoConservacion()==EstadoDeConservacion.BUENO)
 			throw new ObraNoDaniadaException("No se puede restaurar, la obra no esta daniada");
 		
+		this.restaurada= true;
 		this.danio = 0;
-		return getCosteRestauracion()+getValor();
+		setCosteRestauracion(getCosteRestauracion()+getValor());
+		return getCosteRestauracion();
 	}
 
 	/**
@@ -406,6 +409,14 @@ public abstract class ObraDeArte implements Serializable{
 		this.donada= donada;
 	}
 	
+	/**
+	 * Indica si la obra ha sido restaurada.
+	 * @return
+	 */
+	public boolean isRestaurada() {
+		return restaurada;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

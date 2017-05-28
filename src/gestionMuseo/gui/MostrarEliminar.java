@@ -10,7 +10,7 @@ import java.util.stream.StreamSupport;
 
 import javax.swing.JOptionPane;
 
-import gestionMuseo.Exposicion;
+import gestionMuseo.GestionMuseo;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.excepciones.AutorNoValidoException;
@@ -50,7 +50,7 @@ public class MostrarEliminar extends MostrarObrasMuseo {
 				if (opcion == JOptionPane.YES_OPTION) {
 
 					itObras.remove();
-					actualizarListIterator(Principal.exposicion);
+					actualizarListIterator(Principal.museo);
 
 					if (itObras.hasNext()) {
 						nextObra();
@@ -86,7 +86,7 @@ public class MostrarEliminar extends MostrarObrasMuseo {
 			btnAnterior.setEnabled(true);
 	}
 
-	void actualizarListIterator(Exposicion exposicion) {
+	void actualizarListIterator(GestionMuseo exposicion) {
 		try {
 			itObras = exposicion.getList();
 			actualizarBotones();

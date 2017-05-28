@@ -116,8 +116,8 @@ public class ModificarObra extends MostrarObrasMuseo {
 			double alto, double ancho, Pintura pintura)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException, ObraNoExisteException {
-		Principal.exposicion.modificarPintura(
-		Principal.exposicion.indexOf(pintura), textTitulo.getText(),
+		Principal.museo.modificarPintura(
+		Principal.museo.indexOf(pintura), textTitulo.getText(),
 		textAutor.getText(), textLocal.getText(),
 		(EstiloArtistico) cbEA.getSelectedItem(),
 		rbDonada.isSelected(), textPersona.getText(),
@@ -142,8 +142,8 @@ public class ModificarObra extends MostrarObrasMuseo {
 			double alto, double ancho, Dibujo dibujo)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException {
-		Principal.exposicion.modificarDibujo(
-				Principal.exposicion.indexOf(dibujo), textTitulo.getText(),
+		Principal.museo.modificarDibujo(
+				Principal.museo.indexOf(dibujo), textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
 				rbDonada.isSelected(), textPersona.getText(),
@@ -167,8 +167,8 @@ public class ModificarObra extends MostrarObrasMuseo {
 			double alto, double ancho, Grabado grabado)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException {
-		Principal.exposicion.modificarGrabado(
-				Principal.exposicion.indexOf(grabado), textTitulo.getText(),
+		Principal.museo.modificarGrabado(
+				Principal.museo.indexOf(grabado), textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
 				rbDonada.isSelected(), textPersona.getText(),
@@ -193,8 +193,8 @@ public class ModificarObra extends MostrarObrasMuseo {
 			double alto, double ancho, double profundidad,
 			Escultura escultura) throws AutorNoValidoException,
 			TituloNoValidoException, EstiloNoValidoException {
-		Principal.exposicion.modificarEscultura(
-				Principal.exposicion.indexOf(escultura), textTitulo.getText(),
+		Principal.museo.modificarEscultura(
+				Principal.museo.indexOf(escultura), textTitulo.getText(),
 				textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
 				rbDonada.isSelected(), textPersona.getText(),

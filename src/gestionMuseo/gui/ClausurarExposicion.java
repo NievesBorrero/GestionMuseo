@@ -1,52 +1,89 @@
 package gestionMuseo.gui;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
+import gestionMuseo.excepciones.ObraNoExpuestaException;
 
-import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JTextPane;
 import javax.swing.JLabel;
-import javax.swing.JTextArea;
+import javax.swing.JButton;
+
+import java.awt.Rectangle;
+
+import javax.swing.JScrollPane;
+
+import org.eclipse.wb.swing.FocusTraversalOnArray;
+
+import java.awt.Component;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ClausurarExposicion extends JDialog {
 
+	private static final long serialVersionUID = 1L;
+
 	private final JPanel contentPanel = new JPanel();
 
-	/**
-	 * Create the dialog.
-	 */
-	public ClausurarExposicion() {
-		setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		contentPanel.setLayout(null);
-		
-		JLabel lblPresupuesto = new JLabel("Presupuesto");
-		lblPresupuesto.setBounds(31, 12, 160, 15);
-		contentPanel.add(lblPresupuesto);
-		
+	protected JTextPane textPane;
+
+	ClausurarExposicion() {
+		setResizable(false);
+		setModal(true);
+		setBounds(new Rectangle(65, 24, 400, 400));
+		getContentPane().setLayout(null);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 32, 360, 176);
+		getContentPane().add(scrollPane);
+
+		textPane = new JTextPane();
+		scrollPane.setViewportView(textPane);
+
+		JLabel lblPresupuesto = new JLabel("Presupuesto:");
+		lblPresupuesto.setBounds(12, 0, 97, 15);
+		getContentPane().add(lblPresupuesto);
+
 		JButton btnAceptar = new JButton("Aceptar");
-		btnAceptar.setBounds(31, 230, 117, 25);
-		contentPanel.add(btnAceptar);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setText("a");
-		textArea.setBounds(403, 64, -371, 152);
-		contentPanel.add(textArea);
-		
+		btnAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Principal.museo.clausurarExposicion();
+					JOptionPane.showMessageDialog(
+							contentPanel,
+							"Presupuesto del museo:"
+									+ Principal.museo.getPresupuesto(),
+							"Exposicion clausurada",
+							JOptionPane.INFORMATION_MESSAGE);
+				} catch (ObraNoExpuestaException e1) {
+					// No va a entrar, QUITAR ESTA EXCEPCIÓN.
+				}
+				setVisible(false);
+			}
+		});
+		btnAceptar.setBounds(12, 220, 117, 25);
+		getContentPane().add(btnAceptar);
+		textPane.setText(Principal.museo.imprimirPresupuestoExpuestas()
+				+ "\n"
+				+ Principal.museo.calcularGastoSalas()+"\n"
+				+ Principal.museo.imprimirPresupuestoRestauradas()+"\n"
+				+ "\ndias de exposicion "
+				+ Principal.museo.calcularDiasExposicion()+"\n"
+				+ "\nEntradas vendidas: "
+				+ Principal.museo.generarEntradas()+"\n"
+				+ "\nPresupuesto final: "
+				+ Principal.museo.calcularPresupuesto(
+						Principal.museo.getGastos(),
+						Principal.museo.getIngresos())
+				);
+
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(172, 230, 117, 25);
-		
-//		contentPanel.add(btnCancelar);
-//		JScrollPane scroll = new JScrollPane (textArea); 
-//		scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS); 
-//		//scroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS); 
-//		contentPanel.add(scroll); 
-//		
-		
+		btnCancelar.setBounds(255, 220, 117, 25);
+		getContentPane().add(btnCancelar);
+
+		getContentPane().setFocusTraversalPolicy(
+				new FocusTraversalOnArray(new Component[] { scrollPane,
+						textPane, lblPresupuesto, btnAceptar }));
+
 	}
 }

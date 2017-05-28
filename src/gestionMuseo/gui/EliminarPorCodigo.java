@@ -1,6 +1,6 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.Exposicion;
+import gestionMuseo.GestionMuseo;
 import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.jerarquia.Dibujo;
 import gestionMuseo.jerarquia.Escultura;
@@ -27,7 +27,7 @@ public class EliminarPorCodigo extends DialogoGeneral {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public EliminarPorCodigo(Exposicion exposicion) {
+	public EliminarPorCodigo(GestionMuseo exposicion) {
 		super();
 
 		InhabilitarComponentes();

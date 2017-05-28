@@ -61,13 +61,13 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		cbOrdenar.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent arg0) {
 				if (cbOrdenar.getSelectedItem() == "Título") {
-					Principal.exposicion.ordenarPorTitulo();
+					Principal.museo.ordenarPorTitulo();
 					actualizarItObras();
 					nextObra();
 					btnAnterior.setEnabled(false);
 
 				} else if (cbOrdenar.getSelectedItem() == "Coste restauración") {
-					Principal.exposicion.ordenarPorcosteRestauracion();
+					Principal.museo.ordenarPorcosteRestauracion();
 					actualizarItObras();
 					nextObra();
 					btnAnterior.setEnabled(false);
@@ -144,7 +144,7 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 	 */
 	void actualizarItObras() {
 		try {
-			itObras = Principal.exposicion.getList();
+			itObras = Principal.museo.getList();
 		} catch (NoHayFondosException e) {
 			// Aquí no debería entrar
 		}

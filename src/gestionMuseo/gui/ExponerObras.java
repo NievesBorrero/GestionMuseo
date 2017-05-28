@@ -1,6 +1,6 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.Exposicion;
+import gestionMuseo.GestionMuseo;
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.excepciones.EstadoNoAdecuadoException;
@@ -47,7 +47,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					obra = Principal.exposicion.devolverPorCodigo(Integer
+					obra = Principal.museo.devolverPorCodigo(Integer
 							.parseInt(textcod.getText()));
 					if (rbSala_1.isSelected() || rbSala_2.isSelected()
 							|| rbSala_3.isSelected()) {
@@ -69,7 +69,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 								try {
 									obra.restaurar();
 									obra.exponerObra(getSala());
-									Principal.exposicion.setModificada(true);
+									Principal.museo.setModificada(true);
 								} catch (ObraNoDaniadaException e1) {
 									// Aquí no debería entrar.
 								}
@@ -79,7 +79,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 						else{
 							
 						obra.exponerObra(getSala());
-						Principal.exposicion.setModificada(true);
+						Principal.museo.setModificada(true);
 
 						JOptionPane.showMessageDialog(contentPanel,
 								"Buena eleccion, obra expuesta",

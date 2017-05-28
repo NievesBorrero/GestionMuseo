@@ -1,6 +1,6 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.Exposicion;
+import gestionMuseo.GestionMuseo;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
@@ -22,7 +22,7 @@ public class IngresarObras extends DialogoGeneral {
 	/**
 	 * Constructor que permite crear el diálogo.
 	 */
-	public IngresarObras(Exposicion exposicion) {
+	public IngresarObras(GestionMuseo exposicion) {
 		super();
 		
 		setTitle("Ingreso de obras de arte");
@@ -121,7 +121,7 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 */
-	private void ingresarPintura(Exposicion exposicion, double fama,
+	private void ingresarPintura(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException {
@@ -146,7 +146,7 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 */
-	private void ingresarDibujo(Exposicion exposicion, double fama,
+	private void ingresarDibujo(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException {
@@ -170,7 +170,7 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 */
-	private void ingresarGrabado(Exposicion exposicion, double fama,
+	private void ingresarGrabado(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException {
@@ -195,7 +195,7 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 */
-	private void ingresarEscultura(Exposicion exposicion, double fama,
+	private void ingresarEscultura(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho, double profundidad)
 			throws AutorNoValidoException, TituloNoValidoException,
 			EstiloNoValidoException {
