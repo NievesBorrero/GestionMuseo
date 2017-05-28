@@ -493,6 +493,8 @@ public class DialogoGeneral extends JDialog {
 			lblCombobox1.setText("Tecnica");
 			cb1.setModel(new DefaultComboBoxModel(TecnicaDeDibujo.values()));
 			cb1.setSelectedItem(dibujo.getTecnica());
+			cb2.setModel(new DefaultComboBoxModel(Soporte.values()));
+			cb2.setSelectedItem(dibujo.getSoporte());
 			codigo=String.valueOf((dibujo.getCodigo()));
 			textcod.setText(codigo);
 		}		
@@ -509,6 +511,9 @@ public class DialogoGeneral extends JDialog {
 		return obraMostrada;
 	}
 
+	/**
+	 * Muestra/oculta componentes según el tipo de obra.
+	 */
 	void habilitarTipoDeObra(){
 		if(cbTipo.getSelectedItem()=="Pintura"){
 			spprof.setVisible(false);
@@ -558,10 +563,15 @@ public class DialogoGeneral extends JDialog {
 			lblCombobox2.setVisible(false);
 			lblCombobox1.setVisible(true);
 			cb1.setVisible(true);
-			cb2.setVisible(false);
+			cb2.setVisible(true);
 			lblCombobox1.setText("Tecnica");
+			lblCombobox2.setVisible(true);
+			lblCombobox2.setText("Soporte");
 			cb1.setModel(new DefaultComboBoxModel(TecnicaDeDibujo.values()));
-			cb1.setSelectedItem(null);			
+			cb1.setSelectedItem(null);	
+			cb2.setModel(new DefaultComboBoxModel(Soporte.values()));
+			cb2.setSelectedItem(Soporte.PAPEL);
+			cb2.setEnabled(false);
 		}
 		
 		else{
