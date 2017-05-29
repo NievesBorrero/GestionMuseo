@@ -36,7 +36,7 @@ public class OrganizarExposicion extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public OrganizarExposicion(GestionMuseo exposicion) {
+	public OrganizarExposicion(GestionMuseo museo) {
 		setResizable(false);
 		setModal(true);
 		setBounds(100, 100, 450, 300);
@@ -88,9 +88,9 @@ public class OrganizarExposicion extends JDialog {
 				try {
 					LocalDate fechaInicio = getFecha(spinicio);
 					LocalDate fechaFin = getFecha(spfin);
-					exposicion.organizarExposicion(textField.getText(), textPane.getText(), fechaInicio, fechaFin);
+					museo.organizarExposicion(textField.getText(), textPane.getText(), fechaInicio, fechaFin);
 					setVisible(false);
-					exposicion.setModificada(true);
+					museo.setModificado(true);
 				} catch (YaHayExposicionException e) {
 					JOptionPane.showMessageDialog(contentPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (FechaFinException e) {

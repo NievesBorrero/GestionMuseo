@@ -3,20 +3,9 @@ package gestionMuseo.gui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ListIterator;
-import java.util.Spliterator;
-import java.util.Spliterators;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
 import javax.swing.JOptionPane;
-
 import gestionMuseo.GestionMuseo;
-import gestionMuseo.enumeraciones.EstiloArtistico;
-import gestionMuseo.enumeraciones.TecnicaDeDibujo;
-import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.NoHayFondosException;
-import gestionMuseo.excepciones.ObraNoExisteException;
-import gestionMuseo.excepciones.TituloNoValidoException;
 import gestionMuseo.jerarquia.ObraDeArte;
 
 /**

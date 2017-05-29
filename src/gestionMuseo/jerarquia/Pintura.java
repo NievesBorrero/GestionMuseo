@@ -7,10 +7,13 @@ import gestionMuseo.enumeraciones.MaterialPintura;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
-import gestionMuseo.excepciones.TituloNoValidoException;
+import gestionMuseo.excepciones.SinMaterialException;
+import gestionMuseo.excepciones.SinSoporteException;
 
 public class Pintura extends ObraDeArte implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+	
 	private Soporte soporte;
 	private MaterialPintura material;
 	protected double plusExposicion = getCosteExposicion()*0.20; // Cuesta m�s exponer una pintura.
@@ -20,11 +23,11 @@ public class Pintura extends ObraDeArte implements Serializable {
 			String personaEntidad, double fama, double valor, Soporte soporte,
 			MaterialPintura material, double alto, double ancho)
 			throws AutorNoValidoException,
-			TituloNoValidoException, EstiloNoValidoException{
+			EstiloNoValidoException, SinMaterialException, SinSoporteException{
 		super(nombre, autor, localizacion, estiloArtistico, donada,
 				personaEntidad, fama, valor, alto, ancho);
-		this.soporte = soporte;
-		this.material = material;
+		setSoporte(soporte);
+		setMaterial(material);
 		setCosteExposicion(costeExposicion+plusExposicion);
 		setCosteRestauracion(calcularPrecioRestauracion());
 	}
@@ -37,16 +40,22 @@ public class Pintura extends ObraDeArte implements Serializable {
 		return soporte;
 	}
 
-	public void setSoporte(Soporte soporte) {
-		this.soporte = soporte;
+	public void setSoporte(Soporte soporte) throws SinSoporteException {
+		if (soporte != null)
+			this.soporte = soporte;
+		else
+			throw new SinSoporteException("Debe se\u00f1alar el soporte de la pintura");
 	}
 
 	public MaterialPintura getMaterial() {
 		return material;
 	}
 
-	public void setMaterial(MaterialPintura material) {
-		this.material = material;
+	public void setMaterial(MaterialPintura material) throws SinMaterialException {
+		if (material != null)
+			this.material = material;
+		else
+			throw new SinMaterialException("Debe se\u00f1alar el material de la pintura");
 	}
 
 	@Override

@@ -1,31 +1,24 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.GestionMuseo;
+
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
-import gestionMuseo.excepciones.ObraNoExpuestaException;
 import gestionMuseo.jerarquia.ObraDeArte;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ListIterator;
 
-import javax.swing.DefaultListModel;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JList;
+
 
 public class ExponerObras extends MostrarObrasMuseo {
 
+	private static final long serialVersionUID = 1L;
 	ObraDeArte obra;
 
 	/**
@@ -69,7 +62,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 								try {
 									obra.restaurar();
 									obra.exponerObra(getSala());
-									Principal.museo.setModificada(true);
+									Principal.museo.setModificado(true);
 								} catch (ObraNoDaniadaException e1) {
 									// Aquí no debería entrar.
 								}
@@ -79,7 +72,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 						else{
 							
 						obra.exponerObra(getSala());
-						Principal.museo.setModificada(true);
+						Principal.museo.setModificado(true);
 
 						JOptionPane.showMessageDialog(contentPanel,
 								"Buena eleccion, obra expuesta",

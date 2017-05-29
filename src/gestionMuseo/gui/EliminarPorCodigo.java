@@ -63,7 +63,7 @@ public class EliminarPorCodigo extends DialogoGeneral {
 							exposicion.eliminarGrabado(codigo);
 						if (aEliminar instanceof Dibujo)
 							exposicion.eliminarDibujo(codigo);
-						exposicion.setModificada(true);
+						exposicion.setModificado(true);
 						limpiar();
 					}
 				} catch (ObraNoExisteException e) {

@@ -1,9 +1,5 @@
 package gestionMuseo.jerarquia;
 
-/**
- * @author Nieves Borrero.
- */
-
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
@@ -18,13 +14,17 @@ import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
 import gestionMuseo.excepciones.ObraNoExpuestaException;
-import gestionMuseo.excepciones.TituloNoValidoException;
 
 import java.text.DecimalFormat;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class ObraDeArte implements Serializable{
+/**
+ * Clase abstracta de la que heredan los distintos tipos de obras de arte.
+ * 
+ * @author Nieves Borrero.
+ */
+
+public abstract class ObraDeArte implements Serializable {
 
 	/**
 	 * 
@@ -37,7 +37,6 @@ public abstract class ObraDeArte implements Serializable{
 			.ofPattern("dd/MM/yyyy");
 	private static Pattern patternAutor = Pattern
 			.compile("([\\-´,a-zA-ZáéíóúñÑ0-9]{2,}\\s?)+");
-
 
 	protected static DecimalFormat DFORMAT = new java.text.DecimalFormat("0.00");
 
@@ -83,14 +82,15 @@ public abstract class ObraDeArte implements Serializable{
 	 * @throws AutorNoValidoException
 	 * @throws personaEntidadNoValidaException
 	 * @throws TituloNoValidoException
-	 * @throws EstiloNoValidoException 
-	 * @throws LocalizacionNoValidaException 
+	 * @throws EstiloNoValidoException
+	 * @throws LocalizacionNoValidaException
 	 */
 
 	ObraDeArte(String titulo, String autor, String localizacion,
 			EstiloArtistico estiloArtistico, boolean donada,
 			String personaEntidad, double fama, double valor, double alto,
-			double ancho) throws AutorNoValidoException, TituloNoValidoException, EstiloNoValidoException {
+			double ancho) throws AutorNoValidoException,
+			EstiloNoValidoException {
 		setTitulo(titulo);
 		setAutor(autor);
 		setLocalizacion(localizacion);
@@ -113,17 +113,16 @@ public abstract class ObraDeArte implements Serializable{
 	ObraDeArte(int codigo) {
 		this.codigo = codigo;
 	}
-	
-//	/**
-//	 * Constructor de obra de arte a partir del título introducido por
-//	 * parámetro.
-//	 * 
-//	 * @param codigo
-//	 */
-//	ObraDeArte(String Titulo) {
-//		this.titulo = titulo;
-//	}
 
+	// /**
+	// * Constructor de obra de arte a partir del título introducido por
+	// * parámetro.
+	// *
+	// * @param codigo
+	// */
+	// ObraDeArte(String Titulo) {
+	// this.titulo = titulo;
+	// }
 
 	public ObraDeArte() {
 	}
@@ -132,15 +131,18 @@ public abstract class ObraDeArte implements Serializable{
 		return estiloArtistico;
 	}
 
-	public void setEstiloArtistico(EstiloArtistico estiloArtistico) throws EstiloNoValidoException {
+	public void setEstiloArtistico(EstiloArtistico estiloArtistico)
+			throws EstiloNoValidoException {
 		if (estiloArtistico != null)
 			this.estiloArtistico = estiloArtistico;
 		else
-			throw new EstiloNoValidoException("Debes introducir un estilo artistico");
+			throw new EstiloNoValidoException(
+					"Debe introducir un estilo art\u00edstico");
 	}
-	
+
 	/**
 	 * Comprueba si el autor es un nombre válido.
+	 * 
 	 * @param autor
 	 * @return
 	 */
@@ -186,22 +188,22 @@ public abstract class ObraDeArte implements Serializable{
 	 * @param sala
 	 * @throws ObraExpuestaException
 	 * @throws EstadoNoAdecuadoException
-	 * @throws ObraNoExpuestaException 
+	 * @throws ObraNoExpuestaException
 	 */
 	public void exponerObra(Sala sala) throws ObraExpuestaException,
-			EstadoNoAdecuadoException{
+			EstadoNoAdecuadoException {
 
 		if (isExpuesta() == true)
 			throw new ObraExpuestaException("Error, la obra ya esta expuesta");
 		else if (getEstadoConservacion() == EstadoDeConservacion.MUYMALO)
 			throw new EstadoNoAdecuadoException(
-					"Imposible exponer, el estado de conservacion de la obra es pesimo");
+					"Imposible exponer, el estado de conservaci\u00f3n de la obra es p\u00e9simo");
 		else {
 			daniarObra();
 			expuesta = true;
 			setSala(sala);
 		}
-			
+
 	}
 
 	public boolean isExpuesta() {
@@ -217,17 +219,20 @@ public abstract class ObraDeArte implements Serializable{
 	}
 
 	/**
-	 * Cambia el valor de daño de la obra a cero y devuelve el precio de restauración.
+	 * Cambia el valor de daño de la obra a cero y devuelve el precio de
+	 * restauración.
+	 * 
 	 * @return precio de la restauración.
 	 * @throws ObraNoDaniadaException .
 	 */
 	public double restaurar() throws ObraNoDaniadaException {
-		if(getEstadoConservacion()==EstadoDeConservacion.BUENO)
-			throw new ObraNoDaniadaException("No se puede restaurar, la obra no esta daniada");
-		
-		this.restaurada= true;
+		if (getEstadoConservacion() == EstadoDeConservacion.BUENO)
+			throw new ObraNoDaniadaException(
+					"No se puede restaurar, la obra no est\u00e1 da\u00f1ada");
+
+		this.restaurada = true;
 		this.danio = 0;
-		setCosteRestauracion(getCosteRestauracion()+getValor());
+		setCosteRestauracion(getCosteRestauracion() + getValor());
 		return getCosteRestauracion();
 	}
 
@@ -250,7 +255,8 @@ public abstract class ObraDeArte implements Serializable{
 			setSala(Sala.ALMACEN);
 			expuesta = false;
 		} else
-			throw new ObraNoExpuestaException("No puedes recoger una obra que no esta expuesta");
+			throw new ObraNoExpuestaException(
+					"No puedes recoger una obra que no esta expuesta");
 
 	}
 
@@ -289,10 +295,11 @@ public abstract class ObraDeArte implements Serializable{
 		return titulo;
 	}
 
-	public void setTitulo(String titulo) throws TituloNoValidoException {
-		if(titulo=="")
-			this.titulo= "Sin titulo";
-		this.titulo = titulo;
+	public void setTitulo(String titulo) {
+		if (titulo.length() == 0)
+			this.titulo = "Sin titulo";
+		else
+			this.titulo = titulo;
 	}
 
 	public EstadoDeConservacion getEstadoConservacion() {
@@ -302,21 +309,18 @@ public abstract class ObraDeArte implements Serializable{
 	protected void setEstadoConservacion(EstadoDeConservacion estadoConservacion) {
 		this.estadoConservacion = estadoConservacion;
 	}
-	
-	
 
 	public LocalDate getFechaIngreso() {
 		return fechaIngreso;
 	}
-
 
 	public String getAutor() {
 		return autor;
 	}
 
 	public void setAutor(String autor) throws AutorNoValidoException {
-		if(!esValido(autor))
-			throw new AutorNoValidoException("El autor no es valido");
+		if (!esValido(autor))
+			throw new AutorNoValidoException("El autor no es v\u00e1lido");
 		this.autor = autor;
 	}
 
@@ -324,7 +328,7 @@ public abstract class ObraDeArte implements Serializable{
 		return localizacion;
 	}
 
-	public void setLocalizacion(String localizacion){
+	public void setLocalizacion(String localizacion) {
 		this.localizacion = localizacion;
 	}
 
@@ -400,17 +404,18 @@ public abstract class ObraDeArte implements Serializable{
 	public void setAncho(double ancho) {
 		this.ancho = ancho;
 	}
-	
+
 	public boolean isDonada() {
 		return this.donada;
 	}
-	
-	public void setDonada(boolean donada){
-		this.donada= donada;
+
+	public void setDonada(boolean donada) {
+		this.donada = donada;
 	}
-	
+
 	/**
 	 * Indica si la obra ha sido restaurada.
+	 * 
 	 * @return
 	 */
 	public boolean isRestaurada() {
@@ -439,20 +444,18 @@ public abstract class ObraDeArte implements Serializable{
 		return true;
 	}
 
-	@Override
-	public String toString() {
-		return "\n\n" + getClass().getSimpleName() + " [nombre=" + titulo
-				+ ", autor=" + autor + "codigo=" + codigo + " fechaIngreso="
-				+ formatearFecha(fechaIngreso) + ", localizacion="
-				+ localizacion + ", estiloArtistico=" + estiloArtistico
-				+ ",\nestadoConservacion=" + estadoConservacion + ", danio="
-				+ danio + ", donada=" + donada + ", personaEntidad="
-				+ personaEntidad + ",\n sala= " + sala + ", costeExposicion="
-				+ getCosteExposicion() + ", costeRestauracion="
-				+ getCosteRestauracion() + ", fama=" + fama + ", valor="
-				+ valor + " Expuesta= " + expuesta + ", ";
-	}
+//	@Override
+//	public String toString() {
+//		return "\n\n" + getClass().getSimpleName() + " [nombre=" + titulo
+//				+ ", autor=" + autor + "codigo=" + codigo + " fechaIngreso="
+//				+ formatearFecha(fechaIngreso) + ", localizacion="
+//				+ localizacion + ", estiloArtistico=" + estiloArtistico
+//				+ ",\nestadoConservacion=" + estadoConservacion + ", danio="
+//				+ danio + ", donada=" + donada + ", personaEntidad="
+//				+ personaEntidad + ",\n sala= " + sala + ", costeExposicion="
+//				+ getCosteExposicion() + ", costeRestauracion="
+//				+ getCosteRestauracion() + ", fama=" + fama + ", valor="
+//				+ valor + " Expuesta= " + expuesta + ", ";
+//	}
 
-
-	
 }

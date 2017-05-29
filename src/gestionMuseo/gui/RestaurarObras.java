@@ -42,7 +42,7 @@ public class RestaurarObras extends MostrarObrasMuseo {
 
 					if (opcion == JOptionPane.YES_OPTION) {
 							obra.restaurar();
-							Principal.museo.setModificada(true);
+							Principal.museo.setModificado(true);
 							
 					}
 					

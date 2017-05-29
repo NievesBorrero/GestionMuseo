@@ -1,20 +1,9 @@
 package gestionMuseo.gui;
 
 import gestionMuseo.GestionMuseo;
-import gestionMuseo.Fondos;
 import gestionMuseo.Ficheros.Fichero;
 import gestionMuseo.Ficheros.Filtro;
-import gestionMuseo.enumeraciones.EstiloArtistico;
-import gestionMuseo.enumeraciones.MaterialEscultura;
-import gestionMuseo.enumeraciones.MaterialPintura;
-import gestionMuseo.enumeraciones.Soporte;
-import gestionMuseo.enumeraciones.TecnicaDeDibujo;
-import gestionMuseo.enumeraciones.TipoDeGrabado;
-import gestionMuseo.enumeraciones.TipoEscultura;
-import gestionMuseo.excepciones.AutorNoValidoException;
-import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.NoHayFondosException;
-import gestionMuseo.excepciones.TituloNoValidoException;
 
 import java.awt.EventQueue;
 
@@ -28,13 +17,13 @@ import javax.swing.JSeparator;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.KeyStroke;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -43,46 +32,59 @@ public class Principal {
 	private static final String SIN_TITULO_MUSEO = "Sin titulo: Museo";
 	private JFrame frame;
 	static GestionMuseo museo = new GestionMuseo();
-	static { // BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-		try {
-			museo.ingresarPintura("Pintura1", "autor1", "sitio",
-					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			museo.ingresarPintura("Pintura2", "autor2", "sitio",
-					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			museo.ingresarPintura("Pintura3", "autor3", "sitio",
-					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-			museo.ingresarEscultura("Escultura", "autor", "calle",
-					EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
-					TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
-					0.3, 0.4, 0.5);
-			museo.ingresarGrabado("grabado", "autor", "lala",
-					EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
-					TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
-			 museo.ingresarGrabado("grabado2", "pepe", "ronda",
-			 EstiloArtistico.ISLAMICO,
-			 true, "persona", 0.3, 0.5, TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
-			 museo.ingresarDibujo("dibujo", "autorr", "fuente",
-			 EstiloArtistico.CUBISTA,
-			 false, "personita", 0.6, 0.5, TecnicaDeDibujo.CARBONCILLO, 0.10,
-			 0.5);
-
-		}catch (AutorNoValidoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (TituloNoValidoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (EstiloNoValidoException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	private JFileChooser fileChooser = new JFileChooser();
 	private Filtro filtro = new Filtro(".obj", "obj");
 	private String nombreMuseo;
+
+	// static { //
+	// BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+	// try {
+	// museo.ingresarPintura("Pintura1", "autor1", "sitio",
+	// EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+	// Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+	// museo.ingresarPintura("Pintura2", "autor2", "sitio",
+	// EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+	// Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+	// museo.ingresarPintura("Pintura3", "autor3", "sitio",
+	// EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+	// Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+	// museo.ingresarEscultura("Escultura", "autor", "calle",
+	// EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
+	// TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
+	// 0.3, 0.4, 0.5);
+	// museo.ingresarGrabado("grabado", "autor", "lala",
+	// EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
+	// TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
+	// museo.ingresarGrabado("grabado2", "pepe", "ronda",
+	// EstiloArtistico.ISLAMICO, true, "persona", 0.3, 0.5,
+	// TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
+	// museo.ingresarDibujo("dibujo", "autorr", "fuente",
+	// EstiloArtistico.CUBISTA, false, "personita", 0.6, 0.5,
+	// TecnicaDeDibujo.CARBONCILLO, 0.10, 0.5);
+	//
+	// } catch (AutorNoValidoException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (EstiloNoValidoException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (SinMaterialException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (SinSoporteException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (SinTipoGrabadoException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (SinTipoEsculturaException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// } catch (SinTecnicaException e) {
+	// // TODO Auto-generated catch block
+	// e.printStackTrace();
+	// }
+	// }
 
 	/**
 	 * Launch the application.
@@ -116,7 +118,6 @@ public class Principal {
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-		
 
 		JMenuBar menuBar = new JMenuBar();
 		menuBar.setBounds(0, 0, 538, 21);
@@ -126,6 +127,15 @@ public class Principal {
 		mnArchivo.setMnemonic('A');
 		menuBar.add(mnArchivo);
 		mnArchivo.setToolTipText("Archivo");
+		/*
+		 * PROBLEMA: SE SALE SI LE DOY A CANCELARR!!! VER COMO SOLUCIONARLO
+		 */
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				salir();
+			}
+		});
 
 		JMenuItem mntmAbrirExpo = new JMenuItem("Abrir museo");
 		mntmAbrirExpo.addActionListener(new ActionListener() {
@@ -135,6 +145,11 @@ public class Principal {
 		});
 
 		JMenuItem mntmNu = new JMenuItem("Nuevo Museo");
+		mntmNu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				nuevoMuseo();
+			}
+		});
 		mnArchivo.add(mntmNu);
 		mnArchivo.add(mntmAbrirExpo);
 
@@ -165,13 +180,13 @@ public class Principal {
 		JMenuItem mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// SALIR
+				salir();
 			}
 		});
 		mnArchivo.add(mntmSalir);
 
 		JMenu mnObras = new JMenu("Obras");
-		mnObras.setMnemonic('M');
+		mnObras.setMnemonic('O');
 		menuBar.add(mnObras);
 
 		JMenuItem mntmIngresarObra = new JMenuItem("Ingresar obra");
@@ -181,27 +196,28 @@ public class Principal {
 				ingresos.setVisible(true);
 			}
 		});
-		
-				JMenuItem mntmNewMenuItem = new JMenuItem("Mostrar obras");
-				mntmNewMenuItem.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						try {
-							MostrarObrasMuseo mostrar = new MostrarObrasMuseo(museo.getList());
-							mostrar.setVisible(true);
-						} catch (NoHayFondosException e1) {
-							JOptionPane.showMessageDialog(frame, e1.getMessage(),
-									"Error", JOptionPane.ERROR_MESSAGE);
-						}
-					}
-				});
-				mnObras.add(mntmNewMenuItem);
+
+		JMenuItem mntmNewMenuItem = new JMenuItem("Mostrar obras");
+		mntmNewMenuItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(museo
+							.getList());
+					mostrar.setVisible(true);
+				} catch (NoHayFondosException e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnObras.add(mntmNewMenuItem);
 		mnObras.add(mntmIngresarObra);
-		
+
 		JMenuItem mntmModificarDatosDe = new JMenuItem("Modificar datos");
 		mntmModificarDatosDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					ModificarObra modificar= new ModificarObra(museo.getList());
+					ModificarObra modificar = new ModificarObra(museo.getList());
 					modificar.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -366,7 +382,8 @@ public class Principal {
 				MostrarObrasMuseo visitarExposicion;
 				try {
 					if (museo.isOrganizada()) {
-						visitarExposicion = new MostrarObrasMuseo(museo.listExpuestas());
+						visitarExposicion = new MostrarObrasMuseo(museo
+								.listExpuestas());
 						visitarExposicion.setVisible(true);
 					} else
 						JOptionPane.showMessageDialog(frame,
@@ -392,9 +409,9 @@ public class Principal {
 					clausurar.setVisible(true);
 				} else
 					JOptionPane.showMessageDialog(frame,
-							"No hay ninguna exposicion organizada",
-							"Error", JOptionPane.ERROR_MESSAGE);
-				
+							"No hay ninguna exposicion organizada", "Error",
+							JOptionPane.ERROR_MESSAGE);
+
 			}
 		});
 		mnExposicion.add(mntmClausurarExposicin);
@@ -450,6 +467,25 @@ public class Principal {
 	}
 
 	/**
+	 * Crea un nuevo museo vacio.
+	 */
+	private void nuevoMuseo() {
+		if (museo.isModificado()) {
+			if (JOptionPane
+					.showConfirmDialog(
+							null,
+							"Ha hecho cambios... \n¿seguro que quiere abrir un nuevo fichero?",
+							"Museo modificado", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+				museo = new GestionMuseo();
+				frame.setTitle(SIN_TITULO_MUSEO);
+			}
+		} else {
+			museo = new GestionMuseo();
+			frame.setTitle(SIN_TITULO_MUSEO);
+		}
+	}
+
+	/**
 	 * Permite guardar un fichero
 	 * 
 	 * @throws IOException
@@ -458,11 +494,11 @@ public class Principal {
 	private void guardar() {
 		if (Fichero.FICHERO.getName().equalsIgnoreCase(nombreMuseo)) {
 			guardarComo();
-			museo.setModificada(false);
+			museo.setModificado(false);
 		} else {
 			try {
 				Fichero.guardar(museo);
-				museo.setModificada(false);
+				museo.setModificado(false);
 			} catch (IOException ex) {
 				JOptionPane.showMessageDialog(null, "Error al guardar",
 						"ERROR", JOptionPane.ERROR_MESSAGE);
@@ -493,7 +529,8 @@ public class Principal {
 						JOptionPane.WARNING_MESSAGE, null, options, options[0]);
 				if (respuesta == JOptionPane.YES_OPTION) {
 					try {
-						Fichero.guardarComo(museo, Fichero.getFichero());
+						Fichero.guardarComo((GestionMuseo) museo,
+								Fichero.getFichero());
 					} catch (IOException ex) {
 						JOptionPane.showMessageDialog(null,
 								"Error al guardar el archivo", "ERROR",
@@ -506,7 +543,7 @@ public class Principal {
 			}
 
 			frame.setTitle(Fichero.getFichero().getName());
-			museo.setModificada(false);
+			museo.setModificado(false);
 		}
 	}
 
@@ -517,14 +554,16 @@ public class Principal {
 	 * @throws ClassNotFoundException
 	 */
 	private void abrir() {
-		if (museo.isModificada()) {
+		if (museo.isModificado()) {
 			Object[] options = { "SI", "NO", "CANCELAR" };
 			int respuesta = JOptionPane.showOptionDialog(null,
-					"¿Deseas Guardar?", "Archivo sin guardar",
+					"¿Desea Guardar?", "Archivo sin guardar",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 					null, options, options[0]);
 			if (respuesta == JOptionPane.YES_OPTION)
 				guardarComo();
+			else if (respuesta == JOptionPane.CANCEL_OPTION)
+				return;
 			else {
 				try {
 					abrirFichero();
@@ -548,7 +587,7 @@ public class Principal {
 	}
 
 	/**
-	 * Metodo que crea un FileChooser
+	 * Método que crea un FileChooser
 	 * 
 	 * @throws FileNotFoundException
 	 * @throws ClassNotFoundException
@@ -560,10 +599,29 @@ public class Principal {
 		fileChooser.addChoosableFileFilter(filtro);
 		if (fileChooser.showDialog(fileChooser, "Abrir Fichero") == JFileChooser.APPROVE_OPTION) {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
-			museo = (GestionMuseo) Fichero.abrir(fileChooser.getSelectedFile());	
+			museo = (GestionMuseo) Fichero.abrir(fileChooser.getSelectedFile());
 			frame.setTitle(Fichero.getFichero().getName());
 			JOptionPane.showMessageDialog(null, "Cargado con exito");
-}
 		}
 	}
 
+	/**
+	 * Permite salir del programa comprobando si hay archivos modificados, si es
+	 * así pregunta si se desea guardar antes de salir.
+	 */
+	private void salir() {
+		if (museo.isModificado()) {
+			Object[] options = { "SI", "NO", "CANCELAR" };
+			int respuesta = JOptionPane.showOptionDialog(null,
+					"No ha guardado, ¿Desea Guardar?", "Archivo sin guardar",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+					null, options, options[0]);
+			if (respuesta == JOptionPane.YES_OPTION)
+				guardarComo();
+			else if (respuesta == JOptionPane.NO_OPTION)
+				System.exit(0);
+		} else {
+			System.exit(0);
+		}
+	}
+}

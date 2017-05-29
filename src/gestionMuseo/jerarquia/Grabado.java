@@ -6,10 +6,11 @@ import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
-import gestionMuseo.excepciones.TituloNoValidoException;
+import gestionMuseo.excepciones.SinTipoGrabadoException;
 
 public class Grabado extends ObraDeArte implements Serializable{
 
+	private static final long serialVersionUID = 1L;
 	private TipoDeGrabado tipoDeGrabado;
 
 	public Grabado(String nombre, String autor, String localizacion,
@@ -17,10 +18,10 @@ public class Grabado extends ObraDeArte implements Serializable{
 			String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
 			throws AutorNoValidoException,
-			TituloNoValidoException, EstiloNoValidoException{
+			EstiloNoValidoException, SinTipoGrabadoException{
 		super(nombre, autor, localizacion, estiloArtistico, donada,
 				personaEntidad, fama, valor, alto, ancho);
-		this.tipoDeGrabado = tipoDeGrabado;
+		setTipoDeGrabado(tipoDeGrabado);
 		setCosteRestauracion(calcularPrecioRestauracion());
 	}
 
@@ -53,8 +54,12 @@ public class Grabado extends ObraDeArte implements Serializable{
 		return tipoDeGrabado;
 	}
 
-	public void setTipoDeGrabado(TipoDeGrabado tipoDeGrabado) {
-		this.tipoDeGrabado = tipoDeGrabado;
+	public void setTipoDeGrabado(TipoDeGrabado tipoDeGrabado) throws SinTipoGrabadoException {
+		if (tipoDeGrabado != null)
+			this.tipoDeGrabado = tipoDeGrabado;
+		else
+			throw new SinTipoGrabadoException("Debe se\u00f1alar el tipo de escultura");
+		
 	}
 
 }

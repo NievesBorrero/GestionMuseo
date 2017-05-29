@@ -11,7 +11,11 @@ import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraNoExisteException;
-import gestionMuseo.excepciones.TituloNoValidoException;
+import gestionMuseo.excepciones.SinMaterialException;
+import gestionMuseo.excepciones.SinSoporteException;
+import gestionMuseo.excepciones.SinTecnicaException;
+import gestionMuseo.excepciones.SinTipoEsculturaException;
+import gestionMuseo.excepciones.SinTipoGrabadoException;
 import gestionMuseo.jerarquia.Dibujo;
 import gestionMuseo.jerarquia.Escultura;
 import gestionMuseo.jerarquia.Grabado;
@@ -25,7 +29,9 @@ import java.util.ListIterator;
 import javax.swing.JOptionPane;
 
 /**
- * JDialog que recorre el iterador de obras de arte permitiendo modificarlas y guardar los cambios.
+ * JDialog que recorre el iterador de obras de arte permitiendo modificarlas y
+ * guardar los cambios.
+ * 
  * @author Nieves Borrero.
  *
  */
@@ -43,142 +49,141 @@ public class ModificarObra extends MostrarObrasMuseo {
 
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				double fama=  Double.parseDouble(spFama.getValue().toString());
-				double valor= Double.parseDouble(spValor.getValue().toString());
-				double alto= Double.parseDouble(spAlto.getValue().toString());
-				double ancho= Double.parseDouble(spAncho.getValue().toString());
-				double profundidad=  Double.parseDouble(spprof.getValue().toString());
-				
-				Pintura pintura=null;
-				Escultura escultura=null;
-				Grabado grabado=null;
-				Dibujo dibujo= null;
-				
-					try {
-						if(getObraMostrada() instanceof Pintura){
-							pintura = (Pintura) obraMostrada;
-							modificarPintura(fama, valor, alto, ancho, pintura);
-						}
-						else if(getObraMostrada() instanceof Escultura){
-							escultura = (Escultura) obraMostrada;
-							modificarEscultura(fama, valor, alto, ancho,
-									profundidad, escultura);		
-						}
-						else if(getObraMostrada() instanceof Grabado){
-							grabado= (Grabado) obraMostrada;
-							modificarGrabado(fama, valor, alto, ancho, grabado);
-						}
-						else{
-							dibujo= (Dibujo) obraMostrada;
-							modificarDibujo(fama, valor, alto, ancho, dibujo);
-						}
-						
-						//actualizarItObras();
-						
-					} catch (AutorNoValidoException e1) {
-						JOptionPane.showMessageDialog(contentPanel,
-								e1.getMessage(), "Error",
-								JOptionPane.ERROR_MESSAGE);
-					} catch (TituloNoValidoException e1) {
-						JOptionPane.showMessageDialog(contentPanel,
-								e1.getMessage(), "Error",
-								JOptionPane.ERROR_MESSAGE);
-					} catch (EstiloNoValidoException e1) {
-						JOptionPane.showMessageDialog(contentPanel,
-								e1.getMessage(), "Error",
-								JOptionPane.ERROR_MESSAGE);
-					} catch (ObraNoExisteException e1) {
-						JOptionPane.showMessageDialog(contentPanel,
-								e1.getMessage(), "Error",
-								JOptionPane.ERROR_MESSAGE);
+				double fama = Double.parseDouble(spFama.getValue().toString());
+				double valor = Double
+						.parseDouble(spValor.getValue().toString());
+				double alto = Double.parseDouble(spAlto.getValue().toString());
+				double ancho = Double
+						.parseDouble(spAncho.getValue().toString());
+				double profundidad = Double.parseDouble(spprof.getValue()
+						.toString());
+
+				Pintura pintura = null;
+				Escultura escultura = null;
+				Grabado grabado = null;
+				Dibujo dibujo = null;
+
+				try {
+					if (getObraMostrada() instanceof Pintura) {
+						pintura = (Pintura) obraMostrada;
+						modificarPintura(fama, valor, alto, ancho, pintura);
+					} else if (getObraMostrada() instanceof Escultura) {
+						escultura = (Escultura) obraMostrada;
+						modificarEscultura(fama, valor, alto, ancho,
+								profundidad, escultura);
+					} else if (getObraMostrada() instanceof Grabado) {
+						grabado = (Grabado) obraMostrada;
+						modificarGrabado(fama, valor, alto, ancho, grabado);
+					} else {
+						dibujo = (Dibujo) obraMostrada;
+						modificarDibujo(fama, valor, alto, ancho, dibujo);
 					}
+					
+					Principal.museo.setModificado(true);
+
+				} catch (AutorNoValidoException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (EstiloNoValidoException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (ObraNoExisteException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (SinMaterialException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (SinSoporteException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (SinTipoEsculturaException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (SinTipoGrabadoException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (SinTecnicaException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
+			}
 
-			
-
-			
 		});
 	}
-	
+
 	/**
 	 * Modifica los datos de una pintura del museo.
+	 * 
 	 * @param fama
 	 * @param valor
 	 * @param alto
 	 * @param ancho
 	 * @param pintura
 	 * @throws AutorNoValidoException
-	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws ObraNoExisteException
+	 * @throws SinSoporteException
+	 * @throws SinMaterialException
 	 */
-	private void modificarPintura(double fama, double valor,
-			double alto, double ancho, Pintura pintura)
-			throws AutorNoValidoException, TituloNoValidoException,
-			EstiloNoValidoException, ObraNoExisteException {
-		Principal.museo.modificarPintura(
-		Principal.museo.indexOf(pintura), textTitulo.getText(),
-		textAutor.getText(), textLocal.getText(),
-		(EstiloArtistico) cbEA.getSelectedItem(),
-		rbDonada.isSelected(), textPersona.getText(),
-		fama, valor,
-		(Soporte) cb1.getSelectedItem(),
-		(MaterialPintura) cb2.getSelectedItem(),
-		alto, ancho);
+	private void modificarPintura(double fama, double valor, double alto,
+			double ancho, Pintura pintura) throws AutorNoValidoException,
+			EstiloNoValidoException, ObraNoExisteException,
+			SinMaterialException, SinSoporteException {
+		Principal.museo.modificarPintura(Principal.museo.indexOf(pintura),
+				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
+				(EstiloArtistico) cbEA.getSelectedItem(),
+				rbDonada.isSelected(), textPersona.getText(), fama, valor,
+				(Soporte) cb1.getSelectedItem(),
+				(MaterialPintura) cb2.getSelectedItem(), alto, ancho);
 	}
-	
+
 	/**
 	 * Modifica los datos de un dibujo del museo.
+	 * 
 	 * @param fama
 	 * @param valor
 	 * @param alto
 	 * @param ancho
 	 * @param dibujo
 	 * @throws AutorNoValidoException
-	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
+	 * @throws SinTecnicaException
 	 */
-	private void modificarDibujo(double fama, double valor,
-			double alto, double ancho, Dibujo dibujo)
-			throws AutorNoValidoException, TituloNoValidoException,
-			EstiloNoValidoException {
-		Principal.museo.modificarDibujo(
-				Principal.museo.indexOf(dibujo), textTitulo.getText(),
-				textAutor.getText(), textLocal.getText(),
+	private void modificarDibujo(double fama, double valor, double alto,
+			double ancho, Dibujo dibujo) throws AutorNoValidoException,
+			EstiloNoValidoException, SinTecnicaException {
+		Principal.museo.modificarDibujo(Principal.museo.indexOf(dibujo),
+				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(),
-				fama, valor, 
-				(TecnicaDeDibujo) cb1.getSelectedItem(),
-				alto, ancho);
+				rbDonada.isSelected(), textPersona.getText(), fama, valor,
+				(TecnicaDeDibujo) cb1.getSelectedItem(), alto, ancho);
 	}
 
 	/**
 	 * Modifica los datos de un grabado del museo.
+	 * 
 	 * @param fama
 	 * @param valor
 	 * @param alto
 	 * @param ancho
 	 * @param grabado
 	 * @throws AutorNoValidoException
-	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
+	 * @throws SinTipoGrabadoException
 	 */
-	private void modificarGrabado(double fama, double valor,
-			double alto, double ancho, Grabado grabado)
-			throws AutorNoValidoException, TituloNoValidoException,
-			EstiloNoValidoException {
-		Principal.museo.modificarGrabado(
-				Principal.museo.indexOf(grabado), textTitulo.getText(),
-				textAutor.getText(), textLocal.getText(),
+	private void modificarGrabado(double fama, double valor, double alto,
+			double ancho, Grabado grabado) throws AutorNoValidoException,
+			EstiloNoValidoException, SinTipoGrabadoException {
+		Principal.museo.modificarGrabado(Principal.museo.indexOf(grabado),
+				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(),
-				fama, valor, 
-				(TipoDeGrabado) cb1.getSelectedItem(),
-				alto, ancho);
+				rbDonada.isSelected(), textPersona.getText(), fama, valor,
+				(TipoDeGrabado) cb1.getSelectedItem(), alto, ancho);
 	}
-	
+
 	/**
 	 * Modifica los datos de una escultura del museo.
+	 * 
 	 * @param fama
 	 * @param valor
 	 * @param alto
@@ -186,25 +191,23 @@ public class ModificarObra extends MostrarObrasMuseo {
 	 * @param profundidad
 	 * @param escultura
 	 * @throws AutorNoValidoException
-	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
+	 * @throws SinMaterialException
+	 * @throws SinTipoEsculturaException
 	 */
-	private void modificarEscultura(double fama, double valor,
-			double alto, double ancho, double profundidad,
-			Escultura escultura) throws AutorNoValidoException,
-			TituloNoValidoException, EstiloNoValidoException {
-		Principal.museo.modificarEscultura(
-				Principal.museo.indexOf(escultura), textTitulo.getText(),
-				textAutor.getText(), textLocal.getText(),
+	private void modificarEscultura(double fama, double valor, double alto,
+			double ancho, double profundidad, Escultura escultura)
+			throws AutorNoValidoException, EstiloNoValidoException,
+			SinTipoEsculturaException, SinMaterialException {
+		Principal.museo.modificarEscultura(Principal.museo.indexOf(escultura),
+				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
 				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(),
-				fama, valor, 
+				rbDonada.isSelected(), textPersona.getText(), fama, valor,
 				(TipoEscultura) cb1.getSelectedItem(),
-				(MaterialEscultura) cb2.getSelectedItem(),
-				alto, ancho, profundidad);
+				(MaterialEscultura) cb2.getSelectedItem(), alto, ancho,
+				profundidad);
 	}
-	
-	
+
 	private void habilitarComponentes() {
 		cbTipo.setEnabled(true);
 		textTitulo.setEnabled(true);
@@ -236,8 +239,8 @@ public class ModificarObra extends MostrarObrasMuseo {
 		spValor.setEnabled(true);
 
 	}
-	
-	void inhabilitarComponentes(){
+
+	void inhabilitarComponentes() {
 		cbTipo.setEnabled(false);
 		textcod.setEnabled(false);
 	}

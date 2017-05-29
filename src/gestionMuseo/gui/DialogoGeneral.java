@@ -234,11 +234,13 @@ public class DialogoGeneral extends JDialog {
 		ingresosYgastos.add(lblFama);
 		
 		spCosteExp = new JSpinner();
+		spCosteExp.setEnabled(false);
 		spCosteExp.setBounds(186, 23, 64, 20);
 		spCosteExp.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
 		ingresosYgastos.add(spCosteExp);
 		
 		spCostRest = new JSpinner();
+		spCostRest.setEnabled(false);
 		spCostRest.setBounds(186, 50, 64, 20);
 		spCostRest.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
 		ingresosYgastos.add(spCostRest);
@@ -400,6 +402,7 @@ public class DialogoGeneral extends JDialog {
 	 * Limpia el diálogo eliminando todo lo que se ha rellenado previamente.
 	 */
 	void limpiar(){
+	
 		lblCombobox1.setVisible(false);
 		cb1.setVisible(false);
 		lblCombobox2.setVisible(false);

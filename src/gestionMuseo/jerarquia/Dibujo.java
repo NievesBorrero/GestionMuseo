@@ -7,9 +7,11 @@ import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
-import gestionMuseo.excepciones.TituloNoValidoException;
+import gestionMuseo.excepciones.SinTecnicaException;
 
 public class Dibujo extends ObraDeArte implements Serializable{
+	
+	private static final long serialVersionUID = 1L;
 	
 	TecnicaDeDibujo tecnica;
 	Soporte soporte= Soporte.PAPEL;
@@ -22,10 +24,10 @@ public class Dibujo extends ObraDeArte implements Serializable{
  double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException,
-			TituloNoValidoException, EstiloNoValidoException{
+			EstiloNoValidoException, SinTecnicaException{
 		super(titulo, autor, localizacion, estiloArtistico,
 				donada, personaEntidad, fama, valor, alto, ancho);
-		this.tecnica = tecnica;
+		setTecnica(tecnica);
 		setCosteExposicion(costeExposicion+plusExposicion);
 		setCosteRestauracion(calcularPrecioRestauracion());
 		
@@ -39,8 +41,11 @@ public class Dibujo extends ObraDeArte implements Serializable{
 		return tecnica;
 	}
 
-	public void setTecnica(TecnicaDeDibujo tecnica) {
-		this.tecnica = tecnica;
+	public void setTecnica(TecnicaDeDibujo tecnica) throws SinTecnicaException {
+		if (tecnica != null)
+			this.tecnica = tecnica;
+		else
+			throw new SinTecnicaException("Debe se\u00f1alar la t\u00e9cnica de dibujo");	
 	}
 
 	public Soporte getSoporte() {
