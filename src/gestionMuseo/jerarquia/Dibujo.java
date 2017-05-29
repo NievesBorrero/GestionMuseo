@@ -30,7 +30,6 @@ public class Dibujo extends ObraDeArte implements Serializable{
 		setTecnica(tecnica);
 		setCosteExposicion(costeExposicion+plusExposicion);
 		setCosteRestauracion(calcularPrecioRestauracion());
-		
 	}
 	
 	public Dibujo(int codigo){
@@ -57,8 +56,9 @@ public class Dibujo extends ObraDeArte implements Serializable{
 	}
 
 	@Override
+	public
 	double calcularPrecioRestauracion() {
-		return getValor()+soporte.getPrecio();
+		return getValor()+soporte.getPrecio()+ getEstadoConservacion().getPrecio();
 	}
 
 

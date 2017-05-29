@@ -51,7 +51,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 									.showOptionDialog(
 											contentPanel,
 											"La obra esta en mal estado\n su coste de restauracion es "
-													+ obra.getCosteExposicion()+" euros, "
+													+ obra.calcularPrecioRestauracion()+" euros, "
 													+ "\n deseas restaurarla para exponerla?",
 											"Confirmar",
 											JOptionPane.YES_NO_CANCEL_OPTION,

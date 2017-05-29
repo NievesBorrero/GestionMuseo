@@ -68,9 +68,10 @@ public class Escultura extends ObraDeArte implements Serializable{
 	}
 
 	@Override
+	public
 	double calcularPrecioRestauracion() {
 
-		return valor + materialEscultura.getPrecio();
+		return valor + materialEscultura.getPrecio()+getEstadoConservacion().getPrecio();
 	}
 
 	@Override

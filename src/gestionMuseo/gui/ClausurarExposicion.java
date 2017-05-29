@@ -49,6 +49,7 @@ public class ClausurarExposicion extends JDialog {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Principal.museo.clausurarExposicion();
+					Principal.museo.setModificado(true);
 					JOptionPane.showMessageDialog(
 							contentPanel,
 							"Presupuesto del museo:"

@@ -3,7 +3,21 @@ package gestionMuseo.gui;
 import gestionMuseo.GestionMuseo;
 import gestionMuseo.Ficheros.Fichero;
 import gestionMuseo.Ficheros.Filtro;
+import gestionMuseo.enumeraciones.EstiloArtistico;
+import gestionMuseo.enumeraciones.MaterialEscultura;
+import gestionMuseo.enumeraciones.MaterialPintura;
+import gestionMuseo.enumeraciones.Soporte;
+import gestionMuseo.enumeraciones.TecnicaDeDibujo;
+import gestionMuseo.enumeraciones.TipoDeGrabado;
+import gestionMuseo.enumeraciones.TipoEscultura;
+import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.NoHayFondosException;
+import gestionMuseo.excepciones.SinMaterialException;
+import gestionMuseo.excepciones.SinSoporteException;
+import gestionMuseo.excepciones.SinTecnicaException;
+import gestionMuseo.excepciones.SinTipoEsculturaException;
+import gestionMuseo.excepciones.SinTipoGrabadoException;
 
 import java.awt.EventQueue;
 
@@ -36,55 +50,54 @@ public class Principal {
 	private Filtro filtro = new Filtro(".obj", "obj");
 	private String nombreMuseo;
 
-	// static { //
-	// BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-	// try {
-	// museo.ingresarPintura("Pintura1", "autor1", "sitio",
-	// EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-	// Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-	// museo.ingresarPintura("Pintura2", "autor2", "sitio",
-	// EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-	// Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-	// museo.ingresarPintura("Pintura3", "autor3", "sitio",
-	// EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-	// Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-	// museo.ingresarEscultura("Escultura", "autor", "calle",
-	// EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
-	// TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
-	// 0.3, 0.4, 0.5);
-	// museo.ingresarGrabado("grabado", "autor", "lala",
-	// EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
-	// TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
-	// museo.ingresarGrabado("grabado2", "pepe", "ronda",
-	// EstiloArtistico.ISLAMICO, true, "persona", 0.3, 0.5,
-	// TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
-	// museo.ingresarDibujo("dibujo", "autorr", "fuente",
-	// EstiloArtistico.CUBISTA, false, "personita", 0.6, 0.5,
-	// TecnicaDeDibujo.CARBONCILLO, 0.10, 0.5);
-	//
-	// } catch (AutorNoValidoException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (EstiloNoValidoException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (SinMaterialException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (SinSoporteException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (SinTipoGrabadoException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (SinTipoEsculturaException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// } catch (SinTecnicaException e) {
-	// // TODO Auto-generated catch block
-	// e.printStackTrace();
-	// }
-	// }
+	 static { // BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+		 try {
+			 museo.ingresarPintura("Pintura1", "autor1", "sitio",
+			 EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+			 Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+			 museo.ingresarPintura("Pintura2", "autor2", "sitio",
+			 EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+			 Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+			 museo.ingresarPintura("Pintura3", "autor3", "sitio",
+			 EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
+			 Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
+			 museo.ingresarEscultura("Escultura", "autor", "calle",
+			 EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
+			 TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
+			 0.3, 0.4, 0.5);
+			 museo.ingresarGrabado("grabado", "autor", "lala",
+			 EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
+			 TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
+			 museo.ingresarGrabado("grabado2", "pepe", "ronda",
+			 EstiloArtistico.ISLAMICO, true, "persona", 0.3, 0.5,
+			 TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
+			 museo.ingresarDibujo("dibujo", "autorr", "fuente",
+			 EstiloArtistico.CUBISTA, false, "personita", 0.6, 0.5,
+			 TecnicaDeDibujo.CARBONCILLO, 0.10, 0.5);
+		
+		 } catch (AutorNoValidoException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 } catch (EstiloNoValidoException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 } catch (SinMaterialException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 } catch (SinSoporteException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 } catch (SinTipoGrabadoException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 } catch (SinTipoEsculturaException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 } catch (SinTecnicaException e) {
+		 // TODO Auto-generated catch block
+		 e.printStackTrace();
+		 }
+		 }
 
 	/**
 	 * Launch the application.
@@ -423,6 +436,12 @@ public class Principal {
 		JMenuItem mntmRestaurarObra = new JMenuItem("Restaurar obra");
 		mntmRestaurarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+					System.out.println(museo.getObra(1).getEstadoConservacion());
+				} catch (NoHayFondosException e1) {
+		
+				}
+
 				if (museo.comprobarObrasDaniadas()) {
 					RestaurarObras obrasDaniadas;
 					try {

@@ -66,7 +66,7 @@ public class Pintura extends ObraDeArte implements Serializable {
 
 	@Override
 	public double calcularPrecioRestauracion() {
-		return valor + material.getPrecio() + soporte.getPrecio();
+		return valor + material.getPrecio() + soporte.getPrecio()+ getEstadoConservacion().getPrecio();
 
 	}
 

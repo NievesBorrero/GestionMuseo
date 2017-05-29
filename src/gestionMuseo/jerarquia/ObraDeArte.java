@@ -51,7 +51,7 @@ public abstract class ObraDeArte implements Serializable {
 	private int codigo;
 	private static int ID = 1;
 
-	protected EstadoDeConservacion estadoConservacion = EstadoDeConservacion.BUENO;
+	protected EstadoDeConservacion estadoConservacion = EstadoDeConservacion.MALO;
 
 	protected int danio = 0;
 	private boolean donada;
@@ -219,8 +219,7 @@ public abstract class ObraDeArte implements Serializable {
 	}
 
 	/**
-	 * Cambia el valor de daño de la obra a cero y devuelve el precio de
-	 * restauración.
+	 * Cambia el valor de daño de la obra a cero.
 	 * 
 	 * @return precio de la restauración.
 	 * @throws ObraNoDaniadaException .
@@ -229,11 +228,14 @@ public abstract class ObraDeArte implements Serializable {
 		if (getEstadoConservacion() == EstadoDeConservacion.BUENO)
 			throw new ObraNoDaniadaException(
 					"No se puede restaurar, la obra no est\u00e1 da\u00f1ada");
-
-		this.restaurada = true;
+		
+		setRestaurada(true);
 		this.danio = 0;
-		setCosteRestauracion(getCosteRestauracion() + getValor());
-		return getCosteRestauracion();
+		return calcularPrecioRestauracion();
+	}
+
+	public void setRestaurada(boolean restaurada) {
+		this.restaurada = restaurada;
 	}
 
 	/**
@@ -242,7 +244,7 @@ public abstract class ObraDeArte implements Serializable {
 	 * 
 	 * @return precioRestauracion (double)
 	 */
-	abstract double calcularPrecioRestauracion();
+	public abstract double calcularPrecioRestauracion();
 
 	/**
 	 * Cambia la sala a almacén y cambia el valor de expuesta a false, si la

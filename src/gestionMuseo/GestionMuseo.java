@@ -848,6 +848,9 @@ public class GestionMuseo implements Serializable, Presupuestable {
 
 		while (it.hasNext()) {
 			obra = (ObraDeArte) it.next();
+			if (obra.isRestaurada()){
+				obra.setRestaurada(false);
+			}
 			if (obra.isExpuesta()) {
 				obra.recogerObra();
 			}
@@ -867,11 +870,13 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		ListIterator<ObraDeArte> it = museo.listIterator();
 		while (it.hasNext()) {
 			obra = (ObraDeArte) it.next();
+			System.out.println("aqui en el comprobar arriba dice que el estado es: "+obra.getEstadoConservacion());
 			if (obra.getEstadoConservacion() != EstadoDeConservacion.BUENO) {
 				daniadas++;
 			}
+			
 		}
-		if (daniadas < 0)
+		if (daniadas > 0)
 			return true;
 		return false;
 	}

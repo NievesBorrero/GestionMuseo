@@ -46,8 +46,8 @@ public class Grabado extends ObraDeArte implements Serializable{
 //	}
 
 	@Override
-	double calcularPrecioRestauracion() {
-		return valor + tipoDeGrabado.getPrecio();
+	public double calcularPrecioRestauracion() {
+		return valor + tipoDeGrabado.getPrecio()+ getEstadoConservacion().getPrecio();
 	}
 
 	public TipoDeGrabado getTipoDeGrabado() {
