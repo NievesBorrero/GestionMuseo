@@ -41,9 +41,9 @@ public class Grabado extends ObraDeArte implements Serializable{
 	 * 
 	 * @param codigo
 	 */
-//	public Grabado(String titulo) {
-//		super(titulo);
-//	}
+	public Grabado(String titulo) {
+	super(titulo);
+	}
 
 	@Override
 	public double calcularPrecioRestauracion() {

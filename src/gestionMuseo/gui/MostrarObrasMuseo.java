@@ -34,7 +34,6 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		inhabilitarComponentes();
 		btnIzquierda.setVisible(false);
 		
-		cbOrdenar.setSelectedItem(null);
 
 		actualizarMostrar(itObras);
 
@@ -58,25 +57,9 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 				nextObra();
 			}
 		});
-		cbOrdenar.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent arg0) {
-				if (cbOrdenar.getSelectedItem() == "Título") {
-					Principal.museo.ordenarPorTitulo();
-					actualizarItObras();
-					nextObra();
-					btnAnterior.setEnabled(false);
-
-				} else if (cbOrdenar.getSelectedItem() == "Coste restauración") {
-					Principal.museo.ordenarPorcosteRestauracion();
-					actualizarItObras();
-					nextObra();
-					btnAnterior.setEnabled(false);
-
-				}
-			}
-		});
+		
 	}
-
+		
 	
 	private void actualizarMostrar(ListIterator<ObraDeArte> itObras) {
 		mostrar(itObras.next());
@@ -137,9 +120,30 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		}
 
 	}
+	
+	private void ordenarPorCosteRestauracion() {
+		Principal.museo.ordenarPorcosteRestauracion();
+		actualizarItObras();
+		nextObra();
+		btnAnterior.setEnabled(false);
+	}
+
+	private void ordenarPorTitulo() {
+		Principal.museo.ordenarPorTitulo();
+		actualizarItObras();
+		nextObra();
+		btnAnterior.setEnabled(false);
+	}
+
+	private void ordenarPorCodigo() {
+		Principal.museo.ordenarPorCodigo();
+		actualizarItObras();
+		nextObra();
+		btnAnterior.setEnabled(false);
+	}
 
 	/**
-	 * Actualiza el iterador con las obras de arte que hay en los fonfod de la
+	 * Actualiza el iterador con las obras de arte que hay en los fondos de la
 	 * exposición.
 	 */
 	void actualizarItObras() {
@@ -159,6 +163,7 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		textAutor.setEnabled(false);
 		textLocal.setEnabled(false);
 		textPersona.setEnabled(false);
+		textEstado.setEnabled(false);
 		rbDonada.setEnabled(false);
 		ingresosYgastos.setEnabled(false);
 		spprof.setEnabled(false);

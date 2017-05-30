@@ -45,18 +45,6 @@ public class Fondos implements Serializable {
 	}
 
 	/**
-	 * Devuelve una instancia de fondos siempre que no exista ya una.
-	 * 
-	 * @return
-	 */
-
-//	public static Fondos getInstance() {
-//		if (fondos == null)
-//			return new Fondos();
-//		return null;
-//	}
-
-	/**
 	 * A�ade una escultura al ArrayList de fondos.
 	 * 
 	 * @param nombre
@@ -243,7 +231,7 @@ public class Fondos implements Serializable {
 	 * @throws ObraNoExisteException
 	 * @throws NoHayFondosException
 	 */
-	public void eliminarObra(int indice) throws ObraNoExisteException,
+	public void eliminar(int indice) throws ObraNoExisteException,
 			NoHayFondosException {
 		if (fondos.isEmpty())
 			throw new NoHayFondosException(
@@ -267,6 +255,11 @@ public class Fondos implements Serializable {
 	public void ordenarPorTitulo() {
 		Collections.sort(fondos, new CompareTitulo());
 	}
+	
+	public void ordenarPorCodigo() {
+		Collections.sort(fondos, new CompareCodigo());	
+	}
+
 
 	/**
 	 * Ordena por nombre
@@ -279,9 +272,10 @@ public class Fondos implements Serializable {
 	 * 
 	 * @param cod
 	 * @return
+	 * @throws ObraNoExisteException 
 	 * @throws NoHayFondosException
 	 */
-	public ObraDeArte devolverPorCodigo(int cod) {
+	public ObraDeArte devolverPorCodigo(int cod) throws ObraNoExisteException {
 
 		ObraDeArte obra;
 		ListIterator<ObraDeArte> it = fondos.listIterator();
@@ -292,8 +286,31 @@ public class Fondos implements Serializable {
 				return obra;
 			}
 		}
-		return null;
+		throw new ObraNoExisteException("La obra que buscas no existe");
 	}
+	
+	/**
+	 * 
+	 * @param cod
+	 * @return
+	 * @throws ObraNoExisteException 
+	 * @throws NoHayFondosException
+	 */
+	public ObraDeArte devolverPorTitulo(String titulo) throws ObraNoExisteException {
+
+		ObraDeArte obra;
+		ListIterator<ObraDeArte> it = fondos.listIterator();
+
+		while (it.hasNext()) {
+			obra = (ObraDeArte) it.next();
+			if (obra.getTitulo().equalsIgnoreCase(titulo)) {
+				return obra;
+			}
+		}
+		throw new ObraNoExisteException("La obra que buscas no existe");
+	}
+	
+	
 
 	/**
 	 * Devuelve el tamaño del ArrayList de fondos
@@ -712,4 +729,5 @@ public class Fondos implements Serializable {
 		return fondos.isEmpty();
 	}
 
+	
 }

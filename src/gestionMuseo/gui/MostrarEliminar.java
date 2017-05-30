@@ -39,20 +39,31 @@ public class MostrarEliminar extends MostrarObrasMuseo {
 				if (opcion == JOptionPane.YES_OPTION) {
 
 					itObras.remove();
-					actualizarListIterator(Principal.museo);
-
-					if (itObras.hasNext()) {
-						nextObra();
-						actualizarBotones();
-
-					}
-
-					else if (itObras.hasPrevious()) {
-						previousObra();
-						actualizarBotones();
-					} else
+					//actualizarListIterator(Principal.museo);
+					
+					if(!itObras.hasNext()&&!itObras.hasPrevious())
 						setVisible(false);
 
+					else if (!itObras.hasNext()) {
+						previousObra();
+//						if (!itObras.hasNext())
+//							btnDerecha.setEnabled(false);
+//						else 
+//							btnDerecha.setEnabled(true);
+//						if (!itObras.hasPrevious())
+//							btnAnterior.setEnabled(false);
+//						else 
+//							btnAnterior.setEnabled(true);
+						//actualizarBotones();
+
+					}else{
+						nextObra();
+//						if (!itObras.hasNext())
+//							btnDerecha.setEnabled(false);
+//						if (!itObras.hasPrevious())
+//							btnAnterior.setEnabled(false);
+						//actualizarBotones();
+					} 
 				}
 			}
 

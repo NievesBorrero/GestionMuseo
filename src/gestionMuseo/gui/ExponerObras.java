@@ -7,6 +7,7 @@ import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
+import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.jerarquia.ObraDeArte;
 
 import java.awt.event.ActionEvent;
@@ -19,7 +20,7 @@ import javax.swing.JOptionPane;
 public class ExponerObras extends MostrarObrasMuseo {
 
 	private static final long serialVersionUID = 1L;
-	ObraDeArte obra;
+	private ObraDeArte obra;
 
 	/**
 	 * Create the dialog.
@@ -60,11 +61,13 @@ public class ExponerObras extends MostrarObrasMuseo {
 
 							if (opcion == JOptionPane.YES_OPTION) {
 								try {
-									obra.restaurar();
+									Principal.museo.restaurar(obra);
 									obra.exponerObra(getSala());
 									Principal.museo.setModificado(true);
 								} catch (ObraNoDaniadaException e1) {
 									// Aquí no debería entrar.
+								} catch (NoHayFondosException e1) {
+ 									e1.printStackTrace();
 								}
 
 							}
@@ -92,6 +95,12 @@ public class ExponerObras extends MostrarObrasMuseo {
 				} catch (EstadoNoAdecuadoException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+				} catch (NumberFormatException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				} catch (ObraNoExisteException e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
 				}
 			}
 		});

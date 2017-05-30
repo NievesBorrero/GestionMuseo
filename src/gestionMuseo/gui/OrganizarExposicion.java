@@ -111,7 +111,7 @@ public class OrganizarExposicion extends JDialog {
 	public LocalDate getFecha(JSpinner spinner) {
 		Calendar calendar = Calendar.getInstance(); // toma el día de hoy
 		calendar.setTime((Date) spinner.getModel().getValue()); // date que me devuelve.
-		LocalDate fecha = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
+		LocalDate fecha = LocalDate.of(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH)+1,
 				calendar.get(Calendar.DAY_OF_MONTH)); // A partir de date creo una localdate.
 		return fecha;
 	}

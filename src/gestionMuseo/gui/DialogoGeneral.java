@@ -51,54 +51,57 @@ public class DialogoGeneral extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
 	
-	protected final JPanel contentPanel = new JPanel();
-	
-	protected JTextField textTitulo;
-	protected JTextField textLocal;
-	protected JTextField textAutor;
-	protected final ButtonGroup buttonGroup_ad = new ButtonGroup();
-	protected JTextField textPersona;
-	protected JComboBox<PeriodoHistorico>cbPH;
-	protected JComboBox<EstiloArtistico> cbEA;
-	protected JRadioButton rbDonada;
-	protected JRadioButton rbComprada; 
-	protected JButton btnAnterior;
-	protected JButton btnIzquierda;
-	protected JButton btnDerecha;
-	protected JSpinner spAlto;
-	protected JSpinner spAncho;
-	protected JSpinner spCosteExp;
-	protected JSpinner spCostRest;
-	protected JSpinner spValor;
-	protected JSpinner spFama;
-	protected JLabel lblCombobox1;
-	protected JLabel lblCombobox2;
-	protected JComboBox cb1;
-	protected JComboBox cb2;
-	protected JButton btnSiguiente;
-	protected JLabel lblProfundidad;
-	protected JSpinner spprof;
-	protected JLabel lblCosteDeExposicion;
-	protected JLabel lblCosteRestauracin;
-	protected JLabel lblValor;
-	protected JLabel lblFama;
-	private final ButtonGroup buttonGroup_salas = new ButtonGroup();
-	protected JRadioButton rbSala_1;
-	protected JRadioButton rbSala_2;
-	protected JRadioButton rbSala_3;
-	protected JPanel ingresosYgastos;
-	protected JPanel panel_salas;
-	protected JPanel panel_medidas;
-	protected JTextField textcod;
-	protected JLabel lblcod;
-	protected JComboBox cbTipo;
+	final JPanel contentPanel = new JPanel();	
+	JTextField textTitulo;
+	JTextField textLocal;
+	JTextField textAutor;
+	JTextField textPersona;
+	JComboBox<PeriodoHistorico>cbPH;
+	JComboBox<EstiloArtistico> cbEA;
+	JRadioButton rbDonada;
+	JRadioButton rbComprada; 
+	JButton btnAnterior;
+	JButton btnIzquierda;
+	JButton btnDerecha;
+	JSpinner spAlto;
+	JSpinner spAncho;
+	JSpinner spCosteExp;
+	JSpinner spCostRest;
+	JSpinner spValor;
+	JSpinner spFama;
+	JLabel lblCombobox1;
+	JLabel lblCombobox2;
+	JComboBox cb1;
+	JComboBox cb2;
+	JButton btnSiguiente;
+	JLabel lblProfundidad;
+	JSpinner spprof;
+	JLabel lblCosteDeExposicion;
+	JLabel lblCosteRestauracin;
+	JLabel lblValor;
+	JLabel lblFama;
+	JLabel lblLocal;
+	JLabel lblAutor;
+	JLabel lblPersonaentidad;
+	JLabel lblPeriodoHistrico;
+	JLabel lblestado;
+	JRadioButton rbSala_1;
+	JRadioButton rbSala_2;
+	JRadioButton rbSala_3;
+	JPanel ingresosYgastos;
+	JPanel panel_salas;
+	JPanel panel_medidas;
+	JTextField textcod;
+	JLabel lblcod;
+	JComboBox cbTipo;
 	JPanel panel_adquisicion;
 	JRadioButton rbAlmacen;
-	protected JLabel lblFechaDeIngreso;
-	protected JTextField textFecha;
-	JLabel lblOrdenarPor;
-	JComboBox cbOrdenar;
+	JLabel lblFechaDeIngreso;
+	JTextField textFecha;
 	ObraDeArte obraMostrada;
+	private final ButtonGroup buttonGroup_ad = new ButtonGroup();
+	private final ButtonGroup buttonGroup_salas = new ButtonGroup();
+	JTextField textEstado;
 	
 	/**
 	 * Create the dialog.
@@ -106,44 +109,43 @@ public class DialogoGeneral extends JDialog {
 	public DialogoGeneral() {
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 649, 487);
+		setBounds(100, 100, 649, 523);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-
-		{
-			JLabel lblTtulo = new JLabel("T\u00EDtulo");
-			lblTtulo.setBounds(22, 56, 70, 17);
-			contentPanel.add(lblTtulo);
-		}
+		
+		JLabel lblTtulo = new JLabel("T\u00EDtulo");
+		lblTtulo.setBounds(22, 56, 70, 17);
+		contentPanel.add(lblTtulo);
+		
 		
 		textTitulo = new JTextField();
-		textTitulo.setBounds(127, 56, 114, 19);
+		textTitulo.setBounds(127, 56, 164, 19);
 		contentPanel.add(textTitulo);
 		textTitulo.setColumns(10);
 		
 		textLocal = new JTextField();
 		textLocal.setColumns(10);
-		textLocal.setBounds(127, 111, 114, 19);
+		textLocal.setBounds(127, 111, 164, 19);
 		contentPanel.add(textLocal);
 		
-		JLabel lblLocal = new JLabel("Localizaci\u00F3n");
+		lblLocal = new JLabel("Localizaci\u00F3n");
 		lblLocal.setBounds(22, 112, 97, 15);
 		contentPanel.add(lblLocal);
 		
 		textAutor = new JTextField();
 		textAutor.setColumns(10);
-		textAutor.setBounds(127, 80, 114, 19);
+		textAutor.setBounds(127, 80, 164, 19);
 		contentPanel.add(textAutor);
 		
-		JLabel lblAutor_1 = new JLabel("Autor");
-		lblAutor_1.setBounds(22, 85, 70, 15);
-		contentPanel.add(lblAutor_1);
+		lblAutor = new JLabel("Autor");
+		lblAutor.setBounds(22, 85, 70, 15);
+		contentPanel.add(lblAutor);
 		
 		panel_adquisicion = new JPanel();
 		panel_adquisicion.setBorder(new TitledBorder(null, "Adquisici\u00F3n", TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
-		panel_adquisicion.setBounds(22, 298, 229, 105);
+		panel_adquisicion.setBounds(22, 319, 229, 105);
 		contentPanel.add(panel_adquisicion);
 		panel_adquisicion.setLayout(null);
 		
@@ -157,7 +159,7 @@ public class DialogoGeneral extends JDialog {
 		rbComprada.setBounds(110, 19, 111, 23);
 		panel_adquisicion.add(rbComprada);
 		
-		JLabel lblPersonaentidad = new JLabel("Persona/Entidad");
+		lblPersonaentidad = new JLabel("Persona/Entidad");
 		lblPersonaentidad.setBounds(8, 50, 135, 15);
 		panel_adquisicion.add(lblPersonaentidad);
 		
@@ -166,7 +168,7 @@ public class DialogoGeneral extends JDialog {
 		panel_adquisicion.add(textPersona);
 		textPersona.setColumns(10);
 		
-		JLabel lblPeriodoHistrico = new JLabel("Periodo hist\u00F3rico");
+		lblPeriodoHistrico = new JLabel("Periodo hist\u00F3rico");
 		lblPeriodoHistrico.setBounds(309, 54, 129, 15);
 		contentPanel.add(lblPeriodoHistrico);
 
@@ -213,7 +215,7 @@ public class DialogoGeneral extends JDialog {
 		
 		ingresosYgastos = new JPanel();
 		ingresosYgastos.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Ingresos y gastos", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		ingresosYgastos.setBounds(309, 287, 308, 116);
+		ingresosYgastos.setBounds(309, 308, 308, 116);
 		contentPanel.add(ingresosYgastos);
 		ingresosYgastos.setLayout(null);
 		
@@ -256,19 +258,19 @@ public class DialogoGeneral extends JDialog {
 		ingresosYgastos.add(spFama);
 		
 		btnAnterior = new JButton("        ");
-		btnAnterior.setBounds(22, 426, 117, 25);
+		btnAnterior.setBounds(22, 458, 117, 25);
 		contentPanel.add(btnAnterior);
 		
 		btnIzquierda = new JButton("      ");
-		btnIzquierda.setBounds(300, 426, 117, 25);
+		btnIzquierda.setBounds(391, 458, 117, 25);
 		contentPanel.add(btnIzquierda);
 		
 		btnDerecha = new JButton("       ");
-		btnDerecha.setBounds(429, 426, 117, 25);
+		btnDerecha.setBounds(520, 458, 117, 25);
 		contentPanel.add(btnDerecha);
 		
 		btnSiguiente = new JButton("");
-		btnSiguiente.setBounds(171, 426, 117, 25);
+		btnSiguiente.setBounds(151, 458, 117, 25);
 		contentPanel.add(btnSiguiente);
 		
 		JPanel panel_2 = new JPanel();
@@ -326,6 +328,7 @@ public class DialogoGeneral extends JDialog {
 		panel_salas.add(rbSala_1);
 		
 		rbAlmacen = new JRadioButton("Almacén");
+		buttonGroup_salas.add(rbAlmacen);
 		rbAlmacen.setBounds(91, 51, 149, 23);
 		panel_salas.add(rbAlmacen);
 		
@@ -365,19 +368,17 @@ public class DialogoGeneral extends JDialog {
 		JSeparator separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBackground(Color.WHITE);
-		separator.setBounds(0, 420, 561, 13);
+		separator.setBounds(-12, 447, 649, 13);
 		contentPanel.add(separator);
 		
-		lblOrdenarPor = new JLabel("Ordenar por");
-		lblOrdenarPor.setBounds(247, 6, 97, 15);
-		contentPanel.add(lblOrdenarPor);
+		lblestado = new JLabel("Estado de conservación: ");
+		lblestado.setBounds(309, 269, 177, 15);
+		contentPanel.add(lblestado);
 		
-		cbOrdenar = new JComboBox();
-		
-	
-		cbOrdenar.setModel(new DefaultComboBoxModel(new String[] {"Título", "Coste restauración"}));
-		cbOrdenar.setBounds(342, 1, 164, 24);
-		contentPanel.add(cbOrdenar);
+		textEstado = new JTextField();
+		textEstado.setBounds(490, 269, 114, 19);
+		contentPanel.add(textEstado);
+		textEstado.setColumns(10);
 	}
 	
 	/**
@@ -448,6 +449,7 @@ public class DialogoGeneral extends JDialog {
 		spValor.setValue(obra.getValor());
 		spAlto.setValue(obra.getAlto());
 		spAncho.setValue(obra.getAncho());
+		textEstado.setText(obra.getEstadoConservacion().toString().toLowerCase());
 		
 		if (obra.isDonada())
 			rbDonada.setSelected(true);

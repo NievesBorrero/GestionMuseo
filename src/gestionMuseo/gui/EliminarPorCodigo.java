@@ -85,8 +85,6 @@ public class EliminarPorCodigo extends DialogoGeneral {
 	 * Hace invisibles los componentes del JDialog padre que no son necesarios.
 	 */
 	private void hacerComponentesInvisibles() {
-		lblOrdenarPor.setVisible(false);
-		cbOrdenar.setVisible(false);
 		btnAnterior.setVisible(false);
 	}
 

@@ -2,6 +2,7 @@ package gestionMuseo;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ListIterator;
 
@@ -54,6 +55,8 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	private double ingresos = 0.0;
 	private boolean modificado;
 	private int entradas;
+	private static DateTimeFormatter FORMATTER = DateTimeFormatter
+			.ofPattern("dd/MM/yyyy");
 
 	public GestionMuseo() {// BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 
@@ -204,6 +207,16 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public ObraDeArte getObra(int indice) throws NoHayFondosException {
 		return museo.getObra(indice);
 	}
+	
+	/**
+	 * Da formato a una fecha
+	 * 
+	 * @param fecha
+	 * @return cadena con la fecha formateada.
+	 */
+	public String formatearFecha(LocalDate fecha) {
+		return FORMATTER.format(fecha);
+	}
 
 	/**
 	 * Devuelve el tamaño del arrayList museo.
@@ -217,6 +230,10 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void ordenarPorTitulo() {
 		museo.ordenarPorTitulo();
 	}
+	
+	public void ordenarPorCodigo(){
+		museo.ordenarPorCodigo();
+	}
 
 	/**
 	 * Ordena por nombre
@@ -224,7 +241,9 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void ordenarPorcosteRestauracion() {
 		museo.ordenarPorcosteRestauracion();
 	}
-
+	public void eliminar(int indice) throws ObraNoExisteException, NoHayFondosException{
+		museo.eliminar(indice);
+	}
 	/**
 	 * Elimina una obra del museo a partir de su código.
 	 * 
@@ -361,8 +380,12 @@ public class GestionMuseo implements Serializable, Presupuestable {
 
 	}
 
-	public ObraDeArte devolverPorCodigo(int cod) {
+	public ObraDeArte devolverPorCodigo(int cod) throws ObraNoExisteException {
 		return museo.devolverPorCodigo(cod);
+	}
+	
+	public ObraDeArte devolverPorTitulo(String titulo) throws ObraNoExisteException{
+		return museo.devolverPorTitulo(titulo);
 	}
 
 	/**
@@ -372,10 +395,10 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	 * @throws NoHayFondosException
 	 * @throws ObraNoDaniadaException
 	 */
-	public void restaurar(int indice) throws NoHayFondosException,
+	public void restaurar(ObraDeArte obra) throws NoHayFondosException,
 			ObraNoDaniadaException {
-
-		setGastos(getGastos() + museo.getObra(indice).restaurar());
+		obra.restaurar();
+		setGastos(getGastos() + obra.calcularPrecioRestauracion());
 	}
 
 	/**
@@ -548,7 +571,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		if (fin.isAfter(inicio))
 			throw new FechaFinException(
 					"La fecha de fin no puede ser menor que la fecha de inicio");
-		if (fin.isAfter(LocalDate.now()) || inicio.isAfter(LocalDate.now()))
+		if (fin.isBefore(LocalDate.now()) || inicio.isBefore(LocalDate.now()))
 			throw new FechaPasadaException("La fecha ya ha pasado");
 
 		setNombreExposicion(titulo);
@@ -870,7 +893,6 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		ListIterator<ObraDeArte> it = museo.listIterator();
 		while (it.hasNext()) {
 			obra = (ObraDeArte) it.next();
-			System.out.println("aqui en el comprobar arriba dice que el estado es: "+obra.getEstadoConservacion());
 			if (obra.getEstadoConservacion() != EstadoDeConservacion.BUENO) {
 				daniadas++;
 			}

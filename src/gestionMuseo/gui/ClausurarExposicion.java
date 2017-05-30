@@ -25,7 +25,7 @@ public class ClausurarExposicion extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
-	protected JTextPane textPane;
+	private JTextPane textPane;
 
 	ClausurarExposicion() {
 		setResizable(false);
@@ -79,6 +79,11 @@ public class ClausurarExposicion extends JDialog {
 				);
 
 		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
 		btnCancelar.setBounds(255, 220, 117, 25);
 		getContentPane().add(btnCancelar);
 

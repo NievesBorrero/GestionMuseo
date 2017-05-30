@@ -142,8 +142,6 @@ public class IngresarObras extends DialogoGeneral {
 		textFecha.setVisible(false);
 		lblFechaDeIngreso.setVisible(false);
 		btnAnterior.setVisible(false);
-		lblOrdenarPor.setVisible(false);
-		cbOrdenar.setVisible(false);
 	}
 
 	/**

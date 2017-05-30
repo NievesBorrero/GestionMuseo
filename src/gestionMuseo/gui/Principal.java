@@ -147,6 +147,7 @@ public class Principal {
 			@Override
 			public void windowClosing(WindowEvent arg0) {
 				salir();
+			
 			}
 		});
 
@@ -209,13 +210,16 @@ public class Principal {
 				ingresos.setVisible(true);
 			}
 		});
-
-		JMenuItem mntmNewMenuItem = new JMenuItem("Mostrar obras");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		
+		JMenu mnMostrarObras = new JMenu("Mostrar obras");
+		mnObras.add(mnMostrarObras);
+		
+		JMenuItem mntmOrdenadasPorTtulo = new JMenuItem("Ordenadas por título");
+		mntmOrdenadasPorTtulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				museo.ordenarPorTitulo();
 				try {
-					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(museo
-							.getList());
+					MostrarObrasMuseo mostrar= new MostrarObrasMuseo(museo.getList());
 					mostrar.setVisible(true);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -223,7 +227,38 @@ public class Principal {
 				}
 			}
 		});
-		mnObras.add(mntmNewMenuItem);
+		
+		JMenuItem mntmOrdenadasPorCdigo = new JMenuItem("Ordenadas por código ");
+		mntmOrdenadasPorCdigo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				museo.ordenarPorCodigo();			
+				try {
+					MostrarObrasMuseo mostrar = new MostrarObrasMuseo(museo.getList());
+					mostrar.setVisible(true);
+				} catch (NoHayFondosException e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+				
+			}
+		});
+		mnMostrarObras.add(mntmOrdenadasPorCdigo);
+		mnMostrarObras.add(mntmOrdenadasPorTtulo);
+		
+		JMenuItem mntmOrdenadasPorCoste = new JMenuItem("Ordenadas por coste de restauración");
+		mntmOrdenadasPorCoste.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				museo.ordenarPorcosteRestauracion();
+				try {
+					MostrarObrasMuseo mostrar= new MostrarObrasMuseo(museo.getList());
+					mostrar.setVisible(true);
+				} catch (NoHayFondosException e1) {
+					JOptionPane.showMessageDialog(frame, e1.getMessage(),
+							"Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		mnMostrarObras.add(mntmOrdenadasPorCoste);
 		mnObras.add(mntmIngresarObra);
 
 		JMenuItem mntmModificarDatosDe = new JMenuItem("Modificar datos");
@@ -272,7 +307,13 @@ public class Principal {
 		mnBuscar.setMnemonic('B');
 		menuBar.add(mnBuscar);
 
-		JMenuItem mntmBuscarPorNombre = new JMenuItem("Buscar por nombre");
+		JMenuItem mntmBuscarPorNombre = new JMenuItem("Buscar por título");
+		mntmBuscarPorNombre.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				BuscarPorTitulo buscar= new BuscarPorTitulo(museo);
+				buscar.setVisible(true);
+			}
+		});
 		mnBuscar.add(mntmBuscarPorNombre);
 
 		JMenu mnBuscarPorTipo = new JMenu("Buscar por tipo de obra");
@@ -343,16 +384,6 @@ public class Principal {
 		});
 		mnBuscarPorTipo.add(mntmDibujo_1);
 
-		JMenuItem mntmBuscarPorEstilo = new JMenuItem(
-				"Buscar por estilo art\u00EDstico");
-		mntmBuscarPorEstilo.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-			}
-
-		});
-		mnBuscar.add(mntmBuscarPorEstilo);
-
 		JMenu mnExposicion = new JMenu("Exposicion");
 		mnExposicion.setMnemonic('E');
 		menuBar.add(mnExposicion);
@@ -361,6 +392,12 @@ public class Principal {
 				"Organizar exposicion");
 		mntmOrganizarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				if(museo.isOrganizada()){
+					JOptionPane.showMessageDialog(frame,
+							"Ya hay una exposici\u00f3n organizada",
+							"Error", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				if (museo.comprobarSiObrasExpuestas()) {
 					OrganizarExposicion organizar = new OrganizarExposicion(
 							museo);
@@ -375,9 +412,9 @@ public class Principal {
 		JMenuItem mntmExponerObras = new JMenuItem("Exponer obras");
 		mntmExponerObras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				ExponerObras exponer;
 				try {
-					exponer = new ExponerObras(museo.getList());
+					museo.ordenarPorCodigo();
+					ExponerObras exponer = new ExponerObras(museo.getList());
 					exponer.setVisible(true);
 				} catch (NoHayFondosException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(),
@@ -411,6 +448,17 @@ public class Principal {
 		});
 
 		JMenuItem mntmDatosDeLa = new JMenuItem("Datos de la exposici\u00F3n");
+		mntmDatosDeLa.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (museo.isOrganizada()) {
+					Datos datos=new Datos(museo);
+					datos.setVisible(true);
+				} else
+					JOptionPane.showMessageDialog(frame,
+							"No hay ninguna exposicion organizada", "Error",
+							JOptionPane.ERROR_MESSAGE);
+			}
+		});
 		mnExposicion.add(mntmDatosDeLa);
 		mnExposicion.add(mntmVisitarExposicion);
 
@@ -436,16 +484,9 @@ public class Principal {
 		JMenuItem mntmRestaurarObra = new JMenuItem("Restaurar obra");
 		mntmRestaurarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					System.out.println(museo.getObra(1).getEstadoConservacion());
-				} catch (NoHayFondosException e1) {
-		
-				}
-
 				if (museo.comprobarObrasDaniadas()) {
-					RestaurarObras obrasDaniadas;
 					try {
-						obrasDaniadas = new RestaurarObras(museo.getList());
+						Restaurar obrasDaniadas = new Restaurar(museo.getList());
 						obrasDaniadas.setVisible(true);
 					} catch (NoHayFondosException exc) {
 						JOptionPane.showMessageDialog(frame, exc.getMessage(),
@@ -575,15 +616,16 @@ public class Principal {
 	private void abrir() {
 		if (museo.isModificado()) {
 			Object[] options = { "SI", "NO", "CANCELAR" };
-			int respuesta = JOptionPane.showOptionDialog(null,
+			switch(JOptionPane.showOptionDialog(null,
 					"¿Desea Guardar?", "Archivo sin guardar",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-					null, options, options[0]);
-			if (respuesta == JOptionPane.YES_OPTION)
+					null, options, options[0])){
+			case JOptionPane.YES_OPTION:
 				guardarComo();
-			else if (respuesta == JOptionPane.CANCEL_OPTION)
+				break;
+			case JOptionPane.CANCEL_OPTION:
 				return;
-			else {
+			default:
 				try {
 					abrirFichero();
 				} catch (IOException | ClassNotFoundException e) {
@@ -593,6 +635,7 @@ public class Principal {
 					Fichero.nuevo();
 				}
 			}
+			
 		} else {
 			try {
 				abrirFichero();
@@ -620,7 +663,7 @@ public class Principal {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
 			museo = (GestionMuseo) Fichero.abrir(fileChooser.getSelectedFile());
 			frame.setTitle(Fichero.getFichero().getName());
-			JOptionPane.showMessageDialog(null, "Cargado con exito");
+			JOptionPane.showMessageDialog(null, "Cargado con exito\n QUITAR ESTE MENSAJE");
 		}
 	}
 

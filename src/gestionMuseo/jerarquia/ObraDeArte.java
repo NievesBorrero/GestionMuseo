@@ -51,7 +51,7 @@ public abstract class ObraDeArte implements Serializable {
 	private int codigo;
 	private static int ID = 1;
 
-	protected EstadoDeConservacion estadoConservacion = EstadoDeConservacion.MALO;
+	protected EstadoDeConservacion estadoConservacion = EstadoDeConservacion.BUENO;
 
 	protected int danio = 0;
 	private boolean donada;
@@ -114,15 +114,15 @@ public abstract class ObraDeArte implements Serializable {
 		this.codigo = codigo;
 	}
 
-	// /**
-	// * Constructor de obra de arte a partir del título introducido por
-	// * parámetro.
-	// *
-	// * @param codigo
-	// */
-	// ObraDeArte(String Titulo) {
-	// this.titulo = titulo;
-	// }
+	/**
+	 * Constructor de obra de arte a partir del título introducido por
+	 * parámetro.
+	 *
+	 * @param Titulo
+	 */
+	 ObraDeArte(String Titulo) {
+	 setTitulo(Titulo);
+	}
 
 	public ObraDeArte() {
 	}
@@ -221,17 +221,18 @@ public abstract class ObraDeArte implements Serializable {
 	/**
 	 * Cambia el valor de daño de la obra a cero.
 	 * 
-	 * @return precio de la restauración.
 	 * @throws ObraNoDaniadaException .
 	 */
-	public double restaurar() throws ObraNoDaniadaException {
+	public void restaurar() throws ObraNoDaniadaException {
 		if (getEstadoConservacion() == EstadoDeConservacion.BUENO)
 			throw new ObraNoDaniadaException(
 					"No se puede restaurar, la obra no est\u00e1 da\u00f1ada");
 		
 		setRestaurada(true);
 		this.danio = 0;
-		return calcularPrecioRestauracion();
+		comprobarEstadoConservacion();
+		
+		
 	}
 
 	public void setRestaurada(boolean restaurada) {
