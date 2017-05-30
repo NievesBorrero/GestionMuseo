@@ -23,12 +23,13 @@ import javax.swing.SpinnerDateModel;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * JDialog que gestiona la organizacion de una exposición
+ * @author nieves
+ *
+ */
 public class OrganizarExposicion extends JDialog {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
@@ -71,13 +72,13 @@ public class OrganizarExposicion extends JDialog {
 		contentPanel.add(lblFechaDeFin);
 
 		JSpinner spinicio = new JSpinner();
-		spinicio.setBounds(134, 205, 95, 20);
+		spinicio.setBounds(144, 178, 95, 20);
 		spinicio.setModel(new SpinnerDateModel());
 		spinicio.setEditor(new JSpinner.DateEditor(spinicio, "dd/MM/yyyy"));
 		contentPanel.add(spinicio);
 
 		JSpinner spfin = new JSpinner();
-		spfin.setBounds(135, 178, 94, 20);
+		spfin.setBounds(145, 205, 94, 20);
 		spfin.setModel(new SpinnerDateModel());
 		spfin.setEditor(new JSpinner.DateEditor(spfin, "dd/MM/yyyy"));
 		contentPanel.add(spfin);
@@ -107,7 +108,10 @@ public class OrganizarExposicion extends JDialog {
 		btnCancelar.setBounds(144, 247, 105, 25);
 		contentPanel.add(btnCancelar);
 	}
-
+	/**
+	 * @param spinner
+	 * @return LocalDate fecha
+	 */
 	public LocalDate getFecha(JSpinner spinner) {
 		Calendar calendar = Calendar.getInstance(); // toma el día de hoy
 		calendar.setTime((Date) spinner.getModel().getValue()); // date que me devuelve.

@@ -76,32 +76,23 @@ public class Principal {
 			 TecnicaDeDibujo.CARBONCILLO, 0.10, 0.5);
 		
 		 } catch (AutorNoValidoException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 } catch (EstiloNoValidoException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 } catch (SinMaterialException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 } catch (SinSoporteException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 } catch (SinTipoGrabadoException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 } catch (SinTipoEsculturaException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 } catch (SinTecnicaException e) {
-		 // TODO Auto-generated catch block
-		 e.printStackTrace();
+			 e.printStackTrace();
 		 }
 		 }
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -152,6 +143,7 @@ public class Principal {
 		});
 
 		JMenuItem mntmAbrirExpo = new JMenuItem("Abrir museo");
+		mntmAbrirExpo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mntmAbrirExpo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				abrir();
@@ -159,6 +151,7 @@ public class Principal {
 		});
 
 		JMenuItem mntmNu = new JMenuItem("Nuevo Museo");
+		mntmNu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mntmNu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				nuevoMuseo();
@@ -181,6 +174,7 @@ public class Principal {
 		mnArchivo.add(mntmGuardar);
 
 		JMenuItem mntmGuardarComo = new JMenuItem("Guardar como...");
+		mntmGuardarComo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				guardarComo();

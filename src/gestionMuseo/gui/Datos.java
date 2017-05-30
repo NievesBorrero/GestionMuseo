@@ -18,7 +18,11 @@ import javax.swing.JTextField;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * JDialog que muestra los datos de una exposición
+ * @author nieves
+ *
+ */
 public class Datos extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
@@ -32,13 +36,11 @@ public class Datos extends JDialog {
 	private JLabel lblFechaDeInicio;
 	private JLabel lblPresupuestoDelMuseo;
 	private JLabel lblNombreDeLa;
-	private JTextField textFin;
 	private JTextField textInicio;
+	private JTextField textFin;
 	private JTextPane textPane;
 
-	/**
-	 * Create the dialog.
-	 */
+
 	public Datos(GestionMuseo museo) {
 		setBounds(100, 100, 450, 341);
 		getContentPane().setLayout(new BorderLayout());
@@ -81,15 +83,15 @@ public class Datos extends JDialog {
 		textPane.setBounds(12, 101, 413, 111);
 		contentPanel.add(textPane);
 		
-		textFin = new JTextField();
-		textFin.setBounds(130, 248, 114, 19);
-		contentPanel.add(textFin);
-		textFin.setColumns(10);
-		
 		textInicio = new JTextField();
-		textInicio.setBounds(130, 218, 114, 19);
+		textInicio.setBounds(130, 248, 114, 19);
 		contentPanel.add(textInicio);
 		textInicio.setColumns(10);
+		
+		textFin = new JTextField();
+		textFin.setBounds(130, 218, 114, 19);
+		contentPanel.add(textFin);
+		textFin.setColumns(10);
 		
 		rellenarCampos(museo);
 		
@@ -121,7 +123,7 @@ public class Datos extends JDialog {
 		textPresupuesto.setText(""+museo.getPresupuesto());
 		textNombreExp.setText(museo.getNombreExposicion());
 		textPane.setText(museo.getDescripcionExposicion());
-		textInicio.setText(museo.formatearFecha(museo.getFechaInicio()));
-		textFin.setText(museo.formatearFecha(museo.getFechaFin()));
+		textFin.setText(museo.formatearFecha(museo.getFechaInicio()));
+		textInicio.setText(museo.formatearFecha(museo.getFechaFin()));
 	}
 }

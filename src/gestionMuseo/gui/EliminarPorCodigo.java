@@ -22,9 +22,6 @@ import javax.swing.JOptionPane;
  */
 public class EliminarPorCodigo extends DialogoGeneral {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public EliminarPorCodigo(GestionMuseo exposicion) {

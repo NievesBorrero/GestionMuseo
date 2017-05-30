@@ -247,23 +247,23 @@ public class DialogoGeneral extends JDialog {
 		spCosteExp = new JSpinner();
 		spCosteExp.setEnabled(false);
 		spCosteExp.setBounds(186, 23, 64, 20);
-		spCosteExp.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
+		spCosteExp.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 		ingresosYgastos.add(spCosteExp);
 
 		spCostRest = new JSpinner();
 		spCostRest.setEnabled(false);
 		spCostRest.setBounds(186, 50, 64, 20);
-		spCostRest.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
+		spCostRest.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 		ingresosYgastos.add(spCostRest);
 
 		spValor = new JSpinner();
 		spValor.setBounds(63, 87, 58, 20);
-		spValor.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
+		spValor.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 		ingresosYgastos.add(spValor);
 
 		spFama = new JSpinner();
 		spFama.setBounds(186, 87, 64, 20);
-		spFama.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
+		spFama.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 		ingresosYgastos.add(spFama);
 
 		btnAnterior = new JButton("        ");
@@ -297,7 +297,7 @@ public class DialogoGeneral extends JDialog {
 		spprof = new JSpinner();
 		spprof.setBounds(121, 85, 56, 20);
 		panel_2.add(spprof);
-		spprof.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.0));
+		spprof.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 
 		lblAncho = new JLabel("Ancho");
 		lblAncho.setBounds(12, 56, 70, 15);
@@ -306,7 +306,7 @@ public class DialogoGeneral extends JDialog {
 		spAncho = new JSpinner();
 		spAncho.setBounds(121, 53, 56, 20);
 		panel_2.add(spAncho);
-		spAncho.setModel(new SpinnerNumberModel(1.0, 1.0, 100.0, 0.0));
+		spAncho.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 
 		lblAlto = new JLabel("Alto");
 		lblAlto.setBounds(12, 28, 70, 15);
@@ -315,7 +315,7 @@ public class DialogoGeneral extends JDialog {
 		spAlto = new JSpinner();
 		spAlto.setBounds(121, 28, 56, 20);
 		panel_2.add(spAlto);
-		spAlto.setModel(new SpinnerNumberModel(1.0, 1.0, 100.0, 0.0));
+		spAlto.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
 
 		panel_salas = new JPanel();
 		panel_salas.setBorder(new TitledBorder(null, "Salas",
@@ -422,7 +422,6 @@ public class DialogoGeneral extends JDialog {
 	protected void mostrar(ObraDeArte obra) {
 
 		rellenarCamposComunes(obra);
-		String codigo;
 
 		if (obra instanceof Pintura) {
 			rellenarCamposPintura(obra);

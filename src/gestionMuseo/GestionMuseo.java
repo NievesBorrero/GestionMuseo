@@ -241,6 +241,12 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void ordenarPorcosteRestauracion() {
 		museo.ordenarPorcosteRestauracion();
 	}
+	/**
+	 * Elimina una obra por indice
+	 * @param indice
+	 * @throws ObraNoExisteException
+	 * @throws NoHayFondosException
+	 */
 	public void eliminar(int indice) throws ObraNoExisteException, NoHayFondosException{
 		museo.eliminar(indice);
 	}
@@ -379,11 +385,21 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		setGastos(getGastos() + obra.getCosteExposicion());
 
 	}
-
+	/**
+	 * Devuelve una obra por su código si existe
+	 * @param cod
+	 * @return
+	 * @throws ObraNoExisteException
+	 */
 	public ObraDeArte devolverPorCodigo(int cod) throws ObraNoExisteException {
 		return museo.devolverPorCodigo(cod);
 	}
-	
+	/**
+	 * Devuelve una obra por su título si existe
+	 * @param titulo
+	 * @return
+	 * @throws ObraNoExisteException
+	 */
 	public ObraDeArte devolverPorTitulo(String titulo) throws ObraNoExisteException{
 		return museo.devolverPorTitulo(titulo);
 	}
@@ -568,7 +584,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		if (isOrganizada() == true)
 			throw new YaHayExposicionException(
 					"Ya hay una exposicion organizada");
-		if (fin.isAfter(inicio))
+		if (fin.isBefore(inicio))
 			throw new FechaFinException(
 					"La fecha de fin no puede ser menor que la fecha de inicio");
 		if (fin.isBefore(LocalDate.now()) || inicio.isBefore(LocalDate.now()))
@@ -639,7 +655,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			}
 		}
 		restauradas
-				.append("\nTOTAL:\t" + Math.rint(total * 1000) / 1000 + "\n");
+				.append("\nTOTAL:\t-" + Math.rint(total * 1000) / 1000 + "\n");
 
 		return restauradas.toString();
 	}
@@ -837,7 +853,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	}
 
 	public long calcularDiasExposicion() {
-		return ChronoUnit.DAYS.between(fechaFin, fechaInicio);
+		return ChronoUnit.DAYS.between(fechaInicio,fechaFin);
 	}
 
 	// public String[] generarOpcionesMenu() {
