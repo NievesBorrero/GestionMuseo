@@ -40,7 +40,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.InputEvent;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+/**
+ * Ventana principal del programa.
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class Principal {
 
 	private static final String SIN_TITULO_MUSEO = "Sin titulo: Museo";
@@ -49,7 +53,46 @@ public class Principal {
 	private JFileChooser fileChooser = new JFileChooser();
 	private Filtro filtro = new Filtro(".obj", "obj");
 	private String nombreMuseo;
+	
+	private JMenuBar menuBar;
+	private JMenu mnArchivo;
+	private JMenuItem mntmAbrirExpo;
+	private JMenuItem mntmNu;
+	private JMenuItem mntmGuardar;
+	private JMenuItem mntmGuardarComo;
+	private JSeparator separator_1;
+	private JSeparator separator;
+	private JMenuItem mntmSalir;
+	private JMenu mnObras;
+	private JMenuItem mntmIngresarObra;
+	private JMenu mnMostrarObras;
+	private JMenuItem mntmOrdenadasPorTtulo;
+	private JMenuItem mntmOrdenadasPorCdigo;
+	private JMenuItem mntmOrdenadasPorCoste;
+	private JMenuItem mntmModificarDatosDe;
+	private JMenu mnEliminarObra;
+	private JMenuItem mntmPorCdigo;
+	private JMenuItem mntmMostrarObrasY;
+	private JMenu mnBuscar;
+	private JMenuItem mntmBuscarPorNombre;
+	private JMenu mnBuscarPorTipo;
+	private JMenuItem mntmPintura_1;
+	private JMenuItem mntmGrabado_1;
+	private JMenuItem mntmEscultura_1;
+	private JMenuItem mntmDibujo_1;
+	private JMenu mnExposicion;
+	private JMenuItem mntmVisitarExposicion;
+	private JMenuItem mntmOrganizarExposicion;
+	private JMenuItem mntmExponerObras;
+	private JMenuItem mntmDatosDeLa;
+	private JMenuItem mntmClausurarExposicin;
+	private JMenu mnDptoRestauracin;
+	private JMenuItem mntmRestaurarObra;
+	private JMenu mnAyuda;
+	private JMenuItem mntmAcercaDe;
+	private JMenuItem mntmAyuda;
 
+	
 	 static { // BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
 		 try {
 			 museo.ingresarPintura("Pintura1", "autor1", "sitio",
@@ -118,31 +161,29 @@ public class Principal {
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setResizable(false);
+		
 		frame.setBounds(100, 100, 500, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
-
-		JMenuBar menuBar = new JMenuBar();
+		
+		frame.setResizable(false);
+		
+		frame.setTitle(SIN_TITULO_MUSEO);
+		
+		menuBar = new JMenuBar();  //Barra de menú
 		menuBar.setBounds(0, 0, 538, 21);
 		frame.getContentPane().add(menuBar);
-		frame.setTitle(SIN_TITULO_MUSEO);
-		JMenu mnArchivo = new JMenu("Archivo");
+		
+		/*
+		 * ---------Menú de archivo------------
+		 */
+		mnArchivo = new JMenu("Archivo");
 		mnArchivo.setMnemonic('A');
 		menuBar.add(mnArchivo);
 		mnArchivo.setToolTipText("Archivo");
-		/*
-		 * PROBLEMA: SE SALE SI LE DOY A CANCELARR!!! VER COMO SOLUCIONARLO
-		 */
-		frame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent arg0) {
-				salir();
-			
-			}
-		});
+		
 
-		JMenuItem mntmAbrirExpo = new JMenuItem("Abrir museo");
+		mntmAbrirExpo = new JMenuItem("Abrir museo");
 		mntmAbrirExpo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_A, InputEvent.CTRL_MASK));
 		mntmAbrirExpo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -150,7 +191,7 @@ public class Principal {
 			}
 		});
 
-		JMenuItem mntmNu = new JMenuItem("Nuevo Museo");
+		mntmNu = new JMenuItem("Nuevo Museo");
 		mntmNu.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_N, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mntmNu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -160,10 +201,10 @@ public class Principal {
 		mnArchivo.add(mntmNu);
 		mnArchivo.add(mntmAbrirExpo);
 
-		JSeparator separator = new JSeparator();
+		separator = new JSeparator();
 		mnArchivo.add(separator);
 
-		JMenuItem mntmGuardar = new JMenuItem("Guardar");
+		mntmGuardar = new JMenuItem("Guardar");
 		mntmGuardar.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S,
 				InputEvent.CTRL_MASK));
 		mntmGuardar.addActionListener(new ActionListener() {
@@ -173,7 +214,7 @@ public class Principal {
 		});
 		mnArchivo.add(mntmGuardar);
 
-		JMenuItem mntmGuardarComo = new JMenuItem("Guardar como...");
+		mntmGuardarComo = new JMenuItem("Guardar como...");
 		mntmGuardarComo.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mntmGuardarComo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -182,22 +223,25 @@ public class Principal {
 		});
 		mnArchivo.add(mntmGuardarComo);
 
-		JSeparator separator_1 = new JSeparator();
+		separator_1 = new JSeparator();
 		mnArchivo.add(separator_1);
 
-		JMenuItem mntmSalir = new JMenuItem("Salir");
+		mntmSalir = new JMenuItem("Salir");
 		mntmSalir.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				salir();
 			}
 		});
 		mnArchivo.add(mntmSalir);
-
-		JMenu mnObras = new JMenu("Obras");
+		
+		/*
+		 * ---------Menú de obras (ingresar, eliminar, mostrar, modificar)------------
+		 */
+		mnObras = new JMenu("Obras");
 		mnObras.setMnemonic('O');
 		menuBar.add(mnObras);
 
-		JMenuItem mntmIngresarObra = new JMenuItem("Ingresar obra");
+		mntmIngresarObra = new JMenuItem("Ingresar obra");
 		mntmIngresarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				IngresarObras ingresos = new IngresarObras(museo);
@@ -205,10 +249,10 @@ public class Principal {
 			}
 		});
 		
-		JMenu mnMostrarObras = new JMenu("Mostrar obras");
+		mnMostrarObras = new JMenu("Mostrar obras");
 		mnObras.add(mnMostrarObras);
 		
-		JMenuItem mntmOrdenadasPorTtulo = new JMenuItem("Ordenadas por título");
+		mntmOrdenadasPorTtulo = new JMenuItem("Ordenadas por título");
 		mntmOrdenadasPorTtulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				museo.ordenarPorTitulo();
@@ -222,7 +266,7 @@ public class Principal {
 			}
 		});
 		
-		JMenuItem mntmOrdenadasPorCdigo = new JMenuItem("Ordenadas por código ");
+		mntmOrdenadasPorCdigo = new JMenuItem("Ordenadas por código ");
 		mntmOrdenadasPorCdigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				museo.ordenarPorCodigo();			
@@ -239,7 +283,7 @@ public class Principal {
 		mnMostrarObras.add(mntmOrdenadasPorCdigo);
 		mnMostrarObras.add(mntmOrdenadasPorTtulo);
 		
-		JMenuItem mntmOrdenadasPorCoste = new JMenuItem("Ordenadas por coste de restauración");
+		mntmOrdenadasPorCoste = new JMenuItem("Ordenadas por coste de restauración");
 		mntmOrdenadasPorCoste.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				museo.ordenarPorcosteRestauracion();
@@ -255,7 +299,7 @@ public class Principal {
 		mnMostrarObras.add(mntmOrdenadasPorCoste);
 		mnObras.add(mntmIngresarObra);
 
-		JMenuItem mntmModificarDatosDe = new JMenuItem("Modificar datos");
+		mntmModificarDatosDe = new JMenuItem("Modificar datos");
 		mntmModificarDatosDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -269,10 +313,10 @@ public class Principal {
 		});
 		mnObras.add(mntmModificarDatosDe);
 
-		JMenu mnEliminarObra = new JMenu("Eliminar obra");
+		mnEliminarObra = new JMenu("Eliminar obra");
 		mnObras.add(mnEliminarObra);
 
-		JMenuItem mntmPorCdigo = new JMenuItem("Por código");
+		mntmPorCdigo = new JMenuItem("Por código");
 		mntmPorCdigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				EliminarPorCodigo eliminarPorCodigo = new EliminarPorCodigo(
@@ -282,7 +326,7 @@ public class Principal {
 		});
 		mnEliminarObra.add(mntmPorCdigo);
 
-		JMenuItem mntmMostrarObrasY = new JMenuItem("Mostrando obras");
+		mntmMostrarObrasY = new JMenuItem("Mostrando obras");
 		mntmMostrarObrasY.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				MostrarEliminar eliminar;
@@ -296,12 +340,15 @@ public class Principal {
 			}
 		});
 		mnEliminarObra.add(mntmMostrarObrasY);
-
-		JMenu mnBuscar = new JMenu("Buscar");
+		
+		/*
+		 * ---------Menú buscar------------
+		 */
+		mnBuscar = new JMenu("Buscar");
 		mnBuscar.setMnemonic('B');
 		menuBar.add(mnBuscar);
 
-		JMenuItem mntmBuscarPorNombre = new JMenuItem("Buscar por título");
+		mntmBuscarPorNombre = new JMenuItem("Buscar por título");
 		mntmBuscarPorNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				BuscarPorTitulo buscar= new BuscarPorTitulo(museo);
@@ -310,10 +357,10 @@ public class Principal {
 		});
 		mnBuscar.add(mntmBuscarPorNombre);
 
-		JMenu mnBuscarPorTipo = new JMenu("Buscar por tipo de obra");
+		mnBuscarPorTipo = new JMenu("Buscar por tipo de obra");
 		mnBuscar.add(mnBuscarPorTipo);
 
-		JMenuItem mntmPintura_1 = new JMenuItem("Pintura");
+		mntmPintura_1 = new JMenuItem("Pintura");
 		mntmPintura_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -330,7 +377,7 @@ public class Principal {
 		});
 		mnBuscarPorTipo.add(mntmPintura_1);
 
-		JMenuItem mntmEscultura_1 = new JMenuItem("Escultura");
+		mntmEscultura_1 = new JMenuItem("Escultura");
 		mntmEscultura_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -346,7 +393,7 @@ public class Principal {
 		});
 		mnBuscarPorTipo.add(mntmEscultura_1);
 
-		JMenuItem mntmGrabado_1 = new JMenuItem("Grabado");
+		mntmGrabado_1 = new JMenuItem("Grabado");
 		mntmGrabado_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -362,7 +409,7 @@ public class Principal {
 		});
 		mnBuscarPorTipo.add(mntmGrabado_1);
 
-		JMenuItem mntmDibujo_1 = new JMenuItem("Dibujo");
+		mntmDibujo_1 = new JMenuItem("Dibujo");
 		mntmDibujo_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -377,12 +424,15 @@ public class Principal {
 			}
 		});
 		mnBuscarPorTipo.add(mntmDibujo_1);
-
-		JMenu mnExposicion = new JMenu("Exposicion");
+		
+		/*
+		 * ---------Menú de exposición------------
+		 */
+		mnExposicion = new JMenu("Exposicion");
 		mnExposicion.setMnemonic('E');
 		menuBar.add(mnExposicion);
 
-		JMenuItem mntmOrganizarExposicion = new JMenuItem(
+		mntmOrganizarExposicion = new JMenuItem(
 				"Organizar exposicion");
 		mntmOrganizarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -403,7 +453,7 @@ public class Principal {
 			}
 		});
 
-		JMenuItem mntmExponerObras = new JMenuItem("Exponer obras");
+		mntmExponerObras = new JMenuItem("Exponer obras");
 		mntmExponerObras.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -420,7 +470,7 @@ public class Principal {
 		mnExposicion.add(mntmExponerObras);
 		mnExposicion.add(mntmOrganizarExposicion);
 
-		JMenuItem mntmVisitarExposicion = new JMenuItem("Visitar exposicion");
+		mntmVisitarExposicion = new JMenuItem("Visitar exposicion");
 		mntmVisitarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MostrarObrasMuseo visitarExposicion;
@@ -441,7 +491,7 @@ public class Principal {
 			}
 		});
 
-		JMenuItem mntmDatosDeLa = new JMenuItem("Datos de la exposici\u00F3n");
+		mntmDatosDeLa = new JMenuItem("Datos de la exposici\u00F3n");
 		mntmDatosDeLa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (museo.isOrganizada()) {
@@ -456,7 +506,7 @@ public class Principal {
 		mnExposicion.add(mntmDatosDeLa);
 		mnExposicion.add(mntmVisitarExposicion);
 
-		JMenuItem mntmClausurarExposicin = new JMenuItem("Clausurar exposición");
+		mntmClausurarExposicin = new JMenuItem("Clausurar exposición");
 		mntmClausurarExposicin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (museo.isOrganizada()) {
@@ -471,11 +521,11 @@ public class Principal {
 		});
 		mnExposicion.add(mntmClausurarExposicin);
 
-		JMenu mnDptoRestauracin = new JMenu("Dpto. Restauraci\u00F3n");
+		mnDptoRestauracin = new JMenu("Dpto. Restauraci\u00F3n");
 		mnDptoRestauracin.setMnemonic('R');
 		menuBar.add(mnDptoRestauracin);
 
-		JMenuItem mntmRestaurarObra = new JMenuItem("Restaurar obra");
+		mntmRestaurarObra = new JMenuItem("Restaurar obra");
 		mntmRestaurarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (museo.comprobarObrasDaniadas()) {
@@ -495,12 +545,15 @@ public class Principal {
 			}
 		});
 		mnDptoRestauracin.add(mntmRestaurarObra);
-
-		JMenu mnAyuda = new JMenu("Ayuda");
+		
+		/*
+		 * ---------Menú de ayuda------------
+		 */
+		mnAyuda = new JMenu("Ayuda");
 		menuBar.add(mnAyuda);
 		mnAyuda.setMnemonic('Y');
 
-		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de...");
+		mntmAcercaDe = new JMenuItem("Acerca de...");
 		mntmAcercaDe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AcercaDe acerca = new AcercaDe();
@@ -509,7 +562,7 @@ public class Principal {
 		});
 		mnAyuda.add(mntmAcercaDe);
 
-		JMenuItem mntmAyuda = new JMenuItem("Ayuda");
+		mntmAyuda = new JMenuItem("Ayuda");
 		mntmAyuda.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F1, 0));
 		mntmAyuda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -518,7 +571,18 @@ public class Principal {
 			}
 		});
 		mnAyuda.add(mntmAyuda);
-	}
+		
+		/*
+		 * En caso de que se cierre la ventana sin guardar, se preguntará si se desea guardar antes.
+		 */
+		frame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent arg0) {
+				salir();
+			
+			}
+		});
+	} // inicialize
 
 	/**
 	 * Crea un nuevo museo vacio.
