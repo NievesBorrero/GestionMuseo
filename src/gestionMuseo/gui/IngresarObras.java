@@ -22,7 +22,11 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * JDialog que permite el ingreso de obras en el museo.
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class IngresarObras extends DialogoGeneral {
 
 	private static final long serialVersionUID = 1L;
@@ -34,11 +38,11 @@ public class IngresarObras extends DialogoGeneral {
 		super();
 
 		setTitle("Ingreso de obras de arte");
-		hacerComponentesInvisibles();
-		spCosteExp.setVisible(false);
-		spCostRest.setVisible(false);
-		lblCosteDeExposicion.setVisible(false);
-		lblCosteRestauracin.setVisible(false);
+		
+		hacerComponentesInvisibles();	
+		hacerComponentesVisibles();
+		
+		btnAnterior.setText("Limpiar");
 
 		btnIzquierda.setText("a\u00f1adir");
 		btnDerecha.setText("Salir");
@@ -52,16 +56,14 @@ public class IngresarObras extends DialogoGeneral {
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				double fama = Double.parseDouble(spFama.getValue().toString());
-				double valor = Double
-						.parseDouble(spValor.getValue().toString());
-				double alto = Double.parseDouble(spAlto.getValue().toString());
-				double ancho = Double
-						.parseDouble(spAncho.getValue().toString());
-				double profundidad = Double.parseDouble(spprof.getValue()
-						.toString());
+				double fama = obtenerFama();
+				double valor = obtenerValor();
+				double alto = obtenerAltura();
+				double ancho = obtenerAnchura();
+				double profundidad = obtenerProfundidad();
 
 				try {
+					
 					if (cbTipo.getSelectedIndex() == -1)
 						throw new SinTipoException(
 								"No ha seleccionado ningún tipo de obra");
@@ -109,10 +111,17 @@ public class IngresarObras extends DialogoGeneral {
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
-				limpiar();
-
 			}
 
+		});
+		
+		/**
+		 * Al pulsar el botón se limpian los campos.
+		 */
+		btnAnterior.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				limpiar();
+			}
 		});
 
 		/**
@@ -124,6 +133,61 @@ public class IngresarObras extends DialogoGeneral {
 			}
 		});
 
+	}
+	
+	/**
+	 * Transforma el dato del JSpinner profundidad en un decimal y lo devuelve.
+	 * @return decimal.
+	 */
+	private double obtenerProfundidad() {
+		return Double.parseDouble(spprof.getValue()
+				.toString());
+	}
+	
+	/**
+	 * Transforma el dato del JSpinner anchura en un decimal y lo devuelve.
+	 * @return decimal.
+	 */
+	private double obtenerAnchura() {
+		return Double
+				.parseDouble(spAncho.getValue().toString());
+	}
+	
+	/**
+	 * Transforma el dato del JSpinner altura en un decimal y lo devuelve.
+	 * @return decimal.
+	 */
+	private double obtenerAltura() {
+		return Double.parseDouble(spAlto.getValue().toString());
+	}
+	
+	/**
+	 * Transforma el dato del JSpinner valor en un decimal y lo devuelve.
+	 * @return decimal.
+	 */
+	private double obtenerValor() {
+		return Double
+				.parseDouble(spValor.getValue().toString());
+	}
+	
+	/**
+	 * Transforma el dato del JSpinner fama en un decimal y lo devuelve.
+	 * @return decimal.
+	 */
+	private double obtenerFama() {
+		return Double.parseDouble(spFama.getValue().toString());
+	}
+	
+	/**
+	 * Hace visibles los componentes que no están a la vista en el JDialog padre
+	 * y que son necesarios.
+	 */
+	private void hacerComponentesVisibles() {
+		spCosteExp.setVisible(false);
+		spCostRest.setVisible(false);
+		lblCosteDeExposicion.setVisible(false);
+		lblCosteRestauracin.setVisible(false);
+		btnAnterior.setVisible(true);
 	}
 
 	/**
@@ -222,7 +286,6 @@ public class IngresarObras extends DialogoGeneral {
 	 * @param ancho
 	 * @param profundidad
 	 * @throws AutorNoValidoException
-	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoEsculturaException
 	 * @throws SinMaterialException

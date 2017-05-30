@@ -3,17 +3,20 @@ package gestionMuseo.gui;
 
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.jerarquia.ObraDeArte;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ListIterator;
 
+import javax.swing.JOptionPane;
+
 /**
  * JDialog que muestra las obras introducidas por parámetro en un iterador.
  * 
- * @author Nieves Borrero.
- *
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
  */
 
 public class MostrarObrasMuseo extends DialogoGeneral {
@@ -32,12 +35,12 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		setItObras(itObras);
 
 		inhabilitarComponentes();
-		btnIzquierda.setVisible(false);
 		
+		btnIzquierda.setVisible(false);
+		btnDerecha.setText("Salir");
 
 		actualizarMostrar(itObras);
 
-		btnDerecha.setText("Salir");
 		btnDerecha.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
@@ -60,13 +63,20 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		
 	}
 		
-	
+	/**
+	 * Muestra la obra posicionada en el primer índice del iterador.
+	 * @param itObras
+	 */
 	private void actualizarMostrar(ListIterator<ObraDeArte> itObras) {
 		mostrar(itObras.next());
 		if (!itObras.hasNext())
 			btnSiguiente.setEnabled(false);
 	}
-
+	
+	/**
+	 * Permite modificar el iterador de obras de arte.
+	 * @param itObras
+	 */
 	public void setItObras(ListIterator<ObraDeArte> itObras) {
 		this.itObras = itObras;
 	}
@@ -121,27 +131,6 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 
 	}
 	
-	private void ordenarPorCosteRestauracion() {
-		Principal.museo.ordenarPorcosteRestauracion();
-		actualizarItObras();
-		nextObra();
-		btnAnterior.setEnabled(false);
-	}
-
-	private void ordenarPorTitulo() {
-		Principal.museo.ordenarPorTitulo();
-		actualizarItObras();
-		nextObra();
-		btnAnterior.setEnabled(false);
-	}
-
-	private void ordenarPorCodigo() {
-		Principal.museo.ordenarPorCodigo();
-		actualizarItObras();
-		nextObra();
-		btnAnterior.setEnabled(false);
-	}
-
 	/**
 	 * Actualiza el iterador con las obras de arte que hay en los fondos de la
 	 * exposición.
@@ -150,7 +139,8 @@ public class MostrarObrasMuseo extends DialogoGeneral {
 		try {
 			itObras = Principal.museo.getList();
 		} catch (NoHayFondosException e) {
-			// Aquí no debería entrar
+			JOptionPane.showMessageDialog(getContentPane(),
+					e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 	

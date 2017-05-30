@@ -7,14 +7,20 @@ import javax.swing.JOptionPane;
 
 import gestionMuseo.GestionMuseo;
 import gestionMuseo.excepciones.ObraNoExisteException;
-import gestionMuseo.jerarquia.Grabado;
-import gestionMuseo.jerarquia.ObraDeArte;
+
+/**
+ * Permite buscar una obra de arte por su título.
+ * 
+ * @author Nieves Borrero Barea.
+ * @version 1.0
+ */
 
 public class BuscarPorTitulo extends DialogoGeneral {
 
 	private static final long serialVersionUID = 1L;
+	
 	/**
-	 * Create the dialog.
+	 * Crea el diálogo.
 	 */
 	public BuscarPorTitulo(GestionMuseo museo) {
 
