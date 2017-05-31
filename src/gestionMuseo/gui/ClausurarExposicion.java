@@ -65,7 +65,7 @@ public class ClausurarExposicion extends JDialog {
 					JOptionPane.showMessageDialog(
 							contentPanel,
 							"Presupuesto del museo:"
-									+ Principal.museo.getPresupuesto(),
+									+ (double)Math.round(Principal.museo.getPresupuesto()*100)/100,
 							"Exposicion clausurada",
 							JOptionPane.INFORMATION_MESSAGE);
 				} catch (ObraNoExpuestaException e1) {
@@ -93,7 +93,7 @@ public class ClausurarExposicion extends JDialog {
 	}
 
 	/**
-	 * Imprime gastos, ingresos y presupuesto resultante de haber organizado una
+	 * Imprime gastos e ingresos generados al haber organizado una
 	 * exposición.
 	 * 
 	 * @return cadena.
@@ -101,7 +101,7 @@ public class ClausurarExposicion extends JDialog {
 	private String imprimirPresupuesto() {
 		return Principal.museo.imprimirPresupuestoExpuestas()
 				+ "\n"
-				+ Principal.museo.calcularGastoSalas()
+				+ Principal.museo.imprimirGastoSalas()
 				+ "\n"
 				+ Principal.museo.imprimirPresupuestoRestauradas()
 				+ "\n"
@@ -109,11 +109,6 @@ public class ClausurarExposicion extends JDialog {
 				+ Principal.museo.calcularDiasExposicion()
 				+ "\n"
 				+ "\nEntradas vendidas: "
-				+ Principal.museo.generarEntradas()
-				+ "\n"
-				+ "\nPresupuesto final: "
-				+ Principal.museo.calcularPresupuesto(
-						Principal.museo.getGastos(),
-						Principal.museo.getIngresos());
+				+ Principal.museo.generarEntradas();
 	}
 }

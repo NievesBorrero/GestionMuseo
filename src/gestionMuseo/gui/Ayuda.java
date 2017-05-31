@@ -1,33 +1,39 @@
 package gestionMuseo.gui;
 
-import java.awt.BorderLayout;
-import javax.swing.JButton;
+import java.awt.Dimension;
+
 import javax.swing.JDialog;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JSeparator;
+
 
 public class Ayuda extends JDialog {
+	
+	private static final long serialVersionUID = 1L;
 	private static Ayuda ayuda;
+	private JTextArea txtGestion;
 
 	/**
-	 * Create the dialog.
+	 * Permite crear el diálogo.
 	 */
 	private Ayuda() {
 		setResizable(false);
 		setModal(false);
-		setBounds(100, 100, 450, 334);
+		setBounds(100, 100, 400, 500);
 		getContentPane().setLayout(null);
+		JScrollPane areaScrollPane = new JScrollPane(txtGestion);
+		areaScrollPane.setPreferredSize(new Dimension(380, 480));
+		areaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 		
-		JTextArea txtGestion = new JTextArea();
-		txtGestion.setBounds(12, 12, 426, 310);
+		txtGestion = new JTextArea();
+		txtGestion.setBounds(12, 12, 380, 480);
 		getContentPane().add(txtGestion);
-		txtGestion.setEnabled(false);
-		txtGestion.setText("Gestión de Museo");
+		txtGestion.setEditable(false);
+		txtGestion.setText("Gestión de Museo\n"
+				+ "\n"
+				+ "\n"
+				+ "\n"
+				+ "\n");
 	}
 	
 	public static Ayuda getInstance(){

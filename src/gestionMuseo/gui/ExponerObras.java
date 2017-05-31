@@ -1,6 +1,5 @@
 package gestionMuseo.gui;
 
-
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.excepciones.EstadoNoAdecuadoException;
@@ -16,7 +15,13 @@ import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
-
+/**
+ * Muestra las obras y permite exponerlas, si el estado de la obra es malo, da
+ * opción a restaurarla para poder exponerla.
+ * 
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class ExponerObras extends MostrarObrasMuseo {
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +33,8 @@ public class ExponerObras extends MostrarObrasMuseo {
 	 * @param sala
 	 * @throws NoHayFondosException
 	 */
-	public ExponerObras(ListIterator <ObraDeArte> itObras) throws NoHayFondosException {
+	public ExponerObras(ListIterator<ObraDeArte> itObras)
+			throws NoHayFondosException {
 		super(itObras);
 		btnIzquierda.setText("Exponer");
 		btnIzquierda.setVisible(true);
@@ -41,8 +47,8 @@ public class ExponerObras extends MostrarObrasMuseo {
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					obra = Principal.museo.devolverPorCodigo(Integer
-							.parseInt(textcod.getText()));
+					obra = Principal.museo.devolverPorCodigo(pasarTextAEntero(textcod.getText()));
+					
 					if (rbSala_1.isSelected() || rbSala_2.isSelected()
 							|| rbSala_3.isSelected()) {
 
@@ -52,7 +58,8 @@ public class ExponerObras extends MostrarObrasMuseo {
 									.showOptionDialog(
 											contentPanel,
 											"La obra esta en mal estado\n su coste de restauracion es "
-													+ obra.calcularPrecioRestauracion()+" euros, "
+													+ obra.calcularPrecioRestauracion()
+													+ " euros, "
 													+ "\n deseas restaurarla para exponerla?",
 											"Confirmar",
 											JOptionPane.YES_NO_CANCEL_OPTION,
@@ -61,28 +68,26 @@ public class ExponerObras extends MostrarObrasMuseo {
 
 							if (opcion == JOptionPane.YES_OPTION) {
 								try {
-									Principal.museo.restaurar(obra);
-									obra.exponerObra(getSala());
-									Principal.museo.setModificado(true);
+									RestaurarYExponer();
 								} catch (ObraNoDaniadaException e1) {
+									JOptionPane.showMessageDialog(getContentPane(),
+											e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 									// Aquí no debería entrar.
 								} catch (NoHayFondosException e1) {
- 									e1.printStackTrace();
+									JOptionPane.showMessageDialog(getContentPane(),
+											e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 								}
 
 							}
-						}
-						else{
-							
-						obra.exponerObra(getSala());
-						Principal.museo.setModificado(true);
+						} else {
 
-						JOptionPane.showMessageDialog(contentPanel,
-								"Buena eleccion, obra expuesta",
-								"Obra expuesta",
-								JOptionPane.INFORMATION_MESSAGE);
+							exponer();
+
+							JOptionPane.showMessageDialog(contentPanel,
+									"Buena eleccion, obra expuesta",
+									"Obra expuesta",
+									JOptionPane.INFORMATION_MESSAGE);
 						}
-						
 
 					} else
 						JOptionPane.showMessageDialog(contentPanel,
@@ -94,15 +99,19 @@ public class ExponerObras extends MostrarObrasMuseo {
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (EstadoNoAdecuadoException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
-							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NumberFormatException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					JOptionPane.showMessageDialog(getContentPane(),
+							"Debes introducir el codigo", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					// Aquí no debería entrar.
 				} catch (ObraNoExisteException e2) {
-					// TODO Auto-generated catch block
-					e2.printStackTrace();
+					JOptionPane.showMessageDialog(contentPanel,
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+
+			
 		});
 
 	}
@@ -121,6 +130,32 @@ public class ExponerObras extends MostrarObrasMuseo {
 			return Sala.SALA3;
 		else
 			return null;
+	}
+	
+	/** 
+	 * Restaura una obra y la expone.
+	 * @throws NoHayFondosException
+	 * @throws ObraNoDaniadaException
+	 * @throws ObraExpuestaException
+	 * @throws EstadoNoAdecuadoException
+	 */
+	private void RestaurarYExponer() throws NoHayFondosException,
+	ObraNoDaniadaException, ObraExpuestaException,
+	EstadoNoAdecuadoException {
+		Principal.museo.restaurar(obra);
+		textEstado.setText(obra.getEstadoConservacion().toString().toLowerCase());
+		exponer();
+	}
+	
+	/**
+	 * Expone una obra.
+	 * @throws ObraExpuestaException
+	 * @throws EstadoNoAdecuadoException
+	 */
+	private void exponer() throws ObraExpuestaException,
+		EstadoNoAdecuadoException {
+		obra.exponerObra(getSala());
+		Principal.museo.setModificado(true);
 	}
 
 }

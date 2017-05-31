@@ -25,17 +25,27 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
  * JDialog que gestiona la organizacion de una exposición
- * @author nieves
- *
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
  */
 public class OrganizarExposicion extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
-
+	private JLabel lblNewLabel;
+	private JLabel lblDescripcion;
+	private JTextPane textPane;
+	private JLabel lblFe;
+	private JLabel lblFechaDeFin;
+	private JSpinner spinicio;
+	private JSpinner spfin;
+	private JButton btnAceptar;
+	private JButton btnCancelar;
+	
+	
 	/**
-	 * Create the dialog.
+	 * Permite crear el diálogo
 	 */
 	public OrganizarExposicion(GestionMuseo museo) {
 		setResizable(false);
@@ -46,7 +56,7 @@ public class OrganizarExposicion extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
 
-		JLabel lblNewLabel = new JLabel("T\u00EDtulo de la Exposici\u00F3n");
+		lblNewLabel = new JLabel("T\u00EDtulo de la Exposici\u00F3n");
 		lblNewLabel.setBounds(12, 12, 198, 15);
 		contentPanel.add(lblNewLabel);
 
@@ -55,35 +65,35 @@ public class OrganizarExposicion extends JDialog {
 		contentPanel.add(textField);
 		textField.setColumns(10);
 
-		JLabel lblDescripcion = new JLabel("Descripci\u00F3n");
+		lblDescripcion = new JLabel("Descripci\u00F3n");
 		lblDescripcion.setBounds(12, 39, 125, 15);
 		contentPanel.add(lblDescripcion);
 
-		JTextPane textPane = new JTextPane();
+		textPane = new JTextPane();
 		textPane.setBounds(12, 66, 402, 84);
 		contentPanel.add(textPane);
 
-		JLabel lblFe = new JLabel("Fecha de inicio");
+		lblFe = new JLabel("Fecha de inicio");
 		lblFe.setBounds(12, 180, 105, 15);
 		contentPanel.add(lblFe);
 
-		JLabel lblFechaDeFin = new JLabel("Fecha de fin");
+		lblFechaDeFin = new JLabel("Fecha de fin");
 		lblFechaDeFin.setBounds(12, 207, 95, 15);
 		contentPanel.add(lblFechaDeFin);
 
-		JSpinner spinicio = new JSpinner();
+		spinicio = new JSpinner();
 		spinicio.setBounds(144, 178, 95, 20);
 		spinicio.setModel(new SpinnerDateModel());
 		spinicio.setEditor(new JSpinner.DateEditor(spinicio, "dd/MM/yyyy"));
 		contentPanel.add(spinicio);
 
-		JSpinner spfin = new JSpinner();
+		spfin = new JSpinner();
 		spfin.setBounds(145, 205, 94, 20);
 		spfin.setModel(new SpinnerDateModel());
 		spfin.setEditor(new JSpinner.DateEditor(spfin, "dd/MM/yyyy"));
 		contentPanel.add(spfin);
 
-		JButton btnAceptar = new JButton("Aceptar");
+		btnAceptar = new JButton("Aceptar");
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
@@ -104,11 +114,17 @@ public class OrganizarExposicion extends JDialog {
 		btnAceptar.setBounds(12, 247, 95, 25);
 		contentPanel.add(btnAceptar);
 
-		JButton btnCancelar = new JButton("Cancelar");
+		btnCancelar = new JButton("Cancelar");
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
+		});
 		btnCancelar.setBounds(144, 247, 105, 25);
 		contentPanel.add(btnCancelar);
 	}
 	/**
+	 * Lee la fecha de un JSpinner
 	 * @param spinner
 	 * @return LocalDate fecha
 	 */

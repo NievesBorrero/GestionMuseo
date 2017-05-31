@@ -6,6 +6,7 @@ import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.SinTecnicaException;
 
@@ -24,7 +25,7 @@ public class Dibujo extends ObraDeArte implements Serializable{
  double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinTecnicaException{
+			EstiloNoValidoException, SinTecnicaException, DimensionNoValidaException{
 		super(titulo, autor, localizacion, estiloArtistico,
 				donada, personaEntidad, fama, valor, alto, ancho);
 		setTecnica(tecnica);

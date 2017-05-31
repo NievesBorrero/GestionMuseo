@@ -10,6 +10,7 @@ import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.enumeraciones.TipoEscultura;
 import gestionMuseo.excepciones.AdquisicionException;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.SinMaterialException;
 import gestionMuseo.excepciones.SinSoporteException;
@@ -22,8 +23,10 @@ import javax.swing.JOptionPane;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+
 /**
  * JDialog que permite el ingreso de obras en el museo.
+ * 
  * @author Nieves María Borrero Barea.
  * @version 1.0
  */
@@ -38,10 +41,10 @@ public class IngresarObras extends DialogoGeneral {
 		super();
 
 		setTitle("Ingreso de obras de arte");
-		
-		hacerComponentesInvisibles();	
+
+		hacerComponentesInvisibles();
 		hacerComponentesVisibles();
-		
+
 		btnAnterior.setText("Limpiar");
 
 		btnIzquierda.setText("a\u00f1adir");
@@ -63,7 +66,7 @@ public class IngresarObras extends DialogoGeneral {
 				double profundidad = obtenerProfundidad();
 
 				try {
-					
+
 					if (cbTipo.getSelectedIndex() == -1)
 						throw new SinTipoException(
 								"No ha seleccionado ningún tipo de obra");
@@ -114,7 +117,7 @@ public class IngresarObras extends DialogoGeneral {
 			}
 
 		});
-		
+
 		/**
 		 * Al pulsar el botón se limpian los campos.
 		 */
@@ -134,50 +137,52 @@ public class IngresarObras extends DialogoGeneral {
 		});
 
 	}
-	
+
 	/**
 	 * Transforma el dato del JSpinner profundidad en un decimal y lo devuelve.
+	 * 
 	 * @return decimal.
 	 */
 	private double obtenerProfundidad() {
-		return Double.parseDouble(spprof.getValue()
-				.toString());
+		return Double.parseDouble(spprof.getValue().toString());
 	}
-	
+
 	/**
 	 * Transforma el dato del JSpinner anchura en un decimal y lo devuelve.
+	 * 
 	 * @return decimal.
 	 */
 	private double obtenerAnchura() {
-		return Double
-				.parseDouble(spAncho.getValue().toString());
+		return Double.parseDouble(spAncho.getValue().toString());
 	}
-	
+
 	/**
 	 * Transforma el dato del JSpinner altura en un decimal y lo devuelve.
+	 * 
 	 * @return decimal.
 	 */
 	private double obtenerAltura() {
 		return Double.parseDouble(spAlto.getValue().toString());
 	}
-	
+
 	/**
 	 * Transforma el dato del JSpinner valor en un decimal y lo devuelve.
+	 * 
 	 * @return decimal.
 	 */
 	private double obtenerValor() {
-		return Double
-				.parseDouble(spValor.getValue().toString());
+		return Double.parseDouble(spValor.getValue().toString());
 	}
-	
+
 	/**
 	 * Transforma el dato del JSpinner fama en un decimal y lo devuelve.
+	 * 
 	 * @return decimal.
 	 */
 	private double obtenerFama() {
 		return Double.parseDouble(spFama.getValue().toString());
 	}
-	
+
 	/**
 	 * Hace visibles los componentes que no están a la vista en el JDialog padre
 	 * y que son necesarios.
@@ -193,7 +198,6 @@ public class IngresarObras extends DialogoGeneral {
 	/**
 	 * Hace invisibles los componentes del JDialog padre que no son necesarios.
 	 */
-
 	private void hacerComponentesInvisibles() {
 		btnSiguiente.setVisible(false);
 		textcod.setVisible(false);
@@ -206,6 +210,10 @@ public class IngresarObras extends DialogoGeneral {
 		textFecha.setVisible(false);
 		lblFechaDeIngreso.setVisible(false);
 		btnAnterior.setVisible(false);
+		lblestado.setVisible(false);
+		textEstado.setVisible(false);
+	//	lblTotal.setVisible(false);
+	//	textTotal.setVisible(false);
 	}
 
 	/**
@@ -225,11 +233,17 @@ public class IngresarObras extends DialogoGeneral {
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinSoporteException {
-		exposicion.ingresarPintura(textTitulo.getText(), textAutor.getText(),
-				textLocal.getText(), (EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(Soporte) cb1.getSelectedItem(),
-				(MaterialPintura) cb2.getSelectedItem(), alto, ancho);
+		try {
+			exposicion.ingresarPintura(textTitulo.getText(),
+					textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(Soporte) cb1.getSelectedItem(),
+					(MaterialPintura) cb2.getSelectedItem(), alto, ancho);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -248,10 +262,16 @@ public class IngresarObras extends DialogoGeneral {
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinTecnicaException {
-		exposicion.ingresarDibujo(textTitulo.getText(), textAutor.getText(),
-				textLocal.getText(), (EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(TecnicaDeDibujo) cb1.getSelectedItem(), alto, ancho);
+		try {
+			exposicion.ingresarDibujo(textTitulo.getText(),
+					textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(TecnicaDeDibujo) cb1.getSelectedItem(), alto, ancho);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -270,10 +290,17 @@ public class IngresarObras extends DialogoGeneral {
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinTipoGrabadoException {
-		exposicion.ingresarGrabado(textTitulo.getText(), textAutor.getText(),
-				textLocal.getText(), (EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(TipoDeGrabado) cb1.getSelectedItem(), alto, ancho);
+		try {
+			exposicion.ingresarGrabado(textTitulo.getText(),
+					textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(TipoDeGrabado) cb1.getSelectedItem(), alto, ancho);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+			;
+		}
 	}
 
 	/**
@@ -294,12 +321,18 @@ public class IngresarObras extends DialogoGeneral {
 			double valor, double alto, double ancho, double profundidad)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinTipoEsculturaException {
-		exposicion.ingresarEscultura(textTitulo.getText(), textAutor.getText(),
-				textLocal.getText(), (EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(TipoEscultura) cb1.getSelectedItem(),
-				(MaterialEscultura) cb2.getSelectedItem(), alto, ancho,
-				profundidad);
+		try {
+			exposicion.ingresarEscultura(textTitulo.getText(),
+					textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(TipoEscultura) cb1.getSelectedItem(),
+					(MaterialEscultura) cb2.getSelectedItem(), alto, ancho,
+					profundidad);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
+					"Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 }

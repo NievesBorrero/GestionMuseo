@@ -17,13 +17,26 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-
+/**
+ * Informa acerca del proyecto.
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class AcercaDe extends JDialog {
-	URI web;
+	
+	private static final long serialVersionUID = 1L;
+	private URI web;
 	private final JPanel contentPanel = new JPanel();
-
+		
+	private JLabel lblAutora;
+	private JLabel lblAsignatura;
+	private JLabel lblTitulo;
+	private JButton btnirAllink;
+	private JPanel buttonPane;
+	private JButton aceptar;
+	
 	/**
-	 * Create the dialog.
+	 * Permite crear el diálogo.
 	 */
 	public AcercaDe() {
 		setBounds(100, 100, 450, 300);
@@ -31,26 +44,29 @@ public class AcercaDe extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		setModal(true);
+		setResizable(false);
+		
 		try {
 			web = new URI ("https://github.com/NievesBorrero/GestionMuseo");
 		} catch (URISyntaxException e) {
 		}
+		
 		contentPanel.setLayout(null);
-		JLabel lblAutora = new JLabel("Autor/a: Nieves Mar\u00EDa Borrero Barea");
+		lblAutora = new JLabel("Autor/a: Nieves Mar\u00EDa Borrero Barea");
 		lblAutora.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAutora.setBounds(10, 87, 269, 14);
 		contentPanel.add(lblAutora);
 		
-		JLabel lblAsignatura = new JLabel("Asignatura: Programaci\u00F3n");
+		lblAsignatura = new JLabel("Asignatura: Programaci\u00F3n");
 		lblAsignatura.setHorizontalAlignment(SwingConstants.LEFT);
 		lblAsignatura.setBounds(10, 144, 269, 14);
 		contentPanel.add(lblAsignatura);
 		
-		JLabel lblTitulo = new JLabel("Título: Gestión Museo");
+		lblTitulo = new JLabel("Título: Gestión Museo");
 		lblTitulo.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitulo.setBounds(10, 38, 269, 14);
 		contentPanel.add(lblTitulo);
-		JButton btnirAllink = new JButton("repositorio");
+		btnirAllink = new JButton("repositorio");
 		contentPanel.add(btnirAllink);
 		btnirAllink.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -65,11 +81,11 @@ public class AcercaDe extends JDialog {
 		btnirAllink.setBackground(Color.WHITE);
 		btnirAllink.setToolTipText(web.toString());
 		{
-			JPanel buttonPane = new JPanel();
+			buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton aceptar = new JButton("Aceptar");
+				aceptar = new JButton("Aceptar");
 				aceptar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						setVisible(false);
@@ -81,11 +97,14 @@ public class AcercaDe extends JDialog {
 			}
 		}
 	}
-
+	/**
+	 * Lanza un enlace al repositorio en el navegador
+	 * @param web2
+	 */
 	protected void abrirRepositorio(URI web2) {
 		 if (Desktop.isDesktopSupported()) {
 		      try {
-		        Desktop.getDesktop().browse(web);
+		        Desktop.getDesktop().browse(web2);
 		      } catch (IOException e) { 
 		      }
 		    } else {

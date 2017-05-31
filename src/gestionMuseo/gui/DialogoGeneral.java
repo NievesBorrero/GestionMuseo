@@ -118,7 +118,7 @@ public class DialogoGeneral extends JDialog {
 	public DialogoGeneral() {
 		setModal(true);
 		setResizable(false);
-		setBounds(100, 100, 649, 523);
+		setBounds(100, 100, 649, 582);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -154,7 +154,7 @@ public class DialogoGeneral extends JDialog {
 		panel_adquisicion = new JPanel();
 		panel_adquisicion.setBorder(new TitledBorder(null, "Adquisici\u00F3n",
 				TitledBorder.LEADING, TitledBorder.TOP, null, Color.DARK_GRAY));
-		panel_adquisicion.setBounds(22, 319, 229, 105);
+		panel_adquisicion.setBounds(22, 344, 229, 105);
 		contentPanel.add(panel_adquisicion);
 		panel_adquisicion.setLayout(null);
 
@@ -224,7 +224,7 @@ public class DialogoGeneral extends JDialog {
 		ingresosYgastos.setBorder(new TitledBorder(new LineBorder(new Color(
 				184, 207, 229)), "Ingresos y gastos", TitledBorder.LEADING,
 				TitledBorder.TOP, null, new Color(0, 0, 0)));
-		ingresosYgastos.setBounds(309, 308, 308, 116);
+		ingresosYgastos.setBounds(318, 333, 308, 116);
 		contentPanel.add(ingresosYgastos);
 		ingresosYgastos.setLayout(null);
 
@@ -247,46 +247,45 @@ public class DialogoGeneral extends JDialog {
 		spCosteExp = new JSpinner();
 		spCosteExp.setEnabled(false);
 		spCosteExp.setBounds(186, 23, 64, 20);
-		spCosteExp.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spCosteExp.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 		ingresosYgastos.add(spCosteExp);
 
 		spCostRest = new JSpinner();
 		spCostRest.setEnabled(false);
 		spCostRest.setBounds(186, 50, 64, 20);
-		spCostRest.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spCostRest.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 		ingresosYgastos.add(spCostRest);
 
 		spValor = new JSpinner();
 		spValor.setBounds(63, 87, 58, 20);
-		spValor.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spValor.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 		ingresosYgastos.add(spValor);
 
 		spFama = new JSpinner();
 		spFama.setBounds(186, 87, 64, 20);
-		spFama.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spFama.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 		ingresosYgastos.add(spFama);
 
 		btnAnterior = new JButton("        ");
 
-		btnAnterior.setBounds(22, 458, 117, 25);
+		btnAnterior.setBounds(22, 503, 117, 25);
 		contentPanel.add(btnAnterior);
 
 		btnIzquierda = new JButton("      ");
-		btnIzquierda.setBounds(391, 458, 117, 25);
+		btnIzquierda.setBounds(391, 503, 117, 25);
 		contentPanel.add(btnIzquierda);
 
 		btnDerecha = new JButton("       ");
-		btnDerecha.setBounds(520, 458, 117, 25);
+		btnDerecha.setBounds(520, 503, 117, 25);
 		contentPanel.add(btnDerecha);
 
 		btnSiguiente = new JButton("");
-		btnSiguiente.setBounds(151, 458, 117, 25);
+		btnSiguiente.setBounds(151, 503, 117, 25);
 		contentPanel.add(btnSiguiente);
 
 		panel_2 = new JPanel();
-		panel_2.setBorder(new TitledBorder(null, "Medidas",
-				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_2.setBounds(22, 172, 198, 114);
+		panel_2.setBorder(new TitledBorder(new LineBorder(new Color(184, 207, 229)), "Medidas (cm)", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(51, 51, 51)));
+		panel_2.setBounds(22, 174, 198, 116);
 		contentPanel.add(panel_2);
 		panel_2.setLayout(null);
 
@@ -295,32 +294,32 @@ public class DialogoGeneral extends JDialog {
 		panel_2.add(lblProfundidad);
 
 		spprof = new JSpinner();
-		spprof.setBounds(121, 85, 56, 20);
+		spprof.setBounds(107, 85, 70, 20);
 		panel_2.add(spprof);
-		spprof.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spprof.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 
 		lblAncho = new JLabel("Ancho");
 		lblAncho.setBounds(12, 56, 70, 15);
 		panel_2.add(lblAncho);
 
 		spAncho = new JSpinner();
-		spAncho.setBounds(121, 53, 56, 20);
+		spAncho.setBounds(107, 53, 70, 20);
 		panel_2.add(spAncho);
-		spAncho.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spAncho.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 
 		lblAlto = new JLabel("Alto");
 		lblAlto.setBounds(12, 28, 70, 15);
 		panel_2.add(lblAlto);
 
 		spAlto = new JSpinner();
-		spAlto.setBounds(121, 28, 56, 20);
+		spAlto.setBounds(107, 28, 70, 20);
 		panel_2.add(spAlto);
-		spAlto.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.5));
+		spAlto.setModel(new SpinnerNumberModel(0.0, 0.0, 100.0, 0.01));
 
 		panel_salas = new JPanel();
 		panel_salas.setBorder(new TitledBorder(null, "Salas",
 				TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_salas.setBounds(309, 171, 287, 86);
+		panel_salas.setBounds(306, 174, 287, 86);
 		contentPanel.add(panel_salas);
 		panel_salas.setLayout(null);
 
@@ -381,15 +380,15 @@ public class DialogoGeneral extends JDialog {
 		separator = new JSeparator();
 		separator.setForeground(Color.LIGHT_GRAY);
 		separator.setBackground(Color.WHITE);
-		separator.setBounds(-12, 447, 649, 13);
+		separator.setBounds(0, 478, 649, 13);
 		contentPanel.add(separator);
 
 		lblestado = new JLabel("Estado de conservación: ");
-		lblestado.setBounds(309, 269, 177, 15);
+		lblestado.setBounds(309, 284, 177, 15);
 		contentPanel.add(lblestado);
 
 		textEstado = new JTextField();
-		textEstado.setBounds(490, 269, 114, 19);
+		textEstado.setBounds(499, 284, 114, 19);
 		contentPanel.add(textEstado);
 		textEstado.setColumns(10);
 	}
@@ -704,6 +703,14 @@ public class DialogoGeneral extends JDialog {
 		cb2.setVisible(true);
 		cb1.setSelectedItem(null);
 		cb2.setSelectedItem(null);
+	}
+	
+	/**
+	 * Transforma el contenido de un JText a un entero.
+	 * @return
+	 */
+	int pasarTextAEntero(String cod) {
+		return Integer.parseInt(cod);
 	}
 
 	/**

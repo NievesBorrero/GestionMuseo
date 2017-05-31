@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
  * JDialog que permite eliminar una obra introduciendo su código. Al pulsar el
  * botón eliminar, muestra la obra y pregunta antes de borrar.
  * 
- * @author nieves
- *
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
  */
 public class EliminarPorCodigo extends DialogoGeneral {
 
@@ -33,16 +33,10 @@ public class EliminarPorCodigo extends DialogoGeneral {
 		btnIzquierda.setText("Eliminar");
 		btnDerecha.setText("Cancelar");
 
-		btnDerecha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-			}
-		});
-
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
-					int codigo = Integer.parseInt(textcod.getText());
+					int codigo = pasarTextAEntero(textcod.getText());
 					ObraDeArte aEliminar = exposicion.devolverPorCodigo(codigo);
 					mostrar(aEliminar);
 					int n = JOptionPane.showOptionDialog(contentPanel,
@@ -68,16 +62,24 @@ public class EliminarPorCodigo extends DialogoGeneral {
 							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NumberFormatException e1) {
 					JOptionPane.showMessageDialog(getContentPane(),
-							"Debes introducir el codigo", "Error",
+							"Debe introducir el codigo", "Error",
 							JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 
+
+		});
+		
+		btnDerecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
 		});
 
 	}
-
+	
+	
 	/**
 	 * Hace invisibles los componentes del JDialog padre que no son necesarios.
 	 */

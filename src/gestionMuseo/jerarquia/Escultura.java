@@ -6,6 +6,7 @@ import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.TipoEscultura;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.SinMaterialException;
 import gestionMuseo.excepciones.SinTipoEsculturaException;
@@ -24,7 +25,7 @@ public class Escultura extends ObraDeArte implements Serializable{
 			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
 			double ancho, double alto, double profundidad)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinMaterialException, SinTipoEsculturaException{
+			EstiloNoValidoException, SinMaterialException, SinTipoEsculturaException, DimensionNoValidaException{
 		super(nombre, autor, localizacion, estiloArtistico, donada,
 				personaEntidad, fama, valor, alto, ancho);
 		setMaterialEscultura(materialEscultura);
@@ -63,7 +64,9 @@ public class Escultura extends ObraDeArte implements Serializable{
 		return profundidad;
 	}
 
-	public void setProfundidad(double profundidad) {
+	public void setProfundidad(double profundidad) throws DimensionNoValidaException {
+		if(profundidad<=0)throw new DimensionNoValidaException("la profundidad no es válida");
+
 		this.profundidad = profundidad;
 	}
 

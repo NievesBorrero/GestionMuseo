@@ -12,6 +12,7 @@ import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.enumeraciones.TipoEscultura;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraNoExisteException;
@@ -65,6 +66,7 @@ public class Fondos implements Serializable {
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoEsculturaException
 	 * @throws SinMaterialException
+	 * @throws DimensionNoValidaException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -74,7 +76,7 @@ public class Fondos implements Serializable {
 			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
 			double ancho, double alto, double profundidad)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinMaterialException, SinTipoEsculturaException {
+			SinMaterialException, SinTipoEsculturaException, DimensionNoValidaException {
 
 		Escultura escultura = new Escultura(nombre, autor, localizacion,
 				estiloArtistico, donada, personaEntidad, fama, valor,
@@ -103,6 +105,7 @@ public class Fondos implements Serializable {
 	 * @throws EstiloNoValidoException
 	 * @throws SinSoporteException
 	 * @throws SinMaterialException
+	 * @throws DimensionNoValidaException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -111,7 +114,7 @@ public class Fondos implements Serializable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			Soporte soporte, MaterialPintura material, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinMaterialException, SinSoporteException {
+			SinMaterialException, SinSoporteException, DimensionNoValidaException {
 
 		Pintura pintura = new Pintura(titulo, autor, localizacion,
 				estiloArtistico, donada, personaEntidad, fama, valor, soporte,
@@ -147,6 +150,7 @@ public class Fondos implements Serializable {
 	 * @throws LocalizacionNoValidaException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoGrabadoException
+	 * @throws DimensionNoValidaException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -156,7 +160,7 @@ public class Fondos implements Serializable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoGrabadoException {
+			SinTipoGrabadoException, DimensionNoValidaException {
 		Grabado grabado = new Grabado(nombre, autor, localizacion,
 				estiloArtistico, donada, personaEntidad, fama, valor,
 				tipoDeGrabado, alto, ancho);
@@ -181,6 +185,7 @@ public class Fondos implements Serializable {
 	 * @throws LocalizacionNoValidaException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTecnicaException
+	 * @throws DimensionNoValidaException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -189,7 +194,7 @@ public class Fondos implements Serializable {
 			String personaEntidad, double fama, double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTecnicaException {
+			SinTecnicaException, DimensionNoValidaException {
 
 		Dibujo dibujo = new Dibujo(nombre, autor, localizacion,
 				estiloArtistico, donada, personaEntidad, fama, valor, tecnica,
@@ -357,6 +362,7 @@ public class Fondos implements Serializable {
 	 * @throws ObraNoExisteException
 	 * @throws SinMaterialException 
 	 * @throws SinSoporteException 
+	 * @throws DimensionNoValidaException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -365,7 +371,7 @@ public class Fondos implements Serializable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			Soporte soporte, MaterialPintura material, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			ObraNoExisteException, SinMaterialException, SinSoporteException {
+			ObraNoExisteException, SinMaterialException, SinSoporteException, DimensionNoValidaException {
 
 		fondos.get(indice).setTitulo(titulo);
 		fondos.get(indice).setAutor(autor);
@@ -402,6 +408,7 @@ public class Fondos implements Serializable {
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoEsculturaException 
 	 * @throws SinMaterialException 
+	 * @throws DimensionNoValidaException 
 	 */
 	public void modificarEscultura(int indice, String titulo, String autor,
 			String localizacion, EstiloArtistico estiloArtistico,
@@ -409,7 +416,7 @@ public class Fondos implements Serializable {
 			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
 			double ancho, double alto, double profundidad)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinTipoEsculturaException, SinMaterialException {
+			EstiloNoValidoException, SinTipoEsculturaException, SinMaterialException, DimensionNoValidaException {
 
 		fondos.get(indice).setTitulo(titulo);
 		fondos.get(indice).setAutor(autor);
@@ -445,13 +452,14 @@ public class Fondos implements Serializable {
 	 * @throws AutorNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoGrabadoException 
+	 * @throws DimensionNoValidaException 
 	 */
 	public void modificarGrabado(int indice, String titulo, String autor,
 			String localizacion, EstiloArtistico estiloArtistico,
 			boolean donada, String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinTipoGrabadoException {
+			EstiloNoValidoException, SinTipoGrabadoException, DimensionNoValidaException {
 		fondos.get(indice).setTitulo(titulo);
 		fondos.get(indice).setAutor(autor);
 		fondos.get(indice).setAncho(ancho);
@@ -484,6 +492,7 @@ public class Fondos implements Serializable {
 	 * @throws LocalizacionNoValidaException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTecnicaException 
+	 * @throws DimensionNoValidaException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -492,7 +501,7 @@ public class Fondos implements Serializable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinTecnicaException {
+			EstiloNoValidoException, SinTecnicaException, DimensionNoValidaException {
 
 		fondos.get(indice).setTitulo(titulo);
 		fondos.get(indice).setAutor(autor);
@@ -637,7 +646,7 @@ public class Fondos implements Serializable {
 			}
 		}
 		if (!pinturas.listIterator().hasNext())
-			throw new NoHayFondosException("no hay Dibujos");
+			throw new NoHayFondosException("No hay dibujos");
 
 		return pinturas.listIterator();
 	}
@@ -660,7 +669,7 @@ public class Fondos implements Serializable {
 			}
 		}
 		if (!esculturas.listIterator().hasNext())
-			throw new NoHayFondosException("no hay Esculturas");
+			throw new NoHayFondosException("No hay esculturas");
 		return esculturas.listIterator();
 	}
 
@@ -681,7 +690,7 @@ public class Fondos implements Serializable {
 			}
 		}
 		if (!dibujos.listIterator().hasNext())
-			throw new NoHayFondosException("no hay Dibujos");
+			throw new NoHayFondosException("No hay dibujos");
 		return dibujos.listIterator();
 	}
 

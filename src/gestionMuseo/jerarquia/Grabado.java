@@ -5,6 +5,7 @@ import java.io.Serializable;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.SinTipoGrabadoException;
 
@@ -18,7 +19,7 @@ public class Grabado extends ObraDeArte implements Serializable{
 			String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinTipoGrabadoException{
+			EstiloNoValidoException, SinTipoGrabadoException, DimensionNoValidaException{
 		super(nombre, autor, localizacion, estiloArtistico, donada,
 				personaEntidad, fama, valor, alto, ancho);
 		setTipoDeGrabado(tipoDeGrabado);

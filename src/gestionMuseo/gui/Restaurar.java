@@ -1,26 +1,16 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.enumeraciones.EstadoDeConservacion;
-import gestionMuseo.enumeraciones.Sala;
-import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.NoHayFondosException;
-import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
 import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.jerarquia.ObraDeArte;
 
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ListIterator;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
 
 public class Restaurar extends MostrarObrasMuseo {
 
@@ -50,7 +40,7 @@ public class Restaurar extends MostrarObrasMuseo {
 					int opcion;
 					obra= Principal.museo
 							.devolverPorCodigo(
-									Integer.parseInt(textcod
+									pasarTextAEntero(textcod
 											.getText()));
 					opcion = JOptionPane
 							.showOptionDialog(
@@ -65,9 +55,7 @@ public class Restaurar extends MostrarObrasMuseo {
 									null);
 					if (opcion == JOptionPane.YES_OPTION) {
 
-						Principal.museo.restaurar(obra);
-						textEstado.setText(obra.getEstadoConservacion().toString().toLowerCase());
-						Principal.museo.setModificado(true);
+						restaurar();
 
 					}
 				} catch (HeadlessException e2) {
@@ -89,9 +77,21 @@ public class Restaurar extends MostrarObrasMuseo {
 
 			}
 
+
 		});
 
 	}
-
+	
+	/**
+	 * Restaura una obra.
+	 * @throws NoHayFondosException
+	 * @throws ObraNoDaniadaException
+	 */
+	private void restaurar() throws NoHayFondosException,
+	ObraNoDaniadaException {
+		Principal.museo.restaurar(obra);
+		textEstado.setText(obra.getEstadoConservacion().toString().toLowerCase());
+		Principal.museo.setModificado(true);
+	}
 
 }

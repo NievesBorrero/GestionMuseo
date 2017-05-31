@@ -8,6 +8,7 @@ import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.enumeraciones.TipoEscultura;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraNoExisteException;
@@ -32,7 +33,7 @@ import javax.swing.JOptionPane;
  * JDialog que recorre el iterador de obras de arte permitiendo modificarlas y
  * guardar los cambios.
  * 
- * @author Nieves Borrero.
+ * @author Nieves María Borrero Barea.
  *
  */
 public class ModificarObra extends MostrarObrasMuseo {
@@ -46,6 +47,7 @@ public class ModificarObra extends MostrarObrasMuseo {
 		btnIzquierda.setText("Guardar");
 		habilitarComponentes();
 		inhabilitarComponentes();
+		setTitle("Modificar datos");
 
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -78,7 +80,7 @@ public class ModificarObra extends MostrarObrasMuseo {
 						dibujo = (Dibujo) obraMostrada;
 						modificarDibujo(fama, valor, alto, ancho, dibujo);
 					}
-					
+
 					Principal.museo.setModificado(true);
 
 				} catch (AutorNoValidoException e1) {
@@ -129,12 +131,17 @@ public class ModificarObra extends MostrarObrasMuseo {
 			double ancho, Pintura pintura) throws AutorNoValidoException,
 			EstiloNoValidoException, ObraNoExisteException,
 			SinMaterialException, SinSoporteException {
-		Principal.museo.modificarPintura(Principal.museo.indexOf(pintura),
-				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
-				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(Soporte) cb1.getSelectedItem(),
-				(MaterialPintura) cb2.getSelectedItem(), alto, ancho);
+		try {
+			Principal.museo.modificarPintura(Principal.museo.indexOf(pintura),
+					textTitulo.getText(), textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(Soporte) cb1.getSelectedItem(),
+					(MaterialPintura) cb2.getSelectedItem(), alto, ancho);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(),
+					e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -152,11 +159,16 @@ public class ModificarObra extends MostrarObrasMuseo {
 	private void modificarDibujo(double fama, double valor, double alto,
 			double ancho, Dibujo dibujo) throws AutorNoValidoException,
 			EstiloNoValidoException, SinTecnicaException {
-		Principal.museo.modificarDibujo(Principal.museo.indexOf(dibujo),
-				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
-				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(TecnicaDeDibujo) cb1.getSelectedItem(), alto, ancho);
+		try {
+			Principal.museo.modificarDibujo(Principal.museo.indexOf(dibujo),
+					textTitulo.getText(), textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(TecnicaDeDibujo) cb1.getSelectedItem(), alto, ancho);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(),
+					e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -174,11 +186,16 @@ public class ModificarObra extends MostrarObrasMuseo {
 	private void modificarGrabado(double fama, double valor, double alto,
 			double ancho, Grabado grabado) throws AutorNoValidoException,
 			EstiloNoValidoException, SinTipoGrabadoException {
-		Principal.museo.modificarGrabado(Principal.museo.indexOf(grabado),
-				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
-				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(TipoDeGrabado) cb1.getSelectedItem(), alto, ancho);
+		try {
+			Principal.museo.modificarGrabado(Principal.museo.indexOf(grabado),
+					textTitulo.getText(), textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(TipoDeGrabado) cb1.getSelectedItem(), alto, ancho);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(),
+					e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
 	/**
@@ -199,15 +216,23 @@ public class ModificarObra extends MostrarObrasMuseo {
 			double ancho, double profundidad, Escultura escultura)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinTipoEsculturaException, SinMaterialException {
-		Principal.museo.modificarEscultura(Principal.museo.indexOf(escultura),
-				textTitulo.getText(), textAutor.getText(), textLocal.getText(),
-				(EstiloArtistico) cbEA.getSelectedItem(),
-				rbDonada.isSelected(), textPersona.getText(), fama, valor,
-				(TipoEscultura) cb1.getSelectedItem(),
-				(MaterialEscultura) cb2.getSelectedItem(), alto, ancho,
-				profundidad);
+		try {
+			Principal.museo.modificarEscultura(Principal.museo.indexOf(escultura),
+					textTitulo.getText(), textAutor.getText(), textLocal.getText(),
+					(EstiloArtistico) cbEA.getSelectedItem(),
+					rbDonada.isSelected(), textPersona.getText(), fama, valor,
+					(TipoEscultura) cb1.getSelectedItem(),
+					(MaterialEscultura) cb2.getSelectedItem(), alto, ancho,
+					profundidad);
+		} catch (DimensionNoValidaException e) {
+			JOptionPane.showMessageDialog(getContentPane(),
+					e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 
+	/**
+	 * Habilita los componentes del diálogo padre que son necesarios.
+	 */
 	private void habilitarComponentes() {
 		cbTipo.setEnabled(true);
 		textTitulo.setEnabled(true);
@@ -240,9 +265,16 @@ public class ModificarObra extends MostrarObrasMuseo {
 
 	}
 
+	/**
+	 * Inhabilita los componentes del diálogo padre que no son necesarios.
+	 */
 	void inhabilitarComponentes() {
 		cbTipo.setEnabled(false);
 		textcod.setEnabled(false);
+		rbSala_1.setEnabled(false);
+		rbSala_2.setEnabled(false);
+		rbSala_3.setEnabled(false);
+		rbAlmacen.setEnabled(false);
 	}
 
 }

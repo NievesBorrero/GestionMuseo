@@ -3,38 +3,33 @@ package gestionMuseo.gui;
 import gestionMuseo.GestionMuseo;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-import org.eclipse.wb.swing.FocusTraversalOnArray;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
  * JDialog que muestra los datos de una exposición
- * @author nieves
- *
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
  */
 public class Datos extends JDialog {
 	
 	private static final long serialVersionUID = 1L;
 	
 	private final JPanel contentPanel = new JPanel();
-	private JTextField textPresupuesto;
 	private JTextField textNombreExp;
 	private JButton okButton;
 	private JLabel lblDescripcion;
 	private JLabel lblFechaDeFin;
 	private JLabel lblFechaDeInicio;
-	private JLabel lblPresupuestoDelMuseo;
 	private JLabel lblNombreDeLa;
 	private JTextField textInicio;
 	private JTextField textFin;
@@ -47,28 +42,19 @@ public class Datos extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
-		
-		lblPresupuestoDelMuseo = new JLabel("Presupuesto actual del museo:");
-		lblPresupuestoDelMuseo.setBounds(12, 12, 243, 15);
-		contentPanel.add(lblPresupuestoDelMuseo);
-		
-		textPresupuesto = new JTextField();
-		textPresupuesto.setBounds(251, 10, 79, 19);
-		contentPanel.add(textPresupuesto);
-		textPresupuesto.setColumns(10);
 	
 		
 		lblNombreDeLa = new JLabel("Nombre de la exposición:");
-		lblNombreDeLa.setBounds(12, 52, 189, 15);
+		lblNombreDeLa.setBounds(12, 12, 189, 15);
 		contentPanel.add(lblNombreDeLa);
 		
 		textNombreExp = new JTextField();
-		textNombreExp.setBounds(202, 50, 223, 19);
+		textNombreExp.setBounds(202, 10, 223, 19);
 		contentPanel.add(textNombreExp);
 		textNombreExp.setColumns(10);
 		
 		lblDescripcion = new JLabel("Descripción:");
-		lblDescripcion.setBounds(12, 79, 100, 15);
+		lblDescripcion.setBounds(12, 40, 100, 15);
 		contentPanel.add(lblDescripcion);
 		
 		lblFechaDeFin = new JLabel("Fecha de fin:");
@@ -80,7 +66,7 @@ public class Datos extends JDialog {
 		contentPanel.add(lblFechaDeInicio);
 		
 		textPane = new JTextPane();
-		textPane.setBounds(12, 101, 413, 111);
+		textPane.setBounds(12, 67, 413, 141);
 		contentPanel.add(textPane);
 		
 		textInicio = new JTextField();
@@ -119,8 +105,6 @@ public class Datos extends JDialog {
 	 * @param museo
 	 */
 	private void rellenarCampos(GestionMuseo museo) {
-		
-		textPresupuesto.setText(""+museo.getPresupuesto());
 		textNombreExp.setText(museo.getNombreExposicion());
 		textPane.setText(museo.getDescripcionExposicion());
 		textFin.setText(museo.formatearFecha(museo.getFechaInicio()));

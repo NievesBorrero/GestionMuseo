@@ -9,6 +9,7 @@ import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.ObraExpuestaException;
@@ -26,9 +27,6 @@ import java.util.regex.Pattern;
 
 public abstract class ObraDeArte implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String titulo;
 	private String autor;
@@ -83,6 +81,7 @@ public abstract class ObraDeArte implements Serializable {
 	 * @throws personaEntidadNoValidaException
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
+	 * @throws DimensionNoValidaException 
 	 * @throws LocalizacionNoValidaException
 	 */
 
@@ -90,7 +89,7 @@ public abstract class ObraDeArte implements Serializable {
 			EstiloArtistico estiloArtistico, boolean donada,
 			String personaEntidad, double fama, double valor, double alto,
 			double ancho) throws AutorNoValidoException,
-			EstiloNoValidoException {
+			EstiloNoValidoException, DimensionNoValidaException {
 		setTitulo(titulo);
 		setAutor(autor);
 		setLocalizacion(localizacion);
@@ -396,7 +395,8 @@ public abstract class ObraDeArte implements Serializable {
 		return alto;
 	}
 
-	public void setAlto(double alto) {
+	public void setAlto(double alto) throws DimensionNoValidaException {
+		if(alto<=0)throw new DimensionNoValidaException("La altura no es válida");
 		this.alto = alto;
 	}
 
@@ -404,7 +404,8 @@ public abstract class ObraDeArte implements Serializable {
 		return ancho;
 	}
 
-	public void setAncho(double ancho) {
+	public void setAncho(double ancho) throws DimensionNoValidaException {
+		if(ancho<=0)throw new DimensionNoValidaException("El ancho no es válido");
 		this.ancho = ancho;
 	}
 

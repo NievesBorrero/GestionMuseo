@@ -6,6 +6,7 @@ import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialPintura;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.excepciones.AutorNoValidoException;
+import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.SinMaterialException;
 import gestionMuseo.excepciones.SinSoporteException;
@@ -23,7 +24,7 @@ public class Pintura extends ObraDeArte implements Serializable {
 			String personaEntidad, double fama, double valor, Soporte soporte,
 			MaterialPintura material, double alto, double ancho)
 			throws AutorNoValidoException,
-			EstiloNoValidoException, SinMaterialException, SinSoporteException{
+			EstiloNoValidoException, SinMaterialException, SinSoporteException, DimensionNoValidaException{
 		super(nombre, autor, localizacion, estiloArtistico, donada,
 				personaEntidad, fama, valor, alto, ancho);
 		setSoporte(soporte);

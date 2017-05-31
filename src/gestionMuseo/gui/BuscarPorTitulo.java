@@ -11,7 +11,7 @@ import gestionMuseo.excepciones.ObraNoExisteException;
 /**
  * Permite buscar una obra de arte por su título.
  * 
- * @author Nieves Borrero Barea.
+ * @author Nieves María Borrero Barea.
  * @version 1.0
  */
 
@@ -31,12 +31,6 @@ public class BuscarPorTitulo extends DialogoGeneral {
 		btnIzquierda.setText("Buscar");
 		btnDerecha.setText("Cancelar");
 
-		btnDerecha.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				setVisible(false);
-			}
-		});
-
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				try {
@@ -47,6 +41,12 @@ public class BuscarPorTitulo extends DialogoGeneral {
 				}
 			}
 
+		});
+		
+		btnDerecha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}
 		});
 
 	}
