@@ -1,5 +1,7 @@
 package gestionMuseo.Ficheros;
 
+import gestionMuseo.GestionMuseo;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -40,14 +42,14 @@ public class Fichero {
 	/**
 	 * Guarda el fichero preguntando previamente donde y con que nombre
 	 * 
-	 * @param objeto
+	 * @param museo
 	 * @param nombre
 	 * @throws IOException
 	 */
-	public static void guardarComo(Object objeto, File nombre) throws IOException {
+	public static void guardarComo(GestionMuseo museo, File nombre) throws IOException {
 		FICHERO = comprobarNombre(nombre);
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FICHERO))) {
-			out.writeObject(objeto);
+			out.writeObject(museo);
 		}
 	}
 
@@ -57,9 +59,9 @@ public class Fichero {
 	 * @param objeto
 	 * @throws IOException
 	 */
-	public static void guardar(Object objeto) throws IOException {
+	public static void guardar(GestionMuseo museo) throws IOException {
 		try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(FICHERO))) {
-			out.writeObject(objeto);
+			out.writeObject(museo);
 		}
 	}
 
@@ -70,9 +72,9 @@ public class Fichero {
 	 * @throws IOException
 	 * @throws ClassNotFoundException
 	 */
-	public static Object abrir(File archivo) throws IOException, ClassNotFoundException {
+	public static GestionMuseo abrir(File archivo) throws IOException, ClassNotFoundException {
 		try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(archivo))) {
-			return in.readObject();
+			return (GestionMuseo) in.readObject();
 		}
 	}
 

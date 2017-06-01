@@ -4,6 +4,7 @@ import gestionMuseo.GestionMuseo;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
+import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
@@ -12,6 +13,7 @@ import gestionMuseo.excepciones.AdquisicionException;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
+import gestionMuseo.excepciones.PeriodoNoValidoException;
 import gestionMuseo.excepciones.SinMaterialException;
 import gestionMuseo.excepciones.SinSoporteException;
 import gestionMuseo.excepciones.SinTecnicaException;
@@ -70,6 +72,9 @@ public class IngresarObras extends DialogoGeneral {
 					if (cbTipo.getSelectedIndex() == -1)
 						throw new SinTipoException(
 								"No ha seleccionado ningún tipo de obra");
+					if (cbPH.getSelectedIndex() == -1)
+						throw new PeriodoNoValidoException(
+								"Debe introducir un periodo hist\u00f3rico");
 					if (!rbDonada.isSelected() && !rbComprada.isSelected())
 						throw new AdquisicionException(
 								"No ha se\u00f1alado si la obra fue donada o comprada");
@@ -83,12 +88,15 @@ public class IngresarObras extends DialogoGeneral {
 						ingresarGrabado(museo, fama, valor, alto, ancho);
 					else
 						ingresarDibujo(museo, fama, valor, alto, ancho);
-					limpiar();
 					museo.setModificado(true);
+					limpiar();
 				} catch (AutorNoValidoException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (EstiloNoValidoException e1) {
+				} catch (PeriodoNoValidoException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}catch (EstiloNoValidoException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (SinTipoException e1) {
@@ -112,7 +120,10 @@ public class IngresarObras extends DialogoGeneral {
 				} catch (AdquisicionException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				} catch (DimensionNoValidaException e1) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} 
 
 			}
 
@@ -212,8 +223,8 @@ public class IngresarObras extends DialogoGeneral {
 		btnAnterior.setVisible(false);
 		lblestado.setVisible(false);
 		textEstado.setVisible(false);
-	//	lblTotal.setVisible(false);
-	//	textTotal.setVisible(false);
+		// lblTotal.setVisible(false);
+		// textTotal.setVisible(false);
 	}
 
 	/**
@@ -228,22 +239,22 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws EstiloNoValidoException
 	 * @throws SinSoporteException
 	 * @throws SinMaterialException
+	 * @throws PeriodoNoValidoException 
+	 * @throws DimensionNoValidaException 
 	 */
 	private void ingresarPintura(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinMaterialException, SinSoporteException {
-		try {
+			SinMaterialException, SinSoporteException, DimensionNoValidaException, PeriodoNoValidoException {
+
 			exposicion.ingresarPintura(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
+					(PeriodoHistorico) cbPH.getSelectedItem(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
 					(Soporte) cb1.getSelectedItem(),
 					(MaterialPintura) cb2.getSelectedItem(), alto, ancho);
-		} catch (DimensionNoValidaException e) {
-			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-		}
+		
 	}
 
 	/**
@@ -257,21 +268,20 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws AutorNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTecnicaException
+	 * @throws PeriodoNoValidoException 
+	 * @throws DimensionNoValidaException 
 	 */
 	private void ingresarDibujo(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTecnicaException {
-		try {
+			SinTecnicaException, DimensionNoValidaException{
+		
 			exposicion.ingresarDibujo(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
 					(TecnicaDeDibujo) cb1.getSelectedItem(), alto, ancho);
-		} catch (DimensionNoValidaException e) {
-			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-		}
+		
 	}
 
 	/**
@@ -285,22 +295,20 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws AutorNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoGrabadoException
+	 * @throws PeriodoNoValidoException 
+	 * @throws DimensionNoValidaException 
 	 */
 	private void ingresarGrabado(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoGrabadoException {
-		try {
+			SinTipoGrabadoException, DimensionNoValidaException{
+		
 			exposicion.ingresarGrabado(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
 					(TipoDeGrabado) cb1.getSelectedItem(), alto, ancho);
-		} catch (DimensionNoValidaException e) {
-			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-			;
-		}
+		
 	}
 
 	/**
@@ -316,23 +324,24 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoEsculturaException
 	 * @throws SinMaterialException
+	 * @throws PeriodoNoValidoException 
+	 * @throws DimensionNoValidaException 
 	 */
 	private void ingresarEscultura(GestionMuseo exposicion, double fama,
 			double valor, double alto, double ancho, double profundidad)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinMaterialException, SinTipoEsculturaException {
-		try {
+			SinMaterialException, SinTipoEsculturaException, 
+			DimensionNoValidaException, PeriodoNoValidoException {
+		
 			exposicion.ingresarEscultura(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
+					(PeriodoHistorico) cbPH.getSelectedItem(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
 					(TipoEscultura) cb1.getSelectedItem(),
 					(MaterialEscultura) cb2.getSelectedItem(), alto, ancho,
 					profundidad);
-		} catch (DimensionNoValidaException e) {
-			JOptionPane.showMessageDialog(getContentPane(), e.getMessage(),
-					"Error", JOptionPane.ERROR_MESSAGE);
-		}
+		
 	}
 
 }

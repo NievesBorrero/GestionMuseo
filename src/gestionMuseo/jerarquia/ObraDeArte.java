@@ -7,14 +7,14 @@ import java.time.format.DateTimeFormatter;
 
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.EstiloArtistico;
+import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
-import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
 import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
-import gestionMuseo.excepciones.ObraNoExpuestaException;
+import gestionMuseo.excepciones.PeriodoNoValidoException;
 
 import java.text.DecimalFormat;
 import java.util.regex.Pattern;
@@ -30,35 +30,28 @@ public abstract class ObraDeArte implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String titulo;
 	private String autor;
-
 	private static DateTimeFormatter FORMATTER = DateTimeFormatter
 			.ofPattern("dd/MM/yyyy");
 	private static Pattern patternAutor = Pattern
 			.compile("([\\-´,a-zA-ZáéíóúñÑ0-9]{2,}\\s?)+");
-
 	protected static DecimalFormat DFORMAT = new java.text.DecimalFormat("0.00");
 
 	private LocalDate fechaIngreso = LocalDate.now();// La fecha de ingreso será
 														// la misma en la que se
 														// cree la obra de arte.
-
 	private String localizacion;
-
 	private EstiloArtistico estiloArtistico;
-
 	private int codigo;
-	private static int ID = 1;
-
-	protected EstadoDeConservacion estadoConservacion = EstadoDeConservacion.BUENO;
-
-	protected int danio = 0;
+	private static int Id = 1;
+	private EstadoDeConservacion estadoConservacion = EstadoDeConservacion.BUENO;
+	int danio = 0;
 	private boolean donada;
 	private String personaEntidad; // que dona o a la que se compra la obra.
 	private Sala sala = Sala.ALMACEN;
-	protected double costeExposicion = 2; // Suma en gastos
-	protected double costeRestauracion;
+	double costeExposicion = 2; // Suma en gastos
+	private double costeRestauracion;
 	private double fama; // Suma en ingresos
-	protected double valor; // Suma en gastos de restauración
+	double valor; // Suma en gastos de restauración
 	private boolean expuesta;
 	private boolean restaurada;
 	private double alto;
@@ -82,6 +75,7 @@ public abstract class ObraDeArte implements Serializable {
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws DimensionNoValidaException 
+	 * @throws PeriodoNoValidoException 
 	 * @throws LocalizacionNoValidaException
 	 */
 
@@ -89,7 +83,7 @@ public abstract class ObraDeArte implements Serializable {
 			EstiloArtistico estiloArtistico, boolean donada,
 			String personaEntidad, double fama, double valor, double alto,
 			double ancho) throws AutorNoValidoException,
-			EstiloNoValidoException, DimensionNoValidaException {
+			EstiloNoValidoException, DimensionNoValidaException{
 		setTitulo(titulo);
 		setAutor(autor);
 		setLocalizacion(localizacion);
@@ -122,28 +116,13 @@ public abstract class ObraDeArte implements Serializable {
 	 ObraDeArte(String Titulo) {
 	 setTitulo(Titulo);
 	}
-
-	public ObraDeArte() {
-	}
-
-	public EstiloArtistico getEstiloArtistico() {
-		return estiloArtistico;
-	}
-
-	public void setEstiloArtistico(EstiloArtistico estiloArtistico)
-			throws EstiloNoValidoException {
-		if (estiloArtistico != null)
-			this.estiloArtistico = estiloArtistico;
-		else
-			throw new EstiloNoValidoException(
-					"Debe introducir un estilo art\u00edstico");
-	}
-
+	 
+	 
 	/**
 	 * Comprueba si el autor es un nombre válido.
 	 * 
 	 * @param autor
-	 * @return
+	 * @return cadena
 	 */
 	private static boolean esValido(String autor) {
 		return patternAutor.matcher(autor).matches();
@@ -158,7 +137,11 @@ public abstract class ObraDeArte implements Serializable {
 	public String formatearFecha(LocalDate fecha) {
 		return FORMATTER.format(fecha);
 	}
-
+	
+	/**
+	 * Devuelve el daño de una obra de arte.
+	 * @return
+	 */
 	public double getDanio() {
 		return this.danio;
 	}
@@ -172,31 +155,22 @@ public abstract class ObraDeArte implements Serializable {
 			setEstadoConservacion(EstadoDeConservacion.BUENO);
 		else if (danio > 4 && danio < 7)
 			setEstadoConservacion(EstadoDeConservacion.REGULAR);
-		else if (danio > 7 && danio < 10)
-			setEstadoConservacion(EstadoDeConservacion.MALO);
 		else
-			setEstadoConservacion(EstadoDeConservacion.MUYMALO);
+			setEstadoConservacion(EstadoDeConservacion.MALO);
 	}
 
 	/**
-	 * Cambia el estado de la obra que estaba en el almacen a una de las salas,
+	 * Cambia el estado de la obra que estaba en el almacén a una de las salas,
 	 * así la obra está expuesta, modificando el valor de expuesta a true. Si la
-	 * obra ya está expuesta o no tiene un estado de conservación adecuado para
-	 * exponerla, lanza una excepción.
+	 * obra ya está expuesta, lanza una excepción.
 	 * 
 	 * @param sala
 	 * @throws ObraExpuestaException
-	 * @throws EstadoNoAdecuadoException
-	 * @throws ObraNoExpuestaException
 	 */
-	public void exponerObra(Sala sala) throws ObraExpuestaException,
-			EstadoNoAdecuadoException {
+	public void exponerObra(Sala sala) throws ObraExpuestaException {
 
 		if (isExpuesta() == true)
 			throw new ObraExpuestaException("Error, la obra ya esta expuesta");
-		else if (getEstadoConservacion() == EstadoDeConservacion.MUYMALO)
-			throw new EstadoNoAdecuadoException(
-					"Imposible exponer, el estado de conservaci\u00f3n de la obra es p\u00e9simo");
 		else {
 			daniarObra();
 			expuesta = true;
@@ -205,6 +179,10 @@ public abstract class ObraDeArte implements Serializable {
 
 	}
 
+	/**
+	 * Devuelve si la obra está expuesta o no.
+	 * @return true o false.
+	 */
 	public boolean isExpuesta() {
 		return expuesta;
 	}
@@ -233,10 +211,24 @@ public abstract class ObraDeArte implements Serializable {
 		
 		
 	}
-
-	public void setRestaurada(boolean restaurada) {
-		this.restaurada = restaurada;
+	
+	
+	
+	/**
+	 * Modifica el estilo artístico. Si el estilo artístico está a null,
+	 * lanza una excepción.
+	 * @param estiloArtistico
+	 * @throws EstiloNoValidoException
+	 */
+	public void setEstiloArtistico(EstiloArtistico estiloArtistico)
+			throws EstiloNoValidoException {
+		if (estiloArtistico != null)
+			this.estiloArtistico = estiloArtistico;
+		else
+			throw new EstiloNoValidoException(
+					"Debe introducir un estilo art\u00edstico");
 	}
+
 
 	/**
 	 * Calcula el precio de la restauración según distintas variables de cada
@@ -247,19 +239,11 @@ public abstract class ObraDeArte implements Serializable {
 	public abstract double calcularPrecioRestauracion();
 
 	/**
-	 * Cambia la sala a almacén y cambia el valor de expuesta a false, si la
-	 * obra no está expuesta, lanza una excepción.
-	 * 
-	 * @throws ObraNoExpuestaException
+	 * Cambia la sala a almacén y cambia el valor de expuesta a false.
 	 */
-	public void recogerObra() throws ObraNoExpuestaException {
-		if (getSala() != Sala.ALMACEN) {
+	public void recogerObra(){
 			setSala(Sala.ALMACEN);
 			expuesta = false;
-		} else
-			throw new ObraNoExpuestaException(
-					"No puedes recoger una obra que no esta expuesta");
-
 	}
 
 	/**
@@ -290,7 +274,7 @@ public abstract class ObraDeArte implements Serializable {
 	 * @param codigo
 	 */
 	private void setCodigo(int codigo) {
-		this.codigo = ID++;
+		this.codigo = Id++;
 	}
 
 	public String getTitulo() {
@@ -310,6 +294,22 @@ public abstract class ObraDeArte implements Serializable {
 
 	protected void setEstadoConservacion(EstadoDeConservacion estadoConservacion) {
 		this.estadoConservacion = estadoConservacion;
+	}
+	
+	/**
+	 * Modifica el campo "restaurada
+	 * @param restaurada
+	 */
+	public void setRestaurada(boolean restaurada) {
+		this.restaurada = restaurada;
+	}
+	
+	/**
+	  * Devuelve el estilo artístico.
+	  * @return
+	  */
+	public EstiloArtistico getEstiloArtistico() {
+		return estiloArtistico;
 	}
 
 	public LocalDate getFechaIngreso() {

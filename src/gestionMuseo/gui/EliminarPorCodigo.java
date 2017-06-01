@@ -29,6 +29,7 @@ public class EliminarPorCodigo extends DialogoGeneral {
 
 		InhabilitarComponentes();
 		hacerComponentesInvisibles();
+		setTitle("Eliminar obra");
 
 		btnIzquierda.setText("Eliminar");
 		btnDerecha.setText("Cancelar");
@@ -115,6 +116,9 @@ public class EliminarPorCodigo extends DialogoGeneral {
 		rbSala_2.setEnabled(false);
 		rbSala_3.setEnabled(false);
 		rbAlmacen.setEnabled(false);
+		spValor.setEnabled(false);
+		spFama.setEnabled(false);
+		textEstado.setEnabled(false);
 	}
 
 }

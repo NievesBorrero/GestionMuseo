@@ -27,6 +27,7 @@ public class BuscarPorTitulo extends DialogoGeneral {
 		InhabilitarComponentes();
 		hacerComponentesInvisibles();
 		limpiar();
+		setTitle("Buscando obra...");
 		
 		btnIzquierda.setText("Buscar");
 		btnDerecha.setText("Cancelar");
@@ -86,6 +87,9 @@ public class BuscarPorTitulo extends DialogoGeneral {
 		rbSala_2.setEnabled(false);
 		rbSala_3.setEnabled(false);
 		rbAlmacen.setEnabled(false);
+		spValor.setEnabled(false);
+		spFama.setEnabled(false);
+		textEstado.setEnabled(false);
 	}
 
 }

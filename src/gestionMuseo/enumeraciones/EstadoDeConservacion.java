@@ -13,8 +13,7 @@ public enum EstadoDeConservacion {
 	
 	BUENO (0), // Si es bueno no se restaura.
 	REGULAR (50),
-	MALO (100),
-	MUYMALO (0); // Si es muy malo no se podrá ni siquiera restaurar.
+	MALO (100);
 
 	private double precio;
 

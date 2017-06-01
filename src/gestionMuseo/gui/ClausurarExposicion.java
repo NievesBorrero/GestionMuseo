@@ -1,7 +1,5 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.excepciones.ObraNoExpuestaException;
-
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -39,7 +37,7 @@ public class ClausurarExposicion extends JDialog {
 	ClausurarExposicion() {
 		setResizable(false);
 		setModal(true);
-		setBounds(new Rectangle(65, 24, 400, 400));
+		setBounds(new Rectangle(65, 24, 400, 250));
 		getContentPane().setLayout(null);
 
 		scrollPane = new JScrollPane();
@@ -47,6 +45,7 @@ public class ClausurarExposicion extends JDialog {
 		getContentPane().add(scrollPane);
 
 		textPane = new JTextPane();
+		textPane.setEnabled(false);
 		scrollPane.setViewportView(textPane);
 		textPane.setText(imprimirPresupuesto());
 
@@ -59,7 +58,7 @@ public class ClausurarExposicion extends JDialog {
 		getContentPane().add(btnAceptar);
 		btnAceptar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
+				
 					Principal.museo.clausurarExposicion();
 					Principal.museo.setModificado(true);
 					JOptionPane.showMessageDialog(
@@ -68,11 +67,6 @@ public class ClausurarExposicion extends JDialog {
 									+ (double)Math.round(Principal.museo.getPresupuesto()*100)/100,
 							"Exposicion clausurada",
 							JOptionPane.INFORMATION_MESSAGE);
-				} catch (ObraNoExpuestaException e1) {
-					JOptionPane.showMessageDialog(getContentPane(),
-							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-					// No va a entrar, QUITAR ESTA EXCEPCIÓN??
-				}
 				setVisible(false);
 			}
 		});

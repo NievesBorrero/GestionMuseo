@@ -3,23 +3,26 @@ package gestionMuseo.jerarquia;
 import java.io.Serializable;
 
 import gestionMuseo.enumeraciones.EstiloArtistico;
+import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
+import gestionMuseo.excepciones.PeriodoNoValidoException;
 import gestionMuseo.excepciones.SinTipoGrabadoException;
 
-public class Grabado extends ObraDeArte implements Serializable{
+public class Grabado extends ObraDeArte implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private TipoDeGrabado tipoDeGrabado;
 
 	public Grabado(String nombre, String autor, String localizacion,
-			EstiloArtistico estiloArtistico, boolean donada,
-			String personaEntidad, double fama, double valor,
+			EstiloArtistico estiloArtistico,
+			boolean donada, String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
-			throws AutorNoValidoException,
-			EstiloNoValidoException, SinTipoGrabadoException, DimensionNoValidaException{
+			throws AutorNoValidoException, EstiloNoValidoException,
+			SinTipoGrabadoException, DimensionNoValidaException
+	{
 		super(nombre, autor, localizacion, estiloArtistico, donada,
 				personaEntidad, fama, valor, alto, ancho);
 		setTipoDeGrabado(tipoDeGrabado);
@@ -35,7 +38,7 @@ public class Grabado extends ObraDeArte implements Serializable{
 	public Grabado(int codigo) {
 		super(codigo);
 	}
-	
+
 	/**
 	 * Constructor para instanciar un grabado a partir de un título introducido
 	 * por parámetro.
@@ -43,24 +46,27 @@ public class Grabado extends ObraDeArte implements Serializable{
 	 * @param codigo
 	 */
 	public Grabado(String titulo) {
-	super(titulo);
+		super(titulo);
 	}
 
 	@Override
 	public double calcularPrecioRestauracion() {
-		return valor + tipoDeGrabado.getPrecio()+ getEstadoConservacion().getPrecio();
+		return valor + tipoDeGrabado.getPrecio()
+				+ getEstadoConservacion().getPrecio();
 	}
 
 	public TipoDeGrabado getTipoDeGrabado() {
 		return tipoDeGrabado;
 	}
 
-	public void setTipoDeGrabado(TipoDeGrabado tipoDeGrabado) throws SinTipoGrabadoException {
+	public void setTipoDeGrabado(TipoDeGrabado tipoDeGrabado)
+			throws SinTipoGrabadoException {
 		if (tipoDeGrabado != null)
 			this.tipoDeGrabado = tipoDeGrabado;
 		else
-			throw new SinTipoGrabadoException("Debe se\u00f1alar el tipo de escultura");
-		
+			throw new SinTipoGrabadoException(
+					"Debe se\u00f1alar el tipo de escultura");
+
 	}
 
 }

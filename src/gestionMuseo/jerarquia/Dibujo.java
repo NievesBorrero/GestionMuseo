@@ -3,11 +3,13 @@ package gestionMuseo.jerarquia;
 import java.io.Serializable;
 
 import gestionMuseo.enumeraciones.EstiloArtistico;
+import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
+import gestionMuseo.excepciones.PeriodoNoValidoException;
 import gestionMuseo.excepciones.SinTecnicaException;
 
 public class Dibujo extends ObraDeArte implements Serializable{
@@ -22,15 +24,15 @@ public class Dibujo extends ObraDeArte implements Serializable{
 	public Dibujo(String titulo, String autor, String localizacion,
 			EstiloArtistico estiloArtistico,
 			boolean donada, String personaEntidad, double fama,
- double valor,
+			double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException,
 			EstiloNoValidoException, SinTecnicaException, DimensionNoValidaException{
-		super(titulo, autor, localizacion, estiloArtistico,
+				super(titulo, autor, localizacion, estiloArtistico,
 				donada, personaEntidad, fama, valor, alto, ancho);
-		setTecnica(tecnica);
-		setCosteExposicion(costeExposicion+plusExposicion);
-		setCosteRestauracion(calcularPrecioRestauracion());
+				setTecnica(tecnica);
+				setCosteExposicion(costeExposicion+plusExposicion);
+				setCosteRestauracion(calcularPrecioRestauracion());
 	}
 	
 	public Dibujo(int codigo){

@@ -2,7 +2,6 @@ package gestionMuseo.gui;
 
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.Sala;
-import gestionMuseo.excepciones.EstadoNoAdecuadoException;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
@@ -97,9 +96,6 @@ public class ExponerObras extends MostrarObrasMuseo {
 				} catch (ObraExpuestaException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (EstadoNoAdecuadoException e1) {
-					JOptionPane.showMessageDialog(contentPanel,
-							e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NumberFormatException e2) {
 					JOptionPane.showMessageDialog(getContentPane(),
 							"Debes introducir el codigo", "Error",
@@ -140,8 +136,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 	 * @throws EstadoNoAdecuadoException
 	 */
 	private void RestaurarYExponer() throws NoHayFondosException,
-	ObraNoDaniadaException, ObraExpuestaException,
-	EstadoNoAdecuadoException {
+	ObraNoDaniadaException, ObraExpuestaException{
 		Principal.museo.restaurar(obra);
 		textEstado.setText(obra.getEstadoConservacion().toString().toLowerCase());
 		exponer();
@@ -152,8 +147,7 @@ public class ExponerObras extends MostrarObrasMuseo {
 	 * @throws ObraExpuestaException
 	 * @throws EstadoNoAdecuadoException
 	 */
-	private void exponer() throws ObraExpuestaException,
-		EstadoNoAdecuadoException {
+	private void exponer() throws ObraExpuestaException{
 		obra.exponerObra(getSala());
 		Principal.museo.setModificado(true);
 	}
