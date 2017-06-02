@@ -4,6 +4,7 @@ import gestionMuseo.GestionMuseo;
 import gestionMuseo.Ficheros.Fichero;
 import gestionMuseo.Ficheros.Filtro;
 import gestionMuseo.excepciones.NoHayFondosException;
+
 import java.awt.EventQueue;
 
 import javax.imageio.ImageIO;
@@ -84,51 +85,7 @@ public class Principal {
 	private JMenu mnAyuda;
 	private JMenuItem mntmAcercaDe;
 	private JMenuItem mntmAyuda;
-
-//	static { // BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-//		try {
-//			museo.ingresarPintura("Pintura1", "autor1", "sitio",
-//					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-//					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-//			museo.ingresarPintura("Pintura2", "autor2", "sitio",
-//					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-//					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-//			museo.ingresarPintura("Pintura3", "autor3", "sitio",
-//					EstiloArtistico.BARROCO, true, "persona", 0.5, 0.5,
-//					Soporte.LIENZO, MaterialPintura.OLEO, 0.20, 0.10);
-//			museo.ingresarEscultura("Escultura", "autor", "calle",
-//					EstiloArtistico.RENACIMIENTO, true, "persona", 0.5, 0.4,
-//					TipoEscultura.BULTO_REDONDO, MaterialEscultura.ARCILLA,
-//					0.3, 0.4, 0.5);
-//			museo.ingresarGrabado("grabado", "autor", "lala",
-//					EstiloArtistico.EGIPCIO, true, "persona", 0.3, 0.5,
-//					TipoDeGrabado.CALCOGRAFIA, 0.6, 0.3);
-//			museo.ingresarGrabado("grabado2", "pepe", "ronda",
-//					EstiloArtistico.ISLAMICO, true, "persona", 0.3, 0.5,
-//					TipoDeGrabado.LITOGRAFIA, 0.6, 0.3);
-//			museo.ingresarDibujo("dibujo", "autorr", "fuente",
-//					EstiloArtistico.CUBISTA, false, "personita", 0.6, 0.5,
-//					TecnicaDeDibujo.CARBONCILLO, 0.10, 0.5);
-//
-//		} catch (AutorNoValidoException e) {
-//			e.printStackTrace();
-//		} catch (EstiloNoValidoException e) {
-//			e.printStackTrace();
-//		} catch (SinMaterialException e) {
-//			e.printStackTrace();
-//		} catch (SinSoporteException e) {
-//			e.printStackTrace();
-//		} catch (SinTipoGrabadoException e) {
-//			e.printStackTrace();
-//		} catch (SinTipoEsculturaException e) {
-//			e.printStackTrace();
-//		} catch (SinTecnicaException e) {
-//			e.printStackTrace();
-//		} catch (DimensionNoValidaException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
+	
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -143,9 +100,7 @@ public class Principal {
 		});
 	}
 
-	/**
-	 * Create the application.
-	 */
+
 	public Principal() {
 		initialize();
 	}
@@ -268,6 +223,7 @@ public class Principal {
 			public void actionPerformed(ActionEvent e) {
 				if (museo.comprobarObrasDaniadas()) {
 					try {
+						museo.ordenarPorCodigo();
 						Restaurar obrasDaniadas = new Restaurar(museo.getList());
 						obrasDaniadas.setVisible(true);
 					} catch (NoHayFondosException exc) {
@@ -313,7 +269,7 @@ public class Principal {
 					clausurar.setVisible(true);
 				} else
 					JOptionPane.showMessageDialog(frame,
-							"No hay ninguna exposicion organizada", "Error",
+							"No hay ninguna exposición organizada", "Error",
 							JOptionPane.ERROR_MESSAGE);
 
 			}
@@ -330,11 +286,11 @@ public class Principal {
 		mntmDatosDeLa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (museo.isOrganizada()) {
-					Datos datos = new Datos(museo);
+					Datos datos = new Datos();
 					datos.setVisible(true);
 				} else
 					JOptionPane.showMessageDialog(frame,
-							"No hay ninguna exposicion organizada", "Error",
+							"No hay ninguna exposición organizada", "Error",
 							JOptionPane.ERROR_MESSAGE);
 			}
 		});
@@ -345,7 +301,7 @@ public class Principal {
 	 * Crea un JMenuItem para visitar la exposición.
 	 */
 	private void visitarExposicion() {
-		mntmVisitarExposicion = new JMenuItem("Visitar exposición");
+		mntmVisitarExposicion = new JMenuItem("Visitar exposici\u00F3n");
 		mntmVisitarExposicion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				MostrarObrasMuseo visitarExposicion;
@@ -354,9 +310,10 @@ public class Principal {
 						visitarExposicion = new MostrarObrasMuseo(museo
 								.listExpuestas());
 						visitarExposicion.setVisible(true);
+						visitarExposicion.setTitle("visitando...");
 					} else
 						JOptionPane.showMessageDialog(frame,
-								"No hay ninguna exposicion organizada",
+								"No hay ninguna exposición organizada",
 								"Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NoHayFondosException e1) {
 					JOptionPane.showMessageDialog(frame, e1.getMessage(),
@@ -381,7 +338,7 @@ public class Principal {
 	}
 
 	/**
-	 * /** Crea un JMenuItem para organizar una exposición.
+	 * Crea un JMenuItem para organizar una exposición.
 	 */
 	private void organizarExposicion() {
 		mntmOrganizarExposicion = new JMenuItem("Organizar exposición");
@@ -408,7 +365,7 @@ public class Principal {
 		mntmConsultarPresupuesto.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				JOptionPane.showMessageDialog(frame, "Presupuesto del museo: "
-						+ museo.getPresupuesto(), "Presupuesto",
+						+ (double)Math.round(Principal.museo.getPresupuesto()*100)/100, "Presupuesto",
 						JOptionPane.PLAIN_MESSAGE);
 			}
 		});
@@ -550,7 +507,7 @@ public class Principal {
 		mntmBuscarPorNombre.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK));
 		mntmBuscarPorNombre.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				BuscarPorTitulo buscar = new BuscarPorTitulo(museo);
+				BuscarPorTitulo buscar = new BuscarPorTitulo();
 				buscar.setVisible(true);
 			}
 		});
@@ -609,8 +566,7 @@ public class Principal {
 		mntmPorCdigo = new JMenuItem("Por código");
 		mntmPorCdigo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				EliminarPorCodigo eliminarPorCodigo = new EliminarPorCodigo(
-						museo);
+				EliminarPorCodigo eliminarPorCodigo = new EliminarPorCodigo();
 				eliminarPorCodigo.setVisible(true);
 			}
 		});
@@ -731,7 +687,7 @@ public class Principal {
 		mntmIngresarObra.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, InputEvent.CTRL_MASK));
 		mntmIngresarObra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				IngresarObras ingresos = new IngresarObras(museo);
+				IngresarObras ingresos = new IngresarObras();
 				ingresos.setVisible(true);
 			}
 		});
@@ -982,9 +938,6 @@ public class Principal {
 		if (fileChooser.showDialog(fileChooser, "Abrir Fichero") == JFileChooser.APPROVE_OPTION) {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
 			museo = Fichero.abrir(fileChooser.getSelectedFile());
-			frame.setTitle(Fichero.getFichero().getName());
-			JOptionPane.showMessageDialog(null,
-					"Cargado con exito\n QUITAR ESTE MENSAJE");
 		}
 	}
 
@@ -1003,7 +956,7 @@ public class Principal {
 					case JOptionPane.NO_OPTION:
 						System.exit(0);
 					case JOptionPane.CANCEL_OPTION:
-						return;
+						break;
 			}
 		} 
 		else {

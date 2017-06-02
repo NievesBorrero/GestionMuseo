@@ -45,6 +45,7 @@ public class AcercaDe extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		setModal(true);
 		setResizable(false);
+		setTitle("Acerca del proyecto");
 		
 		try {
 			web = new URI ("https://github.com/NievesBorrero/GestionMuseo");

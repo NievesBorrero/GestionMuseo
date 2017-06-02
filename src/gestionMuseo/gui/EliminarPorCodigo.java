@@ -1,6 +1,5 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.GestionMuseo;
 import gestionMuseo.excepciones.ObraNoExisteException;
 import gestionMuseo.jerarquia.Dibujo;
 import gestionMuseo.jerarquia.Escultura;
@@ -24,7 +23,7 @@ public class EliminarPorCodigo extends DialogoGeneral {
 
 	private static final long serialVersionUID = 1L;
 
-	public EliminarPorCodigo(GestionMuseo exposicion) {
+	public EliminarPorCodigo() {
 		super();
 
 		InhabilitarComponentes();
@@ -38,24 +37,24 @@ public class EliminarPorCodigo extends DialogoGeneral {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					int codigo = pasarTextAEntero(textcod.getText());
-					ObraDeArte aEliminar = exposicion.devolverPorCodigo(codigo);
+					ObraDeArte aEliminar = Principal.museo.devolverPorCodigo(codigo);
 					mostrar(aEliminar);
 					int n = JOptionPane.showOptionDialog(contentPanel,
-							"Estas seguro de que desea eliminarlo?",
+							"¿Está segur@ de que desea eliminarla?",
 							"Confirmar", JOptionPane.YES_NO_CANCEL_OPTION,
 							JOptionPane.QUESTION_MESSAGE, null, null, null);
 
 					if (n == JOptionPane.YES_OPTION) {
 
 						if (aEliminar instanceof Pintura)
-							exposicion.eliminarPintura(codigo);
+							Principal.museo.eliminarPintura(codigo);
 						if (aEliminar instanceof Escultura)
-							exposicion.eliminarEscultura(codigo);
+							Principal.museo.eliminarEscultura(codigo);
 						if (aEliminar instanceof Grabado)
-							exposicion.eliminarGrabado(codigo);
+							Principal.museo.eliminarGrabado(codigo);
 						if (aEliminar instanceof Dibujo)
-							exposicion.eliminarDibujo(codigo);
-						exposicion.setModificado(true);
+							Principal.museo.eliminarDibujo(codigo);
+						Principal.museo.setModificado(true);
 						limpiar();
 					}
 				} catch (ObraNoExisteException e) {

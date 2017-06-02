@@ -3,14 +3,16 @@ package gestionMuseo.jerarquia;
 import java.io.Serializable;
 
 import gestionMuseo.enumeraciones.EstiloArtistico;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
-import gestionMuseo.excepciones.PeriodoNoValidoException;
 import gestionMuseo.excepciones.SinTipoGrabadoException;
-
+/**
+ * Clase que extiende de obra de arte, permitiendo crear una escultura.
+ * @author nieves
+ *
+ */
 public class Grabado extends ObraDeArte implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -54,11 +56,18 @@ public class Grabado extends ObraDeArte implements Serializable {
 		return valor + tipoDeGrabado.getPrecio()
 				+ getEstadoConservacion().getPrecio();
 	}
-
+	/**
+	 * 
+	 * @return Tipo de Grabado
+	 */
 	public TipoDeGrabado getTipoDeGrabado() {
 		return tipoDeGrabado;
 	}
-
+	/**
+	 * 
+	 * @param tipoDeGrabado
+	 * @throws SinTipoGrabadoException
+	 */
 	public void setTipoDeGrabado(TipoDeGrabado tipoDeGrabado)
 			throws SinTipoGrabadoException {
 		if (tipoDeGrabado != null)

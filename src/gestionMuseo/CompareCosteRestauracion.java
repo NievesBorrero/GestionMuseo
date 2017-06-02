@@ -4,6 +4,13 @@ import gestionMuseo.jerarquia.ObraDeArte;
 
 import java.util.Comparator;
 
+/**
+ * Clase que implementa la interfaz comparator, comparando por coste de 
+ * restauración y permitiendo ordenar las obras por este campo.
+ * 
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class CompareCosteRestauracion implements Comparator<ObraDeArte> {
 
 	@Override

@@ -1,5 +1,9 @@
 package gestionMuseo.enumeraciones;
-
+/**
+ *  Periodo Histórico de la obra
+ * @author Nieves Borrero
+ *
+ */
 public enum PeriodoHistorico {
 	/*
 	 * Del 3500 a.C. al 476 d.C.

@@ -36,12 +36,13 @@ public class Datos extends JDialog {
 	private JTextPane textPane;
 
 
-	public Datos(GestionMuseo museo) {
+	public Datos() {
 		setBounds(100, 100, 450, 341);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		setTitle("Datos de la exposici\u00F3n");
 	
 		
 		lblNombreDeLa = new JLabel("Nombre de la exposición:");
@@ -79,7 +80,7 @@ public class Datos extends JDialog {
 		contentPanel.add(textFin);
 		textFin.setColumns(10);
 		
-		rellenarCampos(museo);
+		rellenarCampos(Principal.museo);
 		
 		{
 			JPanel buttonPane = new JPanel();

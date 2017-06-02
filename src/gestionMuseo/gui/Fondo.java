@@ -6,15 +6,18 @@ package gestionMuseo.gui;
 	import java.awt.image.BufferedImage;
 
 	import javax.swing.border.Border;
-
+/**
+ * Clase que permite crear una imagen de fondo.
+ * 
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 	public class Fondo implements Border {
 		
-		private static final long serialVersionUID = 1L;
-		
-		BufferedImage backImage = null;
+		private BufferedImage fondo = null;
 
 		public Fondo(BufferedImage bImage) {
-			backImage = bImage;
+			fondo = bImage;
 		}
 
 		public void paintComponent(Graphics g) {
@@ -24,7 +27,6 @@ package gestionMuseo.gui;
 
 		@Override
 		public Insets getBorderInsets(Component arg0) {
-			// TODO Auto-generated method stub
 			return new Insets(0, 0, 0, 0);
 		}
 
@@ -37,8 +39,8 @@ package gestionMuseo.gui;
 		@Override
 		public void paintBorder(Component arg0, Graphics g, int arg2, int arg3, int width, int heigth) {
 			
-			if(backImage!= null){
-				g.drawImage(backImage, 0, 0, width, heigth, null);
+			if(fondo!= null){
+				g.drawImage(fondo, 0, 0, width, heigth, null);
 			}
 			
 	}

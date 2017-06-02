@@ -1,13 +1,8 @@
 package gestionMuseo;
 
-/**
- * @author Nieves María Borrero Barea.
- */
-
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
@@ -34,11 +29,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ListIterator;
 
+/**
+ * Clase envoltorio del arrayList de obras de arte.
+ * 
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class Fondos implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ObraDeArte> fondos;
 
@@ -48,7 +46,7 @@ public class Fondos implements Serializable {
 	}
 
 	/**
-	 * A�ade una escultura al ArrayList de fondos.
+	 * Añade una escultura al ArrayList de fondos.
 	 * 
 	 * @param nombre
 	 * @param autor
@@ -69,22 +67,20 @@ public class Fondos implements Serializable {
 	 * @throws SinTipoEsculturaException
 	 * @throws SinMaterialException
 	 * @throws DimensionNoValidaException
-	 * @throws PeriodoNoValidoException
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
 	public void aniadirEscultura(String nombre, String autor,
-			String localizacion, PeriodoHistorico periodo,
-			EstiloArtistico estiloArtistico, boolean donada,
-			String personaEntidad, double fama, double valor,
+			String localizacion, EstiloArtistico estiloArtistico,
+			boolean donada, String personaEntidad, double fama, double valor,
 			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
 			double ancho, double alto, double profundidad)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinTipoEsculturaException,
-			DimensionNoValidaException, PeriodoNoValidoException {
+			DimensionNoValidaException{
 
 		Escultura escultura = new Escultura(nombre, autor, localizacion,
-				periodo, estiloArtistico, donada, personaEntidad, fama, valor,
+				estiloArtistico, donada, personaEntidad, fama, valor,
 				tipoEscultura, materialEscultura, alto, ancho, profundidad);
 
 		fondos.add(escultura);
@@ -111,17 +107,17 @@ public class Fondos implements Serializable {
 	 * @throws SinSoporteException
 	 * @throws SinMaterialException
 	 * @throws DimensionNoValidaException
-	 * @throws PeriodoNoValidoException 
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
 	public void aniadirPintura(String titulo, String autor,
-			String localizacion, PeriodoHistorico periodo, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			Soporte soporte, MaterialPintura material, double alto, double ancho)
+			String localizacion,
+			EstiloArtistico estiloArtistico, boolean donada,
+			String personaEntidad, double fama, double valor, Soporte soporte,
+			MaterialPintura material, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinSoporteException,
-			DimensionNoValidaException{
+			DimensionNoValidaException {
 
 		Pintura pintura = new Pintura(titulo, autor, localizacion,
 				estiloArtistico, donada, personaEntidad, fama, valor, soporte,
@@ -129,15 +125,6 @@ public class Fondos implements Serializable {
 		fondos.add(pintura);
 	}
 
-	/**
-	 * Devuelve la posición de una obra en el ArrayList.
-	 * 
-	 * @param obra
-	 * @return
-	 */
-	public int indexOf(ObraDeArte obra) {
-		return fondos.indexOf(obra);
-	}
 
 	/**
 	 * Añade un grabado al ArrayList de fondos.
@@ -158,7 +145,7 @@ public class Fondos implements Serializable {
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoGrabadoException
 	 * @throws DimensionNoValidaException
-	 * @throws PeriodoNoValidoException 
+	 * @throws PeriodoNoValidoException
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -168,7 +155,7 @@ public class Fondos implements Serializable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoGrabadoException, DimensionNoValidaException{
+			SinTipoGrabadoException, DimensionNoValidaException {
 		Grabado grabado = new Grabado(nombre, autor, localizacion,
 				estiloArtistico, donada, personaEntidad, fama, valor,
 				tipoDeGrabado, alto, ancho);
@@ -194,7 +181,7 @@ public class Fondos implements Serializable {
 	 * @throws EstiloNoValidoException
 	 * @throws SinTecnicaException
 	 * @throws DimensionNoValidaException
-	 * @throws PeriodoNoValidoException 
+	 * @throws PeriodoNoValidoException
 	 * @throws personaEntidadNoValidaException
 	 * @throws ObraYaExisteException
 	 */
@@ -203,10 +190,10 @@ public class Fondos implements Serializable {
 			String personaEntidad, double fama, double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTecnicaException, DimensionNoValidaException{
+			SinTecnicaException, DimensionNoValidaException {
 
 		Dibujo dibujo = new Dibujo(nombre, autor, localizacion,
-				 estiloArtistico, donada, personaEntidad, fama, valor, tecnica,
+				estiloArtistico, donada, personaEntidad, fama, valor, tecnica,
 				alto, ancho);
 		fondos.add(dibujo);
 	}
@@ -222,17 +209,32 @@ public class Fondos implements Serializable {
 		if (!fondos.remove(new Grabado(codigo)))
 			throw new ObraNoExisteException("Error, la obra no existe");
 	}
-
+	
+	/**
+	 * Elimina una pintura por código
+	 * @param codigo
+	 * @throws ObraNoExisteException
+	 */
 	public void eliminarPintura(int codigo) throws ObraNoExisteException {
 		if (!fondos.remove(new Pintura(codigo)))
 			throw new ObraNoExisteException("Error, la obra no existe");
 	}
-
+	
+	/**
+	 * Elimina un dibujo por código.
+	 * @param codigo
+	 * @throws ObraNoExisteException
+	 */
 	public void eliminarDibujo(int codigo) throws ObraNoExisteException {
 		if (!fondos.remove(new Dibujo(codigo)))
 			throw new ObraNoExisteException("Error, la obra no existe");
 	}
-
+	
+	/**
+	 * Elimina una escultura por código
+	 * @param codigo
+	 * @throws ObraNoExisteException
+	 */
 	public void eliminarEscultura(int codigo) throws ObraNoExisteException {
 		if (!fondos.remove(new Escultura(codigo)))
 			throw new ObraNoExisteException("Error, la obra no existe");
@@ -255,13 +257,6 @@ public class Fondos implements Serializable {
 					"Imposible eliminar, la obra no existe");
 	}
 
-	// /**
-	// * Elimina por título
-	// * @param obra
-	// */
-	// public void eliminar(String titulo){
-	// fondos.remove(new Grabado(titulo));
-	// }
 
 	/**
 	 * Ordena por Titulo
@@ -269,7 +264,9 @@ public class Fondos implements Serializable {
 	public void ordenarPorTitulo() {
 		Collections.sort(fondos, new CompareTitulo());
 	}
-
+	/**
+	 * Ordena por Codigo
+	 */
 	public void ordenarPorCodigo() {
 		Collections.sort(fondos, new CompareCodigo());
 	}
@@ -303,9 +300,9 @@ public class Fondos implements Serializable {
 	}
 
 	/**
-	 * 
+	 * Devuelve una obra por título.
 	 * @param cod
-	 * @return
+	 * @return obra
 	 * @throws ObraNoExisteException
 	 * @throws NoHayFondosException
 	 */
@@ -347,288 +344,7 @@ public class Fondos implements Serializable {
 		return fondos.get(index);
 	}
 
-	/**
-	 * Permite modificar los datos de una pintura.
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param soporte
-	 * @param material
-	 * @param alto
-	 * @param ancho
-	 * @throws AutorNoValidoException
-	 * @throws LocalizacionNoValidaException
-	 * @throws EstiloNoValidoException
-	 * @throws ObraNoExisteException
-	 * @throws SinMaterialException
-	 * @throws SinSoporteException
-	 * @throws DimensionNoValidaException
-	 * @throws personaEntidadNoValidaException
-	 * @throws ObraYaExisteException
-	 */
-	public void modificarPintura(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			Soporte soporte, MaterialPintura material, double alto, double ancho)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			ObraNoExisteException, SinMaterialException, SinSoporteException,
-			DimensionNoValidaException {
-
-		fondos.get(indice).setTitulo(titulo);
-		fondos.get(indice).setAutor(autor);
-		fondos.get(indice).setAncho(ancho);
-		fondos.get(indice).setAlto(alto);
-		fondos.get(indice).setEstiloArtistico(estiloArtistico);
-		fondos.get(indice).setLocalizacion(localizacion);
-		fondos.get(indice).setDonada(donada);
-		fondos.get(indice).setPersonaEntidad(personaEntidad);
-		fondos.get(indice).setFama(fama);
-		fondos.get(indice).setValor(valor);
-		((Pintura) fondos.get(indice)).setSoporte(soporte);
-		((Pintura) fondos.get(indice)).setMaterial(material);
-	}
-
-	/**
-	 * Permite modificar los datos de una escultura.
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tipoEscultura
-	 * @param materialEscultura
-	 * @param ancho
-	 * @param alto
-	 * @param profundidad
-	 * @throws AutorNoValidoException
-	 * @throws EstiloNoValidoException
-	 * @throws SinTipoEsculturaException
-	 * @throws SinMaterialException
-	 * @throws DimensionNoValidaException
-	 */
-	public void modificarEscultura(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
-			double ancho, double alto, double profundidad)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoEsculturaException, SinMaterialException,
-			DimensionNoValidaException {
-
-		fondos.get(indice).setTitulo(titulo);
-		fondos.get(indice).setAutor(autor);
-		fondos.get(indice).setAncho(ancho);
-		fondos.get(indice).setAlto(alto);
-		fondos.get(indice).setEstiloArtistico(estiloArtistico);
-		fondos.get(indice).setLocalizacion(localizacion);
-		fondos.get(indice).setDonada(donada);
-		fondos.get(indice).setPersonaEntidad(personaEntidad);
-		fondos.get(indice).setFama(fama);
-		fondos.get(indice).setValor(valor);
-		((Escultura) fondos.get(indice)).setProfundidad(profundidad);
-		((Escultura) fondos.get(indice)).setTipoEscultura(tipoEscultura);
-		((Escultura) fondos.get(indice))
-				.setMaterialEscultura(materialEscultura);
-	}
-
-	/**
-	 * Permite modificar los datos de un grabado
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tipoDeGrabado
-	 * @param alto
-	 * @param ancho
-	 * @throws AutorNoValidoException
-	 * @throws EstiloNoValidoException
-	 * @throws SinTipoGrabadoException
-	 * @throws DimensionNoValidaException
-	 */
-	public void modificarGrabado(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoGrabadoException, DimensionNoValidaException {
-		fondos.get(indice).setTitulo(titulo);
-		fondos.get(indice).setAutor(autor);
-		fondos.get(indice).setAncho(ancho);
-		fondos.get(indice).setAlto(alto);
-		fondos.get(indice).setEstiloArtistico(estiloArtistico);
-		fondos.get(indice).setLocalizacion(localizacion);
-		fondos.get(indice).setDonada(donada);
-		fondos.get(indice).setPersonaEntidad(personaEntidad);
-		fondos.get(indice).setFama(fama);
-		fondos.get(indice).setValor(valor);
-		((Grabado) fondos.get(indice)).setTipoDeGrabado(tipoDeGrabado);
-	}
-
-	/**
-	 * Permite modificar los datos de un dibujo.
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tecnica
-	 * @param alto
-	 * @param ancho
-	 * @throws AutorNoValidoException
-	 * @throws LocalizacionNoValidaException
-	 * @throws EstiloNoValidoException
-	 * @throws SinTecnicaException
-	 * @throws DimensionNoValidaException
-	 * @throws personaEntidadNoValidaException
-	 * @throws ObraYaExisteException
-	 */
-	public void modificarDibujo(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			TecnicaDeDibujo tecnica, double alto, double ancho)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTecnicaException, DimensionNoValidaException {
-
-		fondos.get(indice).setTitulo(titulo);
-		fondos.get(indice).setAutor(autor);
-		fondos.get(indice).setAncho(ancho);
-		fondos.get(indice).setAlto(alto);
-		fondos.get(indice).setEstiloArtistico(estiloArtistico);
-		fondos.get(indice).setLocalizacion(localizacion);
-		fondos.get(indice).setDonada(donada);
-		fondos.get(indice).setPersonaEntidad(personaEntidad);
-		fondos.get(indice).setFama(fama);
-		fondos.get(indice).setValor(valor);
-		((Dibujo) fondos.get(indice)).setTecnica(tecnica);
-	}
-
-	// /**
-	// * Permite contar las pinturas que hay en el ArrayList de fondos.
-	// *
-	// * @return nº de pinturas.
-	// * @throws NoHayFondosException
-	// */
-	// public int contarPinturas() throws NoHayFondosException {
-	// if (fondos.isEmpty())
-	// throw new NoHayFondosException(
-	// "Imposible contar pinturas, no hay fondos en el museo");
-	//
-	// int n_pinturas = 0;
-	// ListIterator<ObraDeArte> it = fondos.listIterator();
-	//
-	// while (it.hasNext()) {
-	// if (it.next() instanceof Pintura) {
-	// n_pinturas++;
-	// }
-	// }
-	// return n_pinturas;
-	//
-	// }
-	//
-	// /**
-	// * Permite contar las esculturas que hay en el ArrayList de fondos.
-	// *
-	// * @return nº de esculturas.
-	// * @throws NoHayFondosException
-	// */
-	// public int contarEsculturas() throws NoHayFondosException {
-	// if (fondos.isEmpty())
-	// throw new NoHayFondosException(
-	// "Imposible contar esculturas, no hay fondos en el museo");
-	//
-	// int n_esculturas = 0;
-	// ListIterator<ObraDeArte> it = fondos.listIterator();
-	//
-	// while (it.hasNext()) {
-	// if (it.next() instanceof Pintura) {
-	// n_esculturas++;
-	// }
-	// }
-	// return n_esculturas;
-	//
-	// }
-	//
-	// /**
-	// * Permite contar los dibujos que hay en el ArrayList de fondos.
-	// *
-	// * @return nº de dibujos.
-	// * @throws NoHayFondosException
-	// */
-	// public int contarDibujos() throws NoHayFondosException {
-	// if (fondos.isEmpty())
-	// throw new NoHayFondosException(
-	// "Imposible contar esculturas, no hay fondos en el museo");
-	//
-	// int n_dibujos = 0;
-	// ListIterator<ObraDeArte> it = fondos.listIterator();
-	//
-	// while (it.hasNext()) {
-	// if (it.next() instanceof Pintura) {
-	// n_dibujos++;
-	// }
-	// }
-	// return n_dibujos;
-	//
-	// }
-	//
-	// /**
-	// * Permite contar los grabados que hay en el ArrayList de fondos.
-	// *
-	// * @return nº de grabados.
-	// * @throws NoHayFondosException
-	// */
-	// public int contarGrabados() throws NoHayFondosException {
-	// if (fondos.isEmpty())
-	// throw new NoHayFondosException(
-	// "Imposible contar grabados, no hay fondos en el museo");
-	//
-	// int n_grabados = 0;
-	// ListIterator<ObraDeArte> it = fondos.listIterator();
-	//
-	// while (it.hasNext()) {
-	// if (it.next() instanceof Pintura) {
-	// n_grabados++;
-	// }
-	// }
-	// return n_grabados;
-	//
-	// }
-
-	// public String[] generarOpcionesMenu(){
-	// String[] obras= new String[fondos.size()];
-	// String obra;
-	// for (int i = 0; i < obras.length; i++) {
-	// if(fondos.get(i).isExpuesta())
-	// i--;
-	// obra= fondos.get(i).getTitulo();
-	// obras[i] = obra;
-	// }
-	// return obras;
-	// }
-
+	
 	/**
 	 * Devuelve un lisIterator de con los fondos.
 	 * 
@@ -742,7 +458,11 @@ public class Fondos implements Serializable {
 		}
 		return expuestas.listIterator();
 	}
-
+	
+	/**
+	 * Devuelve si el arraylist está vacío o no.
+	 * @return
+	 */
 	public boolean isEmpty() {
 		return fondos.isEmpty();
 	}

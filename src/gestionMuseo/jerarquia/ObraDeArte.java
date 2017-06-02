@@ -7,7 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.EstiloArtistico;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
@@ -22,7 +21,8 @@ import java.util.regex.Pattern;
 /**
  * Clase abstracta de la que heredan los distintos tipos de obras de arte.
  * 
- * @author Nieves Borrero.
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
  */
 
 public abstract class ObraDeArte implements Serializable {
@@ -34,7 +34,7 @@ public abstract class ObraDeArte implements Serializable {
 			.ofPattern("dd/MM/yyyy");
 	private static Pattern patternAutor = Pattern
 			.compile("([\\-´,a-zA-ZáéíóúñÑ0-9]{2,}\\s?)+");
-	protected static DecimalFormat DFORMAT = new java.text.DecimalFormat("0.00");
+	private static DecimalFormat DFORMAT = new java.text.DecimalFormat("0.00");
 
 	private LocalDate fechaIngreso = LocalDate.now();// La fecha de ingreso será
 														// la misma en la que se
@@ -74,8 +74,8 @@ public abstract class ObraDeArte implements Serializable {
 	 * @throws personaEntidadNoValidaException
 	 * @throws TituloNoValidoException
 	 * @throws EstiloNoValidoException
-	 * @throws DimensionNoValidaException 
-	 * @throws PeriodoNoValidoException 
+	 * @throws DimensionNoValidaException
+	 * @throws PeriodoNoValidoException
 	 * @throws LocalizacionNoValidaException
 	 */
 
@@ -83,7 +83,7 @@ public abstract class ObraDeArte implements Serializable {
 			EstiloArtistico estiloArtistico, boolean donada,
 			String personaEntidad, double fama, double valor, double alto,
 			double ancho) throws AutorNoValidoException,
-			EstiloNoValidoException, DimensionNoValidaException{
+			EstiloNoValidoException, DimensionNoValidaException {
 		setTitulo(titulo);
 		setAutor(autor);
 		setLocalizacion(localizacion);
@@ -113,11 +113,10 @@ public abstract class ObraDeArte implements Serializable {
 	 *
 	 * @param Titulo
 	 */
-	 ObraDeArte(String Titulo) {
-	 setTitulo(Titulo);
+	ObraDeArte(String Titulo) {
+		setTitulo(Titulo);
 	}
-	 
-	 
+
 	/**
 	 * Comprueba si el autor es un nombre válido.
 	 * 
@@ -137,9 +136,10 @@ public abstract class ObraDeArte implements Serializable {
 	public String formatearFecha(LocalDate fecha) {
 		return FORMATTER.format(fecha);
 	}
-	
+
 	/**
 	 * Devuelve el daño de una obra de arte.
+	 * 
 	 * @return
 	 */
 	public double getDanio() {
@@ -181,6 +181,7 @@ public abstract class ObraDeArte implements Serializable {
 
 	/**
 	 * Devuelve si la obra está expuesta o no.
+	 * 
 	 * @return true o false.
 	 */
 	public boolean isExpuesta() {
@@ -204,19 +205,17 @@ public abstract class ObraDeArte implements Serializable {
 		if (getEstadoConservacion() == EstadoDeConservacion.BUENO)
 			throw new ObraNoDaniadaException(
 					"No se puede restaurar, la obra no est\u00e1 da\u00f1ada");
-		
+
 		setRestaurada(true);
 		this.danio = 0;
 		comprobarEstadoConservacion();
-		
-		
+
 	}
-	
-	
-	
+
 	/**
-	 * Modifica el estilo artístico. Si el estilo artístico está a null,
-	 * lanza una excepción.
+	 * Modifica el estilo artístico. Si el estilo artístico está a null, lanza
+	 * una excepción.
+	 * 
 	 * @param estiloArtistico
 	 * @throws EstiloNoValidoException
 	 */
@@ -229,7 +228,6 @@ public abstract class ObraDeArte implements Serializable {
 					"Debe introducir un estilo art\u00edstico");
 	}
 
-
 	/**
 	 * Calcula el precio de la restauración según distintas variables de cada
 	 * obra.
@@ -241,19 +239,11 @@ public abstract class ObraDeArte implements Serializable {
 	/**
 	 * Cambia la sala a almacén y cambia el valor de expuesta a false.
 	 */
-	public void recogerObra(){
-			setSala(Sala.ALMACEN);
-			expuesta = false;
+	public void recogerObra() {
+		setSala(Sala.ALMACEN);
+		expuesta = false;
 	}
 
-	/**
-	 * Obtiene las dimensiones de la obra,que varían según el tipo de obra.
-	 * 
-	 * @return dimensiones (double)
-	 */
-	public double obtenerDimensiones() {
-		return getAncho() * getAlto();
-	}
 
 	/**
 	 * Calcula cuánto tiempo lleva la obra en el museo.
@@ -277,10 +267,20 @@ public abstract class ObraDeArte implements Serializable {
 		this.codigo = Id++;
 	}
 
+	/**
+	 * Devuelve el título de una obra.
+	 * 
+	 * @return
+	 */
 	public String getTitulo() {
 		return titulo;
 	}
 
+	/**
+	 * Modifica el título de una obra.
+	 * 
+	 * @param titulo
+	 */
 	public void setTitulo(String titulo) {
 		if (titulo.length() == 0)
 			this.titulo = "Sin titulo";
@@ -288,64 +288,122 @@ public abstract class ObraDeArte implements Serializable {
 			this.titulo = titulo;
 	}
 
+	/**
+	 * Devuelve el estado de conservación de una obra.
+	 * 
+	 * @return estado de conservación.
+	 */
 	public EstadoDeConservacion getEstadoConservacion() {
 		return estadoConservacion;
 	}
 
+	/**
+	 * Modifica el estado de conseración de una obra.
+	 * 
+	 * @param estadoConservacion
+	 */
 	protected void setEstadoConservacion(EstadoDeConservacion estadoConservacion) {
 		this.estadoConservacion = estadoConservacion;
 	}
-	
+
 	/**
-	 * Modifica el campo "restaurada
+	 * Modifica el campo "restaurada" de una obra
+	 * 
 	 * @param restaurada
 	 */
 	public void setRestaurada(boolean restaurada) {
 		this.restaurada = restaurada;
 	}
-	
+
 	/**
-	  * Devuelve el estilo artístico.
-	  * @return
-	  */
+	 * Devuelve el estilo artístico.
+	 * 
+	 * @return
+	 */
 	public EstiloArtistico getEstiloArtistico() {
 		return estiloArtistico;
 	}
 
+	/**
+	 * Devuelve la fecha de ingreso de una obra.
+	 * 
+	 * @return
+	 */
 	public LocalDate getFechaIngreso() {
 		return fechaIngreso;
 	}
 
+	/**
+	 * Devuelve el autor de una obra.
+	 * 
+	 * @return autor.
+	 */
 	public String getAutor() {
 		return autor;
 	}
 
+	/**
+	 * Modifica el autor comprobando si es un nombre válido, en caso de no
+	 * serlo, lanza una excepción.
+	 * 
+	 * @param autor
+	 * @throws AutorNoValidoException
+	 */
 	public void setAutor(String autor) throws AutorNoValidoException {
 		if (!esValido(autor))
 			throw new AutorNoValidoException("El autor no es v\u00e1lido");
 		this.autor = autor;
 	}
 
+	/**
+	 * Devuelve el lugar al que perteneció o donde se encontró una obra.
+	 * 
+	 * @return localización.
+	 */
 	public String getLocalizacion() {
 		return localizacion;
 	}
 
+	/**
+	 * Modifica el lugar al que perteneció o donde se encontró una obra.
+	 * 
+	 * @param localizacion
+	 */
 	public void setLocalizacion(String localizacion) {
 		this.localizacion = localizacion;
 	}
 
+	/**
+	 * Devuelve el código de la obra.
+	 * 
+	 * @return
+	 */
 	public int getCodigo() {
 		return codigo;
 	}
 
+	/**
+	 * Devuelve la persona o entidad que donó o a la que se compró una obra.
+	 * 
+	 * @return cadena.
+	 */
 	public String getPersonaEntidad() {
 		return personaEntidad;
 	}
 
+	/**
+	 * Modifica la persona o entidad a la que se compró o donó una obra.
+	 * 
+	 * @param personaEntidad
+	 */
 	public void setPersonaEntidad(String personaEntidad) {
 		this.personaEntidad = personaEntidad;
 	}
 
+	/**
+	 * Devuelve la sala.
+	 * @return sala.
+	 */
 	public Sala getSala() {
 		return sala;
 	}
@@ -358,61 +416,122 @@ public abstract class ObraDeArte implements Serializable {
 	void setSala(Sala sala) {
 		this.sala = sala;
 	}
-
+	
+	/**
+	 * Devuelve el coste de exposición.
+	 * @return decimal.
+	 */
 	public double getCosteExposicion() {
 		return costeExposicion;
 	}
-
+	
+	/**
+	 * Modifica el coste de esposición de la obra.
+	 * @param costeExposicion
+	 */
 	protected void setCosteExposicion(double costeExposicion) {
 		this.costeExposicion = costeExposicion;
 	}
-
+	
+	/**
+	 * Devuelve el coste de restauración de la obra.
+	 * @return
+	 */
 	public double getCosteRestauracion() {
 		return costeRestauracion;
 	}
-
+	
+	/**
+	 * Modifica el coste de restauración de la obra.
+	 * 
+	 * @param costeRestauracion
+	 */
 	protected void setCosteRestauracion(double costeRestauracion) {
 		this.costeRestauracion = costeRestauracion;
 	}
-
+	
+	/**
+	 * Devuelve la fama de la obra.
+	 * @return
+	 */
 	public double getFama() {
 		return fama;
 	}
 
+	/**
+	 * Modifica la fama de la obra.
+	 * @param fama
+	 */
 	public void setFama(double fama) {
 		this.fama = fama;
 	}
-
+	
+	/**
+	 * Devuelve el valor de la obra.
+	 * @return
+	 */
 	public double getValor() {
 		return valor;
 	}
-
+	
+	/**
+	 * Modifica el valor de la obra.
+	 * @param valor
+	 */
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-
+	
+	/**
+	 * Devuelve el alto de la obra.
+	 * @return
+	 */
 	public double getAlto() {
 		return alto;
 	}
-
+	
+	/**
+	 * Modifica la altura de la obra.
+	 * @param alto
+	 * @throws DimensionNoValidaException
+	 */
 	public void setAlto(double alto) throws DimensionNoValidaException {
-		if(alto<=0)throw new DimensionNoValidaException("La altura no es válida");
+		if (alto <= 0)
+			throw new DimensionNoValidaException("La altura no es válida");
 		this.alto = alto;
 	}
 
+	/**
+	 * Devuelve el ancho de la obra.
+	 * @return
+	 */
 	public double getAncho() {
 		return ancho;
 	}
-
+	
+	/**
+	 * Modifica el ancho de la obra.
+	 * @param ancho
+	 * @throws DimensionNoValidaException
+	 */
 	public void setAncho(double ancho) throws DimensionNoValidaException {
-		if(ancho<=0)throw new DimensionNoValidaException("El ancho no es válido");
+		if (ancho <= 0)
+			throw new DimensionNoValidaException("El ancho no es válido");
 		this.ancho = ancho;
 	}
 
+	/**
+	 * Devuelve si la obra ha sido donada o no.
+	 * @return
+	 */
 	public boolean isDonada() {
 		return this.donada;
 	}
-
+	
+	/**
+	 * Modifica el campo "donada" de la obra.
+	 * @param donada
+	 */
 	public void setDonada(boolean donada) {
 		this.donada = donada;
 	}
@@ -420,7 +539,7 @@ public abstract class ObraDeArte implements Serializable {
 	/**
 	 * Indica si la obra ha sido restaurada.
 	 * 
-	 * @return
+	 * @return true o false
 	 */
 	public boolean isRestaurada() {
 		return restaurada;
@@ -447,19 +566,5 @@ public abstract class ObraDeArte implements Serializable {
 			return false;
 		return true;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "\n\n" + getClass().getSimpleName() + " [nombre=" + titulo
-//				+ ", autor=" + autor + "codigo=" + codigo + " fechaIngreso="
-//				+ formatearFecha(fechaIngreso) + ", localizacion="
-//				+ localizacion + ", estiloArtistico=" + estiloArtistico
-//				+ ",\nestadoConservacion=" + estadoConservacion + ", danio="
-//				+ danio + ", donada=" + donada + ", personaEntidad="
-//				+ personaEntidad + ",\n sala= " + sala + ", costeExposicion="
-//				+ getCosteExposicion() + ", costeRestauracion="
-//				+ getCosteRestauracion() + ", fama=" + fama + ", valor="
-//				+ valor + " Expuesta= " + expuesta + ", ";
-//	}
 
 }

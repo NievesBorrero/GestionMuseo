@@ -1,5 +1,9 @@
 package gestionMuseo.enumeraciones;
-
+/**
+ * Tipo de Grabado
+ * @author Nieves Borrero
+ *
+ */
 public enum TipoDeGrabado {
 	XILOGRAFIA(5),
 	LITOGRAFIA (7),

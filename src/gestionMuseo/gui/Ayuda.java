@@ -2,16 +2,17 @@ package gestionMuseo.gui;
 
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.TextArea;
 
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-
-import org.eclipse.wb.swing.FocusTraversalOnArray;
-
+/**
+ * Jdialog que muestra la ayuda del programa.
+ * @author Nieves María Borrero Barea
+ * @version 1.0
+ */
 
 public class Ayuda extends JDialog {
 
@@ -74,9 +75,8 @@ public class Ayuda extends JDialog {
 						+ "\ntambién se tendrán en cuenta las obras que, a pesar de"
 						+ "\nno haber sido expuestas, se hayan restaurado.\n"
 						+ "\n**Menú Dpto.Restauración:\n"
-						+ "\nPermite restaurar las obras, las cuales se muestran orde-"
-						+ "\nnadas por coste de restauración. Solo se podrán restaurar"
-						+ "\nsi el estado de conservación es regular o malo.\n"
+						+ "\nPermite restaurar las obras. Solo se podrán restaurar"
+						+ "\naquellas cuyo estado de conservación es regular o malo.\n"
 						+ "\n**Menú de ayuda:\n"
 						+ "\nPermite consultar esta ayuda e información acerca del pro-"
 						+ "\ngrama."

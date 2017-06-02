@@ -1,10 +1,8 @@
 package gestionMuseo.gui;
 
-import gestionMuseo.GestionMuseo;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
 import gestionMuseo.enumeraciones.TipoDeGrabado;
@@ -39,7 +37,7 @@ public class IngresarObras extends DialogoGeneral {
 	/**
 	 * Constructor que permite crear el diálogo.
 	 */
-	public IngresarObras(GestionMuseo museo) {
+	public IngresarObras() {
 		super();
 
 		setTitle("Ingreso de obras de arte");
@@ -80,15 +78,15 @@ public class IngresarObras extends DialogoGeneral {
 								"No ha se\u00f1alado si la obra fue donada o comprada");
 
 					else if (cbTipo.getSelectedItem() == "Pintura")
-						ingresarPintura(museo, fama, valor, alto, ancho);
+						ingresarPintura(fama, valor, alto, ancho);
 					else if (cbTipo.getSelectedItem() == "Escultura")
-						ingresarEscultura(museo, fama, valor, alto, ancho,
+						ingresarEscultura(fama, valor, alto, ancho,
 								profundidad);
 					else if (cbTipo.getSelectedItem() == "Grabado")
-						ingresarGrabado(museo, fama, valor, alto, ancho);
+						ingresarGrabado(fama, valor, alto, ancho);
 					else
-						ingresarDibujo(museo, fama, valor, alto, ancho);
-					museo.setModificado(true);
+						ingresarDibujo(fama, valor, alto, ancho);
+					Principal.museo.setModificado(true);
 					limpiar();
 				} catch (AutorNoValidoException e1) {
 					JOptionPane.showMessageDialog(contentPanel,
@@ -242,14 +240,20 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws PeriodoNoValidoException 
 	 * @throws DimensionNoValidaException 
 	 */
-	private void ingresarPintura(GestionMuseo exposicion, double fama,
+	private void ingresarPintura(double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinSoporteException, DimensionNoValidaException, PeriodoNoValidoException {
-
-			exposicion.ingresarPintura(textTitulo.getText(),
+			if (cb1.getSelectedIndex()== -1)
+				throw new SinMaterialException("Debe seleccionar el material");
+			else if (cb2.getSelectedIndex()== -1)
+				throw new SinMaterialException("Debe seleccionar el soporte");
+			else if (alto==0)
+				throw new DimensionNoValidaException("La altura no es válida");
+			else if (ancho==0)
+				throw new DimensionNoValidaException("La anchura no es válida");
+			Principal.museo.ingresarPintura(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
-					(PeriodoHistorico) cbPH.getSelectedItem(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
 					(Soporte) cb1.getSelectedItem(),
@@ -271,12 +275,18 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws PeriodoNoValidoException 
 	 * @throws DimensionNoValidaException 
 	 */
-	private void ingresarDibujo(GestionMuseo exposicion, double fama,
+	private void ingresarDibujo(double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinTecnicaException, DimensionNoValidaException{
+		if (cb1.getSelectedIndex()== -1)
+			throw new SinTecnicaException("Debe seleccionar la técnica de dibujo");
+		else if (alto==0)
+			throw new DimensionNoValidaException("La altura no es válida");
+		else if (ancho==0)
+			throw new DimensionNoValidaException("La anchura no es válida");
 		
-			exposicion.ingresarDibujo(textTitulo.getText(),
+			Principal.museo.ingresarDibujo(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
@@ -298,12 +308,17 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws PeriodoNoValidoException 
 	 * @throws DimensionNoValidaException 
 	 */
-	private void ingresarGrabado(GestionMuseo exposicion, double fama,
+	private void ingresarGrabado(double fama,
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinTipoGrabadoException, DimensionNoValidaException{
-		
-			exposicion.ingresarGrabado(textTitulo.getText(),
+		if (cb1.getSelectedIndex()== -1)
+			throw new SinTipoGrabadoException("Debe seleccionar el tipo de grabado");
+		else if (alto==0)
+			throw new DimensionNoValidaException("La altura no es válida");
+		else if (ancho==0)
+			throw new DimensionNoValidaException("La anchura no es válida");
+			Principal.museo.ingresarGrabado(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
@@ -323,19 +338,26 @@ public class IngresarObras extends DialogoGeneral {
 	 * @throws AutorNoValidoException
 	 * @throws EstiloNoValidoException
 	 * @throws SinTipoEsculturaException
-	 * @throws SinMaterialException
-	 * @throws PeriodoNoValidoException 
+	 * @throws SinMaterialException 
 	 * @throws DimensionNoValidaException 
 	 */
-	private void ingresarEscultura(GestionMuseo exposicion, double fama,
+	private void ingresarEscultura(double fama,
 			double valor, double alto, double ancho, double profundidad)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinTipoEsculturaException, 
-			DimensionNoValidaException, PeriodoNoValidoException {
-		
-			exposicion.ingresarEscultura(textTitulo.getText(),
+			DimensionNoValidaException{
+			if (cb1.getSelectedIndex()== -1)
+			throw new SinMaterialException("Debe seleccionar el material");
+			else if (cb2.getSelectedIndex()== -1)
+			throw new SinMaterialException("Debe seleccionar el tipo de escultura");
+			else if (alto==0)
+				throw new DimensionNoValidaException("La altura no es válida");
+			else if (ancho==0)
+				throw new DimensionNoValidaException("La anchura no es válida");
+			else if (profundidad==0)
+				throw new DimensionNoValidaException("La profundidad no es válida");
+			Principal.museo.ingresarEscultura(textTitulo.getText(),
 					textAutor.getText(), textLocal.getText(),
-					(PeriodoHistorico) cbPH.getSelectedItem(),
 					(EstiloArtistico) cbEA.getSelectedItem(),
 					rbDonada.isSelected(), textPersona.getText(), fama, valor,
 					(TipoEscultura) cb1.getSelectedItem(),

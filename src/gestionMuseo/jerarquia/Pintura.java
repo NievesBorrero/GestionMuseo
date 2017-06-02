@@ -8,18 +8,20 @@ import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.excepciones.AutorNoValidoException;
 import gestionMuseo.excepciones.DimensionNoValidaException;
 import gestionMuseo.excepciones.EstiloNoValidoException;
-import gestionMuseo.excepciones.PeriodoNoValidoException;
 import gestionMuseo.excepciones.SinMaterialException;
 import gestionMuseo.excepciones.SinSoporteException;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
-
+/**
+ * Clase que extiende de obra de arte, permitiendo crear una pintura.
+ * @author Nieves Borrero
+ *
+ */
 public class Pintura extends ObraDeArte implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private Soporte soporte;
 	private MaterialPintura material;
-	protected double plusExposicion = getCosteExposicion() * 0.20; // Cuesta m�s
+	private double plusExposicion = getCosteExposicion() * 0.20; // Cuesta más
 																	// exponer
 																	// una
 																	// pintura.
@@ -38,15 +40,25 @@ public class Pintura extends ObraDeArte implements Serializable {
 		setCosteExposicion(costeExposicion + plusExposicion);
 		setCosteRestauracion(calcularPrecioRestauracion());
 	}
-
+	/**
+	 * Constructor por codigo
+	 * @param codigo
+	 */
 	public Pintura(int codigo) {
 		super(codigo);
 	}
-
+	/**
+	 * Devuelve el soporte.
+	 * @return soporte
+	 */
 	public Soporte getSoporte() {
 		return soporte;
 	}
-
+	/**
+	 * 
+	 * @param soporte
+	 * @throws SinSoporteException
+	 */
 	public void setSoporte(Soporte soporte) throws SinSoporteException {
 		if (soporte != null)
 			this.soporte = soporte;
@@ -54,11 +66,18 @@ public class Pintura extends ObraDeArte implements Serializable {
 			throw new SinSoporteException(
 					"Debe se\u00f1alar el soporte de la pintura");
 	}
-
+	/**
+	 * 
+	 * @return MaterialPintura
+	 */
 	public MaterialPintura getMaterial() {
 		return material;
 	}
-
+	/**
+	 * 
+	 * @param material
+	 * @throws SinMaterialException
+	 */
 	public void setMaterial(MaterialPintura material)
 			throws SinMaterialException {
 		if (material != null)
@@ -79,13 +98,6 @@ public class Pintura extends ObraDeArte implements Serializable {
 		return valor + material.getPrecio() + soporte.getPrecio()
 				+ getEstadoConservacion().getPrecio();
 
-	}
-
-	@Override
-	public String toString() {
-		return super.toString() + "soporte=" + soporte + ", material="
-				+ material + ", dimensiones:"
-				+ DFORMAT.format(obtenerDimensiones()) + " metros]";
 	}
 
 }

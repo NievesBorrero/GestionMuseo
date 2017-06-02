@@ -10,11 +10,17 @@ public enum Soporte {
 	PAPEL (5);
 	
 	private double precio;
-	
+	/**
+	 * 
+	 * @param precio
+	 */
 	Soporte(double precio){
 		this.precio= precio;
 	}
-
+	/**
+	 * 
+	 * @return decimal
+	 */
 	public double getPrecio() {
 		return precio;
 	}

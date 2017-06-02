@@ -3,7 +3,11 @@ package gestionMuseo.Ficheros;
 import java.io.File;
 
 import javax.swing.filechooser.FileFilter;
-
+/**
+ * 
+ * @author Nieves Borrero
+ *
+ */
 public class Filtro extends FileFilter{
 	
 	private String extension;

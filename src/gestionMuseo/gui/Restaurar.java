@@ -12,6 +12,12 @@ import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
+/**
+ * JDialog que permite restaurar las obras del museo mientras se muestran.
+ * 
+ * @author Nieves María Borrero Barea.
+ * @version 1.0
+ */
 public class Restaurar extends MostrarObrasMuseo {
 
 	private static final long serialVersionUID = 1L;
@@ -35,18 +41,17 @@ public class Restaurar extends MostrarObrasMuseo {
 		rbAlmacen.setVisible(false);
 
 		btnIzquierda.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
+			public void actionPerformed(ActionEvent e) {
 				try {
 					int opcion;
-					obra= Principal.museo
-							.devolverPorCodigo(
-									pasarTextAEntero(textcod
-											.getText()));
+					obra = Principal.museo
+							.devolverPorCodigo(pasarTextAEntero(textcod
+									.getText()));
 					opcion = JOptionPane
 							.showOptionDialog(
 									contentPanel,
 									"Restaurar la obra cuesta "
-											+obra.calcularPrecioRestauracion()
+											+ obra.calcularPrecioRestauracion()
 											+ " euros, "
 											+ "\n esta segur@ de que desea restaurarla?",
 									"Confirmar",
@@ -60,37 +65,38 @@ public class Restaurar extends MostrarObrasMuseo {
 					}
 				} catch (HeadlessException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
-							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NumberFormatException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
-							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (ObraNoExisteException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
-							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NoHayFondosException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
-							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (ObraNoDaniadaException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
-							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); 
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 
-
 		});
 
 	}
-	
+
 	/**
 	 * Restaura una obra.
+	 * 
 	 * @throws NoHayFondosException
 	 * @throws ObraNoDaniadaException
 	 */
 	private void restaurar() throws NoHayFondosException,
-	ObraNoDaniadaException {
+			ObraNoDaniadaException {
 		Principal.museo.restaurar(obra);
-		textEstado.setText(obra.getEstadoConservacion().toString().toLowerCase());
+		textEstado.setText(obra.getEstadoConservacion().toString()
+				.toLowerCase());
 		Principal.museo.setModificado(true);
 	}
 

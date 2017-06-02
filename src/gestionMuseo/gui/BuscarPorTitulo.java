@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
-import gestionMuseo.GestionMuseo;
 import gestionMuseo.excepciones.ObraNoExisteException;
 
 /**
@@ -22,7 +21,7 @@ public class BuscarPorTitulo extends DialogoGeneral {
 	/**
 	 * Crea el diálogo.
 	 */
-	public BuscarPorTitulo(GestionMuseo museo) {
+	public BuscarPorTitulo() {
 
 		InhabilitarComponentes();
 		hacerComponentesInvisibles();
@@ -35,7 +34,7 @@ public class BuscarPorTitulo extends DialogoGeneral {
 		btnIzquierda.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {				
 				try {
-					mostrar(museo.devolverPorTitulo(textTitulo.getText()));
+					mostrar(Principal.museo.devolverPorTitulo(textTitulo.getText()));
 				} catch (ObraNoExisteException e) {
 					JOptionPane.showMessageDialog(getContentPane(),
 							e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);

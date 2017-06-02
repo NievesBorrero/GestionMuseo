@@ -37,6 +37,7 @@ public class ClausurarExposicion extends JDialog {
 	ClausurarExposicion() {
 		setResizable(false);
 		setModal(true);
+		setTitle("Clausurando..");
 		setBounds(new Rectangle(65, 24, 400, 250));
 		getContentPane().setLayout(null);
 

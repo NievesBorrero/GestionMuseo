@@ -9,7 +9,11 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.regex.Pattern;
-
+/**
+ * 
+ * @author Nieves Borrero
+ *
+ */
 public class Fichero {
 
 	private static final Pattern patron = Pattern.compile("^((\\w)+(\\.obj))$");
@@ -66,7 +70,7 @@ public class Fichero {
 	}
 
 	/**
-	 * abre un concesionario previamente guardado
+	 * abre un Museo previamente guardado
 	 * 
 	 * @param archivo
 	 * @throws IOException
@@ -79,10 +83,10 @@ public class Fichero {
 	}
 
 	/**
-	 * Comprueba que el nombre del fichero cumple el patr�n establecido y le a�ade la extension elegida (.obj)
+	 * Comprueba que el nombre del fichero cumple el patron establecido y le anade la extension elegida (.obj)
 	 * 
-	 * @param fichero2
-	 * @return
+	 * @param ficheroUsuario
+	 * @return FICHERO
 	 */
 	public static File comprobarNombre(File ficheroUsuario) {
 		if (patron.matcher(ficheroUsuario.getName()).matches()) {

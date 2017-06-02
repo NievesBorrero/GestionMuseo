@@ -10,7 +10,6 @@ import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.enumeraciones.EstiloArtistico;
 import gestionMuseo.enumeraciones.MaterialEscultura;
 import gestionMuseo.enumeraciones.MaterialPintura;
-import gestionMuseo.enumeraciones.PeriodoHistorico;
 import gestionMuseo.enumeraciones.Sala;
 import gestionMuseo.enumeraciones.Soporte;
 import gestionMuseo.enumeraciones.TecnicaDeDibujo;
@@ -25,7 +24,6 @@ import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraExpuestaException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
 import gestionMuseo.excepciones.ObraNoExisteException;
-import gestionMuseo.excepciones.PeriodoNoValidoException;
 import gestionMuseo.excepciones.SinMaterialException;
 import gestionMuseo.excepciones.SinSoporteException;
 import gestionMuseo.excepciones.SinTecnicaException;
@@ -49,8 +47,6 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	private String descripcionExposicion;
 	private LocalDate fechaInicio;
 	private LocalDate fechaFin;
-	private double costeExposicion;
-	private double precioExposicion;
 	private boolean organizada = false;
 	private double gastos = 0.0;
 	private double ingresos = 0.0;
@@ -58,10 +54,6 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	private int entradas;
 	private static DateTimeFormatter FORMATTER = DateTimeFormatter
 			.ofPattern("dd/MM/yyyy");
-
-	public GestionMuseo() {// BORRARRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
-
-	}
 
 	/**
 	 * Añade una pintura al museo.
@@ -88,17 +80,16 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	 * @throws ObraYaExisteException
 	 */
 	public void ingresarPintura(String titulo, String autor,
-			String localizacion, PeriodoHistorico periodo,
-			EstiloArtistico estiloArtistico, boolean donada,
-			String personaEntidad, double fama, double valor, Soporte soporte,
-			MaterialPintura material, double alto, double ancho)
+			String localizacion, EstiloArtistico estiloArtistico,
+			boolean donada, String personaEntidad, double fama, double valor,
+			Soporte soporte, MaterialPintura material, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinSoporteException,
-			DimensionNoValidaException, PeriodoNoValidoException {
+			DimensionNoValidaException {
 
-		museo.aniadirPintura(titulo, autor, localizacion, periodo,
-				estiloArtistico, donada, personaEntidad, fama, valor, soporte,
-				material, alto, ancho);
+		museo.aniadirPintura(titulo, autor, localizacion, estiloArtistico,
+				donada, personaEntidad, fama, valor, soporte, material, alto,
+				ancho);
 	}
 
 	/**
@@ -124,18 +115,17 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	 * @throws DimensionNoValidaException
 	 */
 	public void ingresarEscultura(String titulo, String autor,
-			String localizacion, PeriodoHistorico periodo,
-			EstiloArtistico estiloArtistico, boolean donada,
-			String personaEntidad, double fama, double valor,
+			String localizacion, EstiloArtistico estiloArtistico,
+			boolean donada, String personaEntidad, double fama, double valor,
 			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
 			double ancho, double alto, double profundidad)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinTipoEsculturaException,
-			DimensionNoValidaException, PeriodoNoValidoException {
+			DimensionNoValidaException {
 
-		museo.aniadirEscultura(titulo, autor, localizacion, periodo,
-				estiloArtistico, donada, personaEntidad, fama, valor,
-				tipoEscultura, materialEscultura, ancho, alto, profundidad);
+		museo.aniadirEscultura(titulo, autor, localizacion, estiloArtistico,
+				donada, personaEntidad, fama, valor, tipoEscultura,
+				materialEscultura, ancho, alto, profundidad);
 	}
 
 	/**
@@ -165,8 +155,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoGrabadoException, DimensionNoValidaException
-			{
+			SinTipoGrabadoException, DimensionNoValidaException {
 
 		museo.aniadirGrabado(titulo, autor, localizacion, estiloArtistico,
 				donada, personaEntidad, fama, valor, tipoDeGrabado, alto, ancho);
@@ -200,8 +189,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			boolean donada, String personaEntidad, double fama, double valor,
 			TecnicaDeDibujo tecnica, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTecnicaException, DimensionNoValidaException
-	{
+			SinTecnicaException, DimensionNoValidaException {
 
 		museo.aniadirDibujo(titulo, autor, localizacion, estiloArtistico,
 				donada, personaEntidad, fama, valor, tecnica, alto, ancho);
@@ -220,6 +208,14 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	}
 
 	/**
+	 * 
+	 * @return true o false
+	 */
+	public boolean isEmpty() {
+		return museo.isEmpty();
+	}
+
+	/**
 	 * Da formato a una fecha
 	 * 
 	 * @param fecha
@@ -232,16 +228,22 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	/**
 	 * Devuelve el tamaño del arrayList museo.
 	 * 
-	 * @return
+	 * @return entero
 	 */
 	public int size() {
 		return museo.size();
 	}
 
+	/**
+	 * @see museo.ordenarPorTitulo()
+	 */
 	public void ordenarPorTitulo() {
 		museo.ordenarPorTitulo();
 	}
 
+	/**
+	 * @see museo.ordenarPorCodigo()
+	 */
 	public void ordenarPorCodigo() {
 		museo.ordenarPorCodigo();
 	}
@@ -266,52 +268,49 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	}
 
 	/**
-	 * Elimina una obra del museo a partir de su código.
+	 * Elimina un grabado del museo a partir de su código.
 	 * 
 	 * @param codigo
 	 * @throws ObraNoExisteException
 	 * @throws NoHayFondosException
 	 */
 	public void eliminarGrabado(int codigo) throws ObraNoExisteException {
-
 		museo.eliminarGrabado(codigo);
 	}
 
+	/**
+	 * Elimina una pintura del museo a partir de su código.
+	 * 
+	 * @param codigo
+	 * @throws ObraNoExisteException
+	 * @throws NoHayFondosException
+	 */
 	public void eliminarPintura(int codigo) throws ObraNoExisteException {
 		museo.eliminarPintura(codigo);
 	}
 
+	/**
+	 * Elimina una escultura del museo a partir de su código.
+	 * 
+	 * @param codigo
+	 * @throws ObraNoExisteException
+	 * @throws NoHayFondosException
+	 */
 	public void eliminarEscultura(int codigo) throws ObraNoExisteException {
 		museo.eliminarEscultura(codigo);
 	}
 
+	/**
+	 * Elimina un dibujo del museo a partir de su código.
+	 * 
+	 * @param codigo
+	 * @throws ObraNoExisteException
+	 * @throws NoHayFondosException
+	 */
 	public void eliminarDibujo(int codigo) throws ObraNoExisteException {
 		museo.eliminarDibujo(codigo);
 	}
 
-	// /**
-	// * Elimina una obra del museo.
-	// * @param titulo
-	// */
-	// public void eliminar(String titulo){
-	// museo.eliminar(titulo);
-	// }
-
-	// public int contarPinturas() throws NoHayFondosException {
-	// return museo.contarPinturas();
-	// }
-	//
-	// public int contarDibujos() throws NoHayFondosException {
-	// return museo.contarDibujos();
-	// }
-	//
-	// public int contarEsculturas() throws NoHayFondosException {
-	// return museo.contarEsculturas();
-	// }
-	//
-	// public int contarGrabados() throws NoHayFondosException {
-	// return museo.contarGrabados();
-	// }
 
 	/**
 	 * Devuelve una lista iterable de las obras del museo.
@@ -375,7 +374,9 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			throw new NoHayFondosException("No hay fondos en el museo");
 		return museo.listGrabados();
 	}
-
+	/**
+	 * Devuelve un iterable de las obras expuestas
+	 */
 	public ListIterator<ObraDeArte> listExpuestas() {
 		return museo.listExpuestas();
 	}
@@ -434,162 +435,6 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			ObraNoDaniadaException {
 		obra.restaurar();
 		setGastos(getGastos() + obra.calcularPrecioRestauracion());
-	}
-
-	/**
-	 * Devuelve la posición de una obra en el museo.
-	 * 
-	 * @param obra
-	 * @return
-	 */
-	public int indexOf(ObraDeArte obra) {
-		return museo.indexOf(obra);
-	}
-
-	/**
-	 * Permite modificar los datos de una pintura del museo.
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param soporte
-	 * @param material
-	 * @param alto
-	 * @param ancho
-	 * @throws AutorNoValidoException
-	 * @throws LocalizacionNoValidaException
-	 * @throws EstiloNoValidoException
-	 * @throws ObraNoExisteException
-	 * @throws SinSoporteException
-	 * @throws SinMaterialException
-	 * @throws DimensionNoValidaException
-	 * @throws personaEntidadNoValidaException
-	 * @throws ObraYaExisteException
-	 */
-	public void modificarPintura(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			Soporte soporte, MaterialPintura material, double alto, double ancho)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			ObraNoExisteException, SinMaterialException, SinSoporteException,
-			DimensionNoValidaException {
-
-		museo.modificarPintura(indice, titulo, autor, localizacion,
-				estiloArtistico, donada, personaEntidad, fama, valor, soporte,
-				material, alto, ancho);
-
-	}
-
-	/**
-	 * Permite modificar los datos de una escultura del museo.
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tipoEscultura
-	 * @param materialEscultura
-	 * @param ancho
-	 * @param alto
-	 * @param profundidad
-	 * @throws AutorNoValidoException
-	 * @throws EstiloNoValidoException
-	 * @throws SinMaterialException
-	 * @throws SinTipoEsculturaException
-	 * @throws DimensionNoValidaException
-	 */
-	public void modificarEscultura(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			TipoEscultura tipoEscultura, MaterialEscultura materialEscultura,
-			double ancho, double alto, double profundidad)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoEsculturaException, SinMaterialException,
-			DimensionNoValidaException {
-
-		museo.modificarEscultura(indice, titulo, autor, localizacion,
-				estiloArtistico, donada, personaEntidad, fama, valor,
-				tipoEscultura, materialEscultura, ancho, alto, profundidad);
-	}
-
-	/**
-	 * Permite modificar los datos de un grabado del museo.
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tipoDeGrabado
-	 * @param alto
-	 * @param ancho
-	 * @throws AutorNoValidoException
-	 * @throws LocalizacionNoValidaException
-	 * @throws EstiloNoValidoException
-	 * @throws SinTipoGrabadoException
-	 * @throws DimensionNoValidaException
-	 * @throws personaEntidadNoValidaException
-	 * @throws ObraYaExisteException
-	 */
-	public void modificarGrabado(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			TipoDeGrabado tipoDeGrabado, double alto, double ancho)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTipoGrabadoException, DimensionNoValidaException {
-		museo.modificarGrabado(indice, titulo, autor, localizacion,
-				estiloArtistico, donada, personaEntidad, fama, valor,
-				tipoDeGrabado, alto, ancho);
-	}
-
-	/**
-	 * Permite modificar los datos de un dibujo del museo
-	 * 
-	 * @param indice
-	 * @param titulo
-	 * @param autor
-	 * @param localizacion
-	 * @param estiloArtistico
-	 * @param donada
-	 * @param personaEntidad
-	 * @param fama
-	 * @param valor
-	 * @param tecnica
-	 * @param alto
-	 * @param ancho
-	 * @throws AutorNoValidoException
-	 * @throws LocalizacionNoValidaException
-	 * @throws EstiloNoValidoException
-	 * @throws SinTecnicaException
-	 * @throws DimensionNoValidaException
-	 * @throws personaEntidadNoValidaException
-	 * @throws ObraYaExisteException
-	 */
-	public void modificarDibujo(int indice, String titulo, String autor,
-			String localizacion, EstiloArtistico estiloArtistico,
-			boolean donada, String personaEntidad, double fama, double valor,
-			TecnicaDeDibujo tecnica, double alto, double ancho)
-			throws AutorNoValidoException, EstiloNoValidoException,
-			SinTecnicaException, DimensionNoValidaException {
-
-		museo.modificarDibujo(indice, titulo, autor, localizacion,
-				estiloArtistico, donada, personaEntidad, fama, valor, tecnica,
-				alto, ancho);
 	}
 
 	/**
@@ -687,7 +532,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	}
 
 	/**
-	 * Añade el gasto de la sala a los gastos de la exposición
+	 * Imprime los gastos de las salas abiertas.
 	 * 
 	 * @return cadena
 	 */
@@ -732,6 +577,9 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		return salas.toString();
 	}
 
+	/**
+	 * Calcula el gasto de las salas abiertas y lo suma a gastos.
+	 */
 	private void calcularGastoSalas() {
 		ObraDeArte obra;
 		Sala sala;
@@ -769,7 +617,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	/**
 	 * Comprueba si hay obras expuestas
 	 * 
-	 * @return
+	 * @return true o false.
 	 */
 	public boolean comprobarSiObrasExpuestas() {
 		int i = 0;
@@ -786,75 +634,133 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			return true;
 		return false;
 	}
-
+	/**
+	 * 
+	 * @return entradas
+	 */
 	public int getEntradas() {
 		return entradas;
 	}
-
+	/**
+	 * 
+	 * @param entradas
+	 */
 	public void setEntradas(int entradas) {
 		this.entradas = entradas;
 	}
-
+	/**
+	 * 
+	 * @return true o false
+	 */
 	public boolean isOrganizada() {
 		return organizada;
 	}
-
+	/**
+	 * 
+	 * @param organizada
+	 */
 	public void setOrganizada(boolean organizada) {
 		this.organizada = organizada;
 	}
-
+	/**
+	 * 
+	 * @return nombre cadena
+	 */
 	public String getNombreExposicion() {
 		return nombreExposicion;
 	}
-
+	/**
+	 * 
+	 * @return decimal
+	 */
 	public double getGastos() {
 		return gastos;
 	}
-
+	/**
+	 * 
+	 * @return Fondos
+	 */
 	public Fondos getMuseo() {
 		return museo;
 	}
-
+	/**
+	 * 
+	 * @param museo
+	 */
 	public void setMuseo(Fondos museo) {
 		this.museo = museo;
 	}
-
+	/**
+	 * 
+	 * @param gastos
+	 */
 	public void setGastos(double gastos) {
 		this.gastos = gastos;
 	}
-
+	/**
+	 * 
+	 * @return decimal
+	 */
 	public double getIngresos() {
 		return ingresos;
 	}
-
+	/**
+	 * 
+	 * @param ingresos
+	 */
 	public void setIngresos(double ingresos) {
 		this.ingresos = ingresos;
 	}
-
+	/**
+	 * 
+	 * @param nombreExposicion
+	 */
 	public void setNombreExposicion(String nombreExposicion) {
 		this.nombreExposicion = nombreExposicion;
 	}
-
+	/**
+	 * 
+	 * @return cadena
+	 */
 	public String getDescripcionExposicion() {
 		return descripcionExposicion;
 	}
-
+	/**
+	 * 
+	 * @param descripcionExposicion
+	 */
 	public void setDescripcionExposicion(String descripcionExposicion) {
 		this.descripcionExposicion = descripcionExposicion;
 	}
-
+	/**
+	 * 
+	 * @return LocalDate
+	 */
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
-
+	/**
+	 * 
+	 * @param fechaInicio
+	 */
 	public void setFechaInicio(LocalDate fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
+	/**
+	 * Devuelve la fecha de fin de la exposición.
+	 * 
+	 * @return LocalDate
+	 */
 	public LocalDate getFechaFin() {
 		return fechaFin;
 	}
 
+	/**
+	 * Modifica la fecha de fin de la exposición
+	 * 
+	 * @param fechaFin
+	 */
 	public void setFechaFin(LocalDate fechaFin) {
 		this.fechaFin = fechaFin;
 	}
@@ -862,7 +768,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	/**
 	 * Calcula el ingreso de la exposición
 	 *
-	 * @return
+	 * @return decimal.
 	 */
 	public void calcularIngreso() {
 		ListIterator<ObraDeArte> it = museo.listIterator();
@@ -881,7 +787,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	/**
 	 * Calcula el gasto de la exposición
 	 *
-	 * @return
+	 * @return decimal
 	 */
 	public void calcularGasto() {
 		ListIterator<ObraDeArte> it = museo.listIterator();
@@ -889,8 +795,8 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		double gastoObras = 0.0;
 
 		while (it.hasNext()) {
-			if (it.next().isExpuesta()) {
-				obra = (ObraDeArte) it.next();
+			obra=it.next();
+			if (obra.isExpuesta()) {
 				gastoObras += obra.getCosteExposicion();
 			}
 		}
@@ -906,29 +812,42 @@ public class GestionMuseo implements Serializable, Presupuestable {
 
 	}
 
+	/**
+	 * Calcula los días que dura una exposición.
+	 * 
+	 * @return
+	 */
 	public long calcularDiasExposicion() {
 		long dias = ChronoUnit.DAYS.between(fechaInicio, fechaFin);
 		if (dias == 0)
 			return 1;
 		return dias;
 	}
-
-	// public String[] generarOpcionesMenu() {
-	// return museo.generarOpcionesMenu();
-	// }
-
+	/**
+	 * 
+	 * @return double
+	 */
 	public double getPresupuesto() {
 		return this.presupuesto;
 	}
-
+	/**
+	 * 
+	 * @return true o false
+	 */
 	public boolean isModificado() {
 		return modificado;
 	}
-
+	/**
+	 * 
+	 * @param modificado
+	 */
 	public void setModificado(boolean modificado) {
 		this.modificado = modificado;
 	}
-
+	/**
+	 * 
+	 * @param presupuesto
+	 */
 	public void setPresupuesto(double presupuesto) {
 		this.presupuesto = presupuesto;
 	}
@@ -978,21 +897,6 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		if (daniadas > 0)
 			return true;
 		return false;
-	}
-
-	/**
-	 * Muestra informaaci�n sobre la exosici�n.
-	 */
-	@Override
-	public String toString() {
-
-		return "Exposicion [museo=" + museo + ", presupuesto="
-				+ getPresupuesto() + ", nombreExposicion=" + nombreExposicion
-				+ ", descripcionExposicion=" + descripcionExposicion
-				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin
-				+ ", costeExposicion=" + costeExposicion
-				+ ", precioExposicion=" + precioExposicion + "]";
-
 	}
 
 }

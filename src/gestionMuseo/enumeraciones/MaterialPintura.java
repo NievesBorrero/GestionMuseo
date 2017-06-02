@@ -1,7 +1,7 @@
 package gestionMuseo.enumeraciones;
 /**
  * Según el material de la pintura, costará más o menos restaurar una pintura.
- * @author nieves
+ * @author Nieves Borrero
  *
  */
 public enum MaterialPintura {
@@ -11,11 +11,17 @@ public enum MaterialPintura {
 	ACUARELA(8);
 	
 	double precio;
-	
+	/**
+	 * 
+	 * @param precio
+	 */
 	MaterialPintura(double precio){
 		this.precio=precio;
 	}
-
+	/**
+	 * 
+	 * @return decimal
+	 */
 	public double getPrecio() {
 		return precio;
 	}
