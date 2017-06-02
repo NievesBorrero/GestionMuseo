@@ -39,6 +39,7 @@ public class Fondos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private ArrayList<ObraDeArte> fondos;
+	private int ultimoCodigo=0;
 
 	public Fondos() {
 
@@ -84,8 +85,10 @@ public class Fondos implements Serializable {
 				tipoEscultura, materialEscultura, alto, ancho, profundidad);
 
 		fondos.add(escultura);
+		
+		comprobarUltimoCodigo(escultura);
 	}
-
+	
 	/**
 	 * Añade una pintura al ArrayList de fondos.
 	 * 
@@ -123,6 +126,7 @@ public class Fondos implements Serializable {
 				estiloArtistico, donada, personaEntidad, fama, valor, soporte,
 				material, alto, ancho);
 		fondos.add(pintura);
+		comprobarUltimoCodigo(pintura);
 	}
 
 
@@ -160,6 +164,7 @@ public class Fondos implements Serializable {
 				estiloArtistico, donada, personaEntidad, fama, valor,
 				tipoDeGrabado, alto, ancho);
 		fondos.add(grabado);
+		comprobarUltimoCodigo(grabado);
 	}
 
 	/**
@@ -196,6 +201,38 @@ public class Fondos implements Serializable {
 				estiloArtistico, donada, personaEntidad, fama, valor, tecnica,
 				alto, ancho);
 		fondos.add(dibujo);
+		comprobarUltimoCodigo(dibujo);
+	}
+	
+
+	/**
+	 * Comprueba el último código de las obras almacenadas en el arrayList.
+	 * @param obra
+	 */
+	protected void comprobarUltimoCodigo(ObraDeArte obra) {
+		int index = fondos.indexOf(obra);
+		System.out.println("ultimo codigo antes de anadir: "+getUltimoCodigo());
+		if (fondos.get(index).getCodigo()<getUltimoCodigo())
+
+			fondos.get(index).setCodigo(getUltimoCodigo()+1);
+		setUltimoCodigo(fondos.get(index).getCodigo());
+		System.out.println("ultimo codigo despues de anadir: "+getUltimoCodigo());
+	}
+	
+	/**
+	 * Devuelve el último código de las obras almacenadas en el arrayList.
+	 * @return entero
+	 */
+	public int getUltimoCodigo() {
+		return ultimoCodigo;
+	}
+
+	/**
+	 * Modifica el último código de las obras almacenadas en el arrayList.
+	 * @param ultimoCodigo
+	 */
+	public void setUltimoCodigo(int ultimoCodigo) {
+		this.ultimoCodigo = ultimoCodigo;
 	}
 
 	/**
@@ -465,6 +502,10 @@ public class Fondos implements Serializable {
 	 */
 	public boolean isEmpty() {
 		return fondos.isEmpty();
+	}
+
+	public ArrayList<ObraDeArte> getObras() {
+		return fondos;
 	}
 
 }

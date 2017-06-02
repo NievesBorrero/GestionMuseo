@@ -4,6 +4,7 @@ import gestionMuseo.GestionMuseo;
 import gestionMuseo.Ficheros.Fichero;
 import gestionMuseo.Ficheros.Filtro;
 import gestionMuseo.excepciones.NoHayFondosException;
+import gestionMuseo.jerarquia.ObraDeArte;
 
 import java.awt.EventQueue;
 
@@ -30,6 +31,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ListIterator;
 import java.awt.Color;
 import java.awt.Toolkit;
 
@@ -938,8 +940,21 @@ public class Principal {
 		if (fileChooser.showDialog(fileChooser, "Abrir Fichero") == JFileChooser.APPROVE_OPTION) {
 			Fichero.FICHERO = fileChooser.getSelectedFile();
 			museo = Fichero.abrir(fileChooser.getSelectedFile());
+			actualizarUltimoCodigo();
 		}
 	}
+	/**
+	 * Actualiza el codigo identificador al cargar los fondos
+	 */
+	private void actualizarUltimoCodigo() {
+		
+		for (ObraDeArte obra: museo.getListaMuseo()){
+			if (obra.getCodigo()>museo.getMuseo().getUltimoCodigo())
+				museo.getMuseo().setUltimoCodigo(obra.getCodigo()+1);
+		}			
+	}
+		
+
 
 	/**
 	 * Permite salir del programa comprobando si hay archivos modificados, si es

@@ -244,6 +244,7 @@ public class IngresarObras extends DialogoGeneral {
 			double valor, double alto, double ancho)
 			throws AutorNoValidoException, EstiloNoValidoException,
 			SinMaterialException, SinSoporteException, DimensionNoValidaException, PeriodoNoValidoException {
+			
 			if (cb1.getSelectedIndex()== -1)
 				throw new SinMaterialException("Debe seleccionar el material");
 			else if (cb2.getSelectedIndex()== -1)

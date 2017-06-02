@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.ListIterator;
 
 import gestionMuseo.enumeraciones.EstadoDeConservacion;
@@ -39,7 +40,7 @@ import gestionMuseo.jerarquia.ObraDeArte;
  *
  */
 
-public class GestionMuseo implements Serializable, Presupuestable {
+public class GestionMuseo implements Serializable, Presupuestable{
 	private static final long serialVersionUID = 1L;
 	private Fondos museo = new Fondos(); // Fondos que hay en el museo.
 	private double presupuesto = 1000; // dinero de que dispone el museo.
@@ -90,6 +91,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		museo.aniadirPintura(titulo, autor, localizacion, estiloArtistico,
 				donada, personaEntidad, fama, valor, soporte, material, alto,
 				ancho);
+		
 	}
 
 	/**
@@ -311,7 +313,6 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		museo.eliminarDibujo(codigo);
 	}
 
-
 	/**
 	 * Devuelve una lista iterable de las obras del museo.
 	 * 
@@ -374,6 +375,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			throw new NoHayFondosException("No hay fondos en el museo");
 		return museo.listGrabados();
 	}
+
 	/**
 	 * Devuelve un iterable de las obras expuestas
 	 */
@@ -634,6 +636,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			return true;
 		return false;
 	}
+
 	/**
 	 * 
 	 * @return entradas
@@ -641,6 +644,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public int getEntradas() {
 		return entradas;
 	}
+
 	/**
 	 * 
 	 * @param entradas
@@ -648,6 +652,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setEntradas(int entradas) {
 		this.entradas = entradas;
 	}
+
 	/**
 	 * 
 	 * @return true o false
@@ -655,6 +660,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public boolean isOrganizada() {
 		return organizada;
 	}
+
 	/**
 	 * 
 	 * @param organizada
@@ -662,6 +668,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setOrganizada(boolean organizada) {
 		this.organizada = organizada;
 	}
+
 	/**
 	 * 
 	 * @return nombre cadena
@@ -669,6 +676,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public String getNombreExposicion() {
 		return nombreExposicion;
 	}
+
 	/**
 	 * 
 	 * @return decimal
@@ -676,12 +684,16 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public double getGastos() {
 		return gastos;
 	}
+
 	/**
 	 * 
 	 * @return Fondos
 	 */
 	public Fondos getMuseo() {
 		return museo;
+	}
+	public ArrayList<ObraDeArte> getListaMuseo(){
+		return museo.getObras();
 	}
 	/**
 	 * 
@@ -690,6 +702,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setMuseo(Fondos museo) {
 		this.museo = museo;
 	}
+
 	/**
 	 * 
 	 * @param gastos
@@ -697,6 +710,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setGastos(double gastos) {
 		this.gastos = gastos;
 	}
+
 	/**
 	 * 
 	 * @return decimal
@@ -704,6 +718,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public double getIngresos() {
 		return ingresos;
 	}
+
 	/**
 	 * 
 	 * @param ingresos
@@ -711,6 +726,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setIngresos(double ingresos) {
 		this.ingresos = ingresos;
 	}
+
 	/**
 	 * 
 	 * @param nombreExposicion
@@ -718,6 +734,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setNombreExposicion(String nombreExposicion) {
 		this.nombreExposicion = nombreExposicion;
 	}
+
 	/**
 	 * 
 	 * @return cadena
@@ -725,6 +742,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public String getDescripcionExposicion() {
 		return descripcionExposicion;
 	}
+
 	/**
 	 * 
 	 * @param descripcionExposicion
@@ -732,6 +750,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setDescripcionExposicion(String descripcionExposicion) {
 		this.descripcionExposicion = descripcionExposicion;
 	}
+
 	/**
 	 * 
 	 * @return LocalDate
@@ -739,6 +758,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public LocalDate getFechaInicio() {
 		return fechaInicio;
 	}
+
 	/**
 	 * 
 	 * @param fechaInicio
@@ -795,7 +815,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 		double gastoObras = 0.0;
 
 		while (it.hasNext()) {
-			obra=it.next();
+			obra = it.next();
 			if (obra.isExpuesta()) {
 				gastoObras += obra.getCosteExposicion();
 			}
@@ -823,6 +843,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 			return 1;
 		return dias;
 	}
+
 	/**
 	 * 
 	 * @return double
@@ -830,6 +851,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public double getPresupuesto() {
 		return this.presupuesto;
 	}
+
 	/**
 	 * 
 	 * @return true o false
@@ -837,6 +859,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public boolean isModificado() {
 		return modificado;
 	}
+
 	/**
 	 * 
 	 * @param modificado
@@ -844,6 +867,7 @@ public class GestionMuseo implements Serializable, Presupuestable {
 	public void setModificado(boolean modificado) {
 		this.modificado = modificado;
 	}
+
 	/**
 	 * 
 	 * @param presupuesto

@@ -263,10 +263,17 @@ public abstract class ObraDeArte implements Serializable {
 	 * 
 	 * @param codigo
 	 */
-	private void setCodigo(int codigo) {
+	public void setCodigo() {
 		this.codigo = Id++;
 	}
-
+	
+	/**
+	 * Modifica el código
+	 * @param codigo
+	 */
+	public void setCodigo(int codigo){
+		this.codigo = codigo;
+	}
 	/**
 	 * Devuelve el título de una obra.
 	 * 
