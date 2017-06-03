@@ -1,5 +1,6 @@
 package gestionMuseo.gui;
 
+import gestionMuseo.enumeraciones.EstadoDeConservacion;
 import gestionMuseo.excepciones.NoHayFondosException;
 import gestionMuseo.excepciones.ObraNoDaniadaException;
 import gestionMuseo.excepciones.ObraNoExisteException;
@@ -47,6 +48,9 @@ public class Restaurar extends MostrarObrasMuseo {
 					obra = Principal.museo
 							.devolverPorCodigo(pasarTextAEntero(textcod
 									.getText()));
+					if(obra.getEstadoConservacion()==EstadoDeConservacion.BUENO)
+						throw new ObraNoDaniadaException("La obra no está dañada");
+					
 					opcion = JOptionPane
 							.showOptionDialog(
 									contentPanel,
@@ -63,7 +67,10 @@ public class Restaurar extends MostrarObrasMuseo {
 						restaurar();
 
 					}
-				} catch (HeadlessException e2) {
+				} catch (ObraNoDaniadaException e2) {
+					JOptionPane.showMessageDialog(contentPanel,
+							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}catch (HeadlessException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
 				} catch (NumberFormatException e2) {
@@ -75,10 +82,7 @@ public class Restaurar extends MostrarObrasMuseo {
 				} catch (NoHayFondosException e2) {
 					JOptionPane.showMessageDialog(contentPanel,
 							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				} catch (ObraNoDaniadaException e2) {
-					JOptionPane.showMessageDialog(contentPanel,
-							e2.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
+				} 
 
 			}
 
